@@ -88,11 +88,11 @@ def Menu(message):
     elif "classifica" in message.text.lower():
         utenti = g.classifica()
         if len(utenti)>=1:
-            classifica = "🥇 "+utenti[0].nome+" "+utenti[0].cognome+" Lv."+str(utenti[0].livello)+"\n"
+            classifica = "🥇 "+utenti[0].nome+" Lv."+str(utenti[0].livello)+"\n"
         if len(utenti)>=2:
-            classifica = classifica + "🥈 "+utenti[1].nome+" "+utenti[1].cognome+" Lv."+str(utenti[1].livello)+"\n"
+            classifica = classifica + "🥈 "+utenti[1].nome+" Lv."+str(utenti[1].livello)+"\n"
         if len(utenti)>=3:
-            classifica = classifica + "🥉 "+utenti[2].nome+" "+utenti[2].cognome+" Lv."+str(utenti[2].livello)+"\n"
+            classifica = classifica + "🥉 "+utenti[2].nome+" Lv."+str(utenti[2].livello)+"\n"
         bot.send_message(chatid, classifica)
         Start(message)
     elif "Backup" in message.text and str(chatid) in admin:
