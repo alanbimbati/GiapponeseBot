@@ -205,8 +205,17 @@ class GiappoBot:
                     raise
                 finally:
                     session.close()
+            else:
+                word = Word()
+                if row['Romanji'] != word.romanji: word.romanji = row['Romanji']
+                if row['Katana'] != word.katana: word.katana = row['Katana']
+                if row['Libro'] != word.libro: word.libro = row['Libro']
+                if row['Lezione'] != word.lezione: word.lezione = row['Lezione']
+                if row['Tag'] != word.tag: word.tag = row['Tag']
+                if row['Altro...'] != word.altro: word.altro = row['Altro...']
 
-    def classifica(self):
+
+    def classifica(self):   
         session = self.Session()
         utenti = session.query(Utente).order_by(desc(Utente.livello)).order_by(desc(Utente.exp)).all()
         return utenti

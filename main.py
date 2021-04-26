@@ -100,6 +100,7 @@ def Menu(message):
         g.populaDB()  
         Start(message)
     session.close()
+    
 def Answer(message):
     print("answer")
     g = GiappoBot(BOT_TOKEN,CANALE_LOG)
