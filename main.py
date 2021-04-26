@@ -18,6 +18,7 @@ def Start(message):
     g.CreateUtente(message)
     markup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
     scelte = ['🇮🇹 ItaToRomanji 🇯🇵', '🇮🇹 ItaToKatana 🇯🇵', '🇯🇵 RomanjiToIta 🇮🇹', '🇯🇵 KatanaToIta 🇮🇹', '🎲 TuttoRandom', '👤 Scheda personale']
+    scelte.append("🏆 Classifica")
     if str(message.chat.id) in admin:
         scelte.append("Backup")
         scelte.append("Restore")
@@ -70,6 +71,16 @@ def Menu(message):
     elif "Scheda" in message.text:
         bot.reply_to(message, g.printMe(chatid),reply_markup=hideBoard)
         time.sleep(2)
+        Start(message)
+    elif "classifica" in message.text.lower():
+        utenti = g.classifica()
+        if len(utenti)>=1:
+            classifica = "🥇 "+utenti[0].nome+" "+utenti[0].cognome+" "+str(utenti[0].livello)+"\n"
+        if len(utenti)>=2:
+            classifica = classifica + "🥈 "+utenti[1].nome+" "+utenti[1].cognome+" "+str(utenti[1].livello)+"\n"
+        if len(utenti)>=3:
+            classifica = classifica + "🥉 "+utenti[2].nome+" "+utenti[2].cognome+" "+str(utenti[2].livello)+"\n"
+        bot.send_message(chatid, classifica)
         Start(message)
     elif "Backup" in message.text and chatid in admin:
         g.Backup()

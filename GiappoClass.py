@@ -4,7 +4,9 @@ import random
 from telebot import types
 from sqlalchemy         import create_engine
 from sqlalchemy         import update
+from sqlalchemy         import desc
 from sqlalchemy.orm     import sessionmaker
+
 from model import Utente, db_connect, create_table
 from model import Word
 import gspread
@@ -212,5 +214,9 @@ class GiappoBot:
                 finally:
                     session.close()
 
+    def classifica(self):
+        session = self.Session()
+        utenti = session.query(Utente).order_by(desc(Utente.livello)).order_by(desc(Utente.exp)).all()
+        return utenti
 
         
