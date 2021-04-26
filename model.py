@@ -31,8 +31,8 @@ class Utente(Base):
 class Word(Base):
     __tablename__ = "word"
     id = Column(Integer, primary_key=True)
-    ita = Column('ita', String(256), unique=True)
-    romanji = Column('romanji', String(256), unique=True)
+    ita = Column('ita', String(256))
+    romanji = Column('romanji', String(256))
     katana = Column('katana', String(256))
     libro = Column('libro', String(32))
     Lezione = Column('lezione', String(16))

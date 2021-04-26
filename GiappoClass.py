@@ -7,8 +7,7 @@ from sqlalchemy         import update
 from sqlalchemy         import desc
 from sqlalchemy.orm     import sessionmaker
 
-from model import Utente, db_connect, create_table
-from model import Word
+from model import Utente,Word, db_connect, create_table
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
@@ -51,7 +50,6 @@ class GiappoBot:
         elif translate_by == "Katana":
             item['domanda'] = word.katana
 
-
         if translate_to == "Italiano":
             item['risposta'] = word.ita
         elif translate_to == "Romanji":
@@ -59,8 +57,12 @@ class GiappoBot:
         elif translate_to == "Katana":
             item['risposta'] = word.katana
 
-        item['traduci_in'] = translate_to
+        if item['risposta'] == "" or item['domanda']=="":
+            self.clean(chatid)
+            self.TranslateFromTo(chatid, translate_by, translate_to)
+
         item['traduci_da'] = translate_by
+        item['traduci_in'] = translate_to
         print(item)
         self.update_user(chatid, item)
         session.close()
@@ -120,12 +122,6 @@ class GiappoBot:
             return "👤 @"+me.username+"\n💪🏻 Exp"+str(me.exp)+"\n🎖 Lv. "+str(me.livello)+"\n💰 Money "+str(me.money)
         else:
             return "👤 "+me.nome+"\n💪🏻 Exp"+str(me.exp)+"\n🎖 Lv. "+str(me.livello)+"\n💰 Money "+str(me.money)
-
-    def Backup(self):
-        print("backupping")
-        doc = open('giappo.db', 'rb')
-        self.bot.send_document('62716473', doc, caption="#database #backup")
-        doc.close()
 
     def CreateUtente(self, message):
         session = self.Session()
@@ -189,22 +185,18 @@ class GiappoBot:
         client = gspread.authorize(creds)
         sheet = client.open("Studio Giapponese").sheet1
         nrows = sheet.get_all_records()
-        
-        
-        for row in range(42,len(nrows)):
-            ita = sheet.cell(row,1).value
-            print(ita)
-            exist = session.query(Word).filter_by(ita=ita).first()
+        for row in nrows:
+            exist = session.query(Word).filter_by(ita=row['Italiano']).first()
             if exist is None:
                 try:
                     word = Word()
-                    word.ita        = sheet.cell(row,1).value
-                    word.romanji    = sheet.cell(row,2).value
-                    word.katana     = sheet.cell(row,3).value
-                    word.libro      = sheet.cell(row,4).value
-                    word.lezione    = sheet.cell(row,5).value
-                    word.Tag        = sheet.cell(row,6).value
-                    word.Altro      = sheet.cell(row,7).value
+                    word.ita        = row['Italiano']
+                    word.romanji    = row['Romanji']
+                    word.katana     = row['Katana']
+                    word.libro      = row['Libro']
+                    word.lezione    = row['Lezione']
+                    word.Tag        = row['Tag']
+                    word.Altro      = row['Altro...']
 
                     session.add(word)
                     session.commit()

@@ -3,6 +3,11 @@ from telebot import types
 from telebot import TeleBot
 import time
 
+from sqlalchemy         import create_engine
+from sqlalchemy.orm     import sessionmaker
+
+from model import Utente,Word, db_connect, create_table
+
 BOT_TOKEN = "1359089063:AAEig5IHLo_sRmyoGEzPbEv0PdylyyIglAo"
 CANALE_LOG = "-1001469821841"
 bot = TeleBot(BOT_TOKEN)
@@ -33,6 +38,11 @@ def Start(message):
 
 
 def Menu(message):  
+    engine = db_connect()
+    create_table(engine)
+    Session = sessionmaker(bind=engine)
+    session = Session()
+
     g = GiappoBot(BOT_TOKEN, CANALE_LOG)  
     chatid = message.chat.id
 
@@ -44,28 +54,27 @@ def Menu(message):
 
     if "ItaToRomanji" in message.text:     
         g.ItaToRomanji(chatid)
-        utente = g.getUtente(chatid)
+        utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
         msg = bot.reply_to(message, "Traduci \""+utente.domanda+"\" in " + utente.traduci_in, reply_markup=markup)
         bot.register_next_step_handler(msg, Answer)
     elif "ItaToKatana" in message.text:     
         g.ItaToKatana(chatid)
-        utente = g.getUtente(chatid)
+        utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
         msg = bot.reply_to(message, "Traduci \""+utente.domanda+"\" in " + utente.traduci_in, reply_markup=markup)
         bot.register_next_step_handler(msg, Answer)
     elif "RomanjiToIta" in message.text:     
         g.RomanjiToIta(chatid)
-        utente = g.getUtente(chatid)
-
+        utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
         msg = bot.reply_to(message, "Traduci \""+utente.domanda+"\" in " + utente.traduci_in, reply_markup=markup)
         bot.register_next_step_handler(msg, Answer)
     elif "KatanaToIta" in message.text:     
         g.KatanaToIta(chatid)
-        utente = g.getUtente(chatid)
+        utente = session.query(Utente).filter_by(id_telegram = chatid).first() 
         msg = bot.reply_to(message, "Traduci \""+utente.domanda+"\" in " + utente.traduci_in, reply_markup=markup)
         bot.register_next_step_handler(msg, Answer)
     elif "TuttoRandom" in message.text:
         g.TuttoRandom(chatid)
-        utente = g.getUtente(chatid)
+        utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
         msg = bot.reply_to(message, "Traduci \""+utente.domanda+"\" in " + utente.traduci_in, reply_markup=markup)
         bot.register_next_step_handler(msg, Answer)
     elif "Scheda" in message.text:
@@ -75,20 +84,22 @@ def Menu(message):
     elif "classifica" in message.text.lower():
         utenti = g.classifica()
         if len(utenti)>=1:
-            classifica = "🥇 "+utenti[0].nome+" "+utenti[0].cognome+" "+str(utenti[0].livello)+"\n"
+            classifica = "🥇 "+utenti[0].nome+" "+utenti[0].cognome+" Lv."+str(utenti[0].livello)+"\n"
         if len(utenti)>=2:
-            classifica = classifica + "🥈 "+utenti[1].nome+" "+utenti[1].cognome+" "+str(utenti[1].livello)+"\n"
+            classifica = classifica + "🥈 "+utenti[1].nome+" "+utenti[1].cognome+" Lv."+str(utenti[1].livello)+"\n"
         if len(utenti)>=3:
-            classifica = classifica + "🥉 "+utenti[2].nome+" "+utenti[2].cognome+" "+str(utenti[2].livello)+"\n"
+            classifica = classifica + "🥉 "+utenti[2].nome+" "+utenti[2].cognome+" Lv."+str(utenti[2].livello)+"\n"
         bot.send_message(chatid, classifica)
         Start(message)
-    elif "Backup" in message.text and chatid in admin:
-        g.Backup()
+    elif "Backup" in message.text and str(chatid) in admin:
+        doc = open('giappo.db', 'rb')
+        bot.send_document(chatid, doc, caption="#database #backup", reply_markup=hideBoard)
+        doc.close()
         Start(message)
-    elif "Restore" in message.text:
+    elif "Restore" in message.text and str(chatid) in admin:
         g.populaDB()  
         Start(message)
-        
+    session.close()
 def Answer(message):
     print("answer")
     g = GiappoBot(BOT_TOKEN,CANALE_LOG)
