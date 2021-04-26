@@ -8,7 +8,8 @@ from sqlalchemy.orm     import sessionmaker
 
 from model import Utente,Word, db_connect, create_table
 
-BOT_TOKEN = "1359089063:AAEig5IHLo_sRmyoGEzPbEv0PdylyyIglAo"
+BOT_TOKEN = "1359089063:AAEig5IHLo_sRmyoGEzPbEv0PdylyyIglAo" #Giappo
+# BOT_TOKEN = "1685908798:AAGme7f1NrMoFQpaiHE1-4O1Br3FIMWOKIU" #TEST
 CANALE_LOG = "-1001469821841"
 bot = TeleBot(BOT_TOKEN)
 
@@ -19,23 +20,26 @@ autorizzati = ['391473447', '62716473']
 
 @bot.message_handler(commands=['start'])
 def Start(message):
-    g = GiappoBot(BOT_TOKEN, CANALE_LOG)  
-    g.CreateUtente(message)
-    markup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
-    scelte = ['🇮🇹 ItaToRomanji 🇯🇵', '🇮🇹 ItaToKatana 🇯🇵', '🇯🇵 RomanjiToIta 🇮🇹', '🇯🇵 KatanaToIta 🇮🇹', '🎲 TuttoRandom', '👤 Scheda personale']
-    scelte.append("🏆 Classifica")
-    if str(message.chat.id) in admin:
-        scelte.append("Backup")
-        scelte.append("Restore")
-    
-    for scelta in scelte:
-        types.KeyboardButton(scelta)
-        markup.add(scelta)
+    if message.chat.type == "private":
+
+        g = GiappoBot(BOT_TOKEN, CANALE_LOG)  
+        g.CreateUtente(message)
+        markup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
+        scelte = ['🇮🇹 ItaToRomanji 🇯🇵', '🇮🇹 ItaToKatana 🇯🇵', '🇯🇵 RomanjiToIta 🇮🇹', '🇯🇵 KatanaToIta 🇮🇹', '🎲 TuttoRandom', '👤 Scheda personale']
+        scelte.append("🏆 Classifica")
+        if str(message.chat.id) in admin:
+            scelte.append("Backup")
+            scelte.append("Restore")
+        
+        for scelta in scelte:
+            types.KeyboardButton(scelta)
+            markup.add(scelta)
 
 
-    msg = bot.reply_to(message, "Quale operazione vuoi svolgere?", reply_markup=markup)
-    bot.register_next_step_handler(msg, Menu)
-
+        msg = bot.reply_to(message, "Quale operazione vuoi svolgere?", reply_markup=markup)
+        bot.register_next_step_handler(msg, Menu)
+    else:
+        bot.reply_to(message, "Mi dispiace, questo bot funziona solo in privato")
 
 def Menu(message):  
     engine = db_connect()
