@@ -114,7 +114,8 @@ def Answer(message):
             bot.register_next_step_handler(msg, Answer)
         elif "Skip" in message.text:
             meta = g.skip(chatid)
-            msg = bot.reply_to(message, meta)           
+            msg = bot.reply_to(message, meta)  
+            Start(message)
     elif message.text==utente.risposta:
         g.CorrectAnswer(chatid)
         current_level = utente.livello 
@@ -122,10 +123,12 @@ def Answer(message):
             bot.send_message(chatid, "Complimenti! Sei passato/a al livello "+str(current_level), reply_markup=hideBoard)
         else:
             bot.send_message(chatid, "Complimenti! Hai ottenuto 10 exp!", reply_markup=hideBoard)
+        Start(message)
+
     else:
         bot.send_message(chatid, "Mi dispiace, la risposta era "+utente.risposta, reply_markup=hideBoard)
+        Start(message)
 
-    Start(message)
 
 
 bot.infinity_polling()

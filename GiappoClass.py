@@ -149,7 +149,9 @@ class GiappoBot:
     def buyHalfWord(self, chatid):
         utente = self.getUtente(chatid)
         if utente.money >=50:
-            self.update_user(chatid, money = utente.money- 50)
+            item = {}
+            item['money'] = utente.money -50
+            self.update_user(chatid, item)
             return utente.risposta[:int(len(utente.risposta)/2)]
         else:
             return "No money, no party"
@@ -157,7 +159,9 @@ class GiappoBot:
     def skip(self, chatid):
         utente = self.getUtente(chatid)
         if utente.money >=50:
-            self.update_user(chatid, money = utente.money- 50)
+            item = {}
+            item['money'] = utente.money -50
+            self.update_user(chatid, item)
             return "Domanda saltata"
         else:
             return "No money, no party"
@@ -210,9 +214,9 @@ class GiappoBot:
                 if row['Romanji'] != word.romanji: word.romanji = row['Romanji']
                 if row['Katana'] != word.katana: word.katana = row['Katana']
                 if row['Libro'] != word.libro: word.libro = row['Libro']
-                if row['Lezione'] != word.lezione: word.lezione = row['Lezione']
-                if row['Tag'] != word.tag: word.tag = row['Tag']
-                if row['Altro...'] != word.altro: word.altro = row['Altro...']
+                if row['Lezione'] != word.Lezione: word.Lezione = row['Lezione']
+                if row['Tag'] != word.Tag: word.Tag = row['Tag']
+                if row['Altro...'] != word.Altro: word.Altro = row['Altro...']
 
 
     def classifica(self):   
