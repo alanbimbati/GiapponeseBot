@@ -1,0 +1,982 @@
+Italiano,Romanji,Katana,Libro,Lezione,Tag,Altro...
+Buongiorno,Ohayou gozaimasu,,Speciale,S1,Saluto,
+Buon pomeriggio,Konnichiwa,,Speciale,S1,Saluto,
+Buonasera,Konbanwa,,Speciale,S1,Saluto,
+Buonanotte,Oyasuminasai,,Speciale,S1,Saluto,
+Arrivederci/Addio,Sayounara,,Speciale,S1,Saluto,
+Arrivederci (informale),Dewa mata,,Speciale,S1,Saluto,
+A domani,Mata ashita,,Speciale,S1,Saluto,
+Piacere lieto di conoscerla,Hajimemashite douzo yoroshiku onegai itashimasu,,Speciale,S1,Presentarsi,
+Piacere mio,Kochirakoso douzo yoroshiku,,Speciale,S1,Presentarsi,
+Auguri,Omedetou,,Speciale,S1,Augurio,
+Buon anno,Akemashite omedetou,,Speciale,S1,Augurio,
+Come stai?,Ogenki desu ka,,Speciale,S1,Frase,
+Sto bene e lei?,Genki desu anata wa,,Speciale,S1,Frase,
+Grazie,Arigatou gozaimasu,,Speciale,S1,Frase,
+Scusi mi dispiace,Sumimasen,,Speciale,S1,Frase,
+Ho capito,Wakarimashita,,Speciale,S1,Frase,
+Non capisco,Wakarimasen,,Speciale,S1,Frase,
+Occhi,Me,め,A,A1,Corpo,
+Mani,Te,て,A,A1,Corpo,
+Denti,Ha,は,A,A1,Corpo,
+Albero,Ki,き,A,A1,Piante,
+Gambe,Ashi,あし,A,A1,Corpo,
+Viso,Kao,かお,A,A1,Corpo,
+Casa,Ie,いえ,A,A1,Luogo,
+Sedia,Isu,いす,A,A1,Oggetti,
+Cane,Inu,いぬ,A,A1,Creature,
+Gatto,Neko,ねこ,A,A1,Creature,
+Bocca,Kuchi,くち,A,A1,Corpo,
+Naso,Hana,はな,A,A1,Corpo,
+Orecchie,Mimi,みみ,A,A1,Corpo,
+Pancia,Hara,はら,A,A1,Corpo,
+Ombrello,Kasa,かさ,A,A1,Oggetti,
+Scarpe,Kutsu,くつ,A,A1,Abbigliamento,
+Girandola,Koma,こま,A,A1,Oggetti,
+Bacchette,Hashi,はし,A,A1,Oggetti,
+Cavallo,Uma,うま,A,A1,Creature,
+Piccione,Hato,はと,A,A1,Creature,
+Petto,Mune,むね,A,A2,Corpo,
+Ombelico,Heso,へそ,A,A2,Corpo,
+Flauto,Fue,ふえ,A,A2,Oggetti,
+Libro,Hon,ほん,A,A2,Oggetti,
+Vestiti,Fuku,ふく,A,A2,Abbigliamento,
+Caco,Kaki,かき,A,A2,Cibo,
+Crisantemo,Kiku,きく,A,A2,Piante,
+Castagna,Kuri,くり,A,A2,Cibo,
+Bambù,Take,たけ,A,A2,Piante,
+Caramella,Ame,あめ,A,A2,Cibo,
+Sudore,Ase,あせ,A,A2,Corpo,
+Osso,Hone,ほね,A,A2,Corpo,
+Aquilone,Tako,たこ,A,A2,Oggetti,
+Colla,Nori,のり,A,A2,Oggetti,
+Pera giapponese,Nashi,なし,A,A2,Cibo,
+Fiore,Hana,はな,A,A2,Piante,
+Pesca,Momo,もも,A,A2,Cibo,
+Giglio,Yuri,ゆり,A,A2,Piante,
+Coccodrillo,Wani,わに,A,A2,Creature,
+Stagno,Ike,いけ,A,A2,Paesaggio,
+Questo,Kore,これ,Speciale,S3,Pronome,Pronome dimostrativo
+Codesto,Sore,それ,Speciale,S3,Pronome,Pronome dimostrativo
+Quello,Are,あれ,Speciale,S3,Pronome,Pronome dimostrativo
+Essere,Desu,です,Speciale,S3,Verbo,
+Questo è un libro,Kore wa hon desu,これはほんです,Speciale,S3,Frase,
+Questo è un libro,Kore wa hon da,これはほんだ,Speciale,S3,Frase,Informale
+Codesto è un libro,Sore wa hon desu,それはほんです,Speciale,S3,Frase,
+Quello è un libro,Are wa hon desu,あれはほんです,Speciale,S3,Frase,
+Questo non è un libro,Kore wa hon dewa arimasen,これはほんではありません,Speciale,S3,Frase,
+Codesto non è un libro,Sore wa hon dewa arimasen,それはほんではありません,Speciale,S3,Frase,
+Quello non è un libro,Are wa hon dewa arimasen,あれはほんではありません,Speciale,S3,Frase,
+Questi,Korera,これら,Speciale,S3,Pronome,Pronome dimostrativo
+Codesti,Sorera,それら,Speciale,S3,Pronome,Pronome dimostrativo
+Quelli,Arera,めれら,Speciale,S3,Pronome,Pronome dimostrativo
+Questi sono dei libri,Korera wa hon desu,これらはほんです,Speciale,S3,Frase,
+Codesti sono dei libri,Sorera wa hon desu,それらはほんです,Speciale,S3,Frase,
+Quelli sono dei libri,Arera wa hon desu,あれらはほんです,Speciale,S3,Frase,
+Questi non sono dei libri,Korera wa hon dewa arimasen,これらはほんではありません,Speciale,S3,Frase,
+Codesti non sono dei libri,Sorera wa hon dewa arimasen,それらはほんではありません,Speciale,S3,Frase,
+Quelli non sono dei libri,Arera wa hon dewa arimasen,あれらはほんではありません,Speciale,S3,Frase,
+Questa è una sedia,Kore wa isu desu,これはいすです,Speciale,S3,Frase,
+Questa non è una sedia,Kore wa isu dewa arimasen,これはいすではありません,Speciale,S3,Frase,
+Queste sono delle sedie,Korera wa isu desu,これらはいすです,Speciale,S3,Frase,
+Queste non sono delle sedie,Korera wa isu dewa arimasen,これらはいすではありません,Speciale,S3,Frase,
+Codesto è un albero,Sore wa ki desu,それはきです,Speciale,S3,Frase,
+Codesto non è un albero,Sore wa ki dewa arimasen,それはきではありません,Speciale,S3,Frase,
+Codesti sono degli alberi,Sorera wa ki desu,それらはきです,Speciale,S3,Frase,
+Codesti non sono degli alberi,Sorera wa ki dewa arimasen,それらはきではありません,Speciale,S3,Frase,
+Quella è una casa,Are wa ie desu,あれはいえです,Speciale,S3,Frase,
+Quella non è una casa,Are wa ie dewa arimasen,あれはいえではありません,Speciale,S3,Frase,
+Quelle sono delle case,Arera wa ie desu,あれらはいえです,Speciale,S3,Frase,
+Quelle non sono delle case,Arera wa ie dewa arimasen,あれらはいえではありません,Speciale,S3,Frase,
+Questo è un cane,Kore wa inu desu,これはいぬです,Speciale,S3,Frase,
+Questo è un ombrello,Kore wa kasa desu,これはかさです,Speciale,S3,Frase,
+Questa è una caramella,Kore wa ame desu,これはあめです,Speciale,S3,Frase,
+Codesto è un gatto,Sore wa neko desu,それはねこです,Speciale,S3,Frase,
+Codesto è un cavallo,Sore wa uma desu,それはうまです,Speciale,S3,Frase,
+Codeste sono un paio di scarpe,Sore wa kutsu desu,これはくつです,Speciale,S3,Frase,
+Quello è un coccodrillo,Are wa wani desu,あれはわにです,Speciale,S3,Frase,
+Quello è un laghetto,Are wa ike desu,あれはいけです,Speciale,S3,Frase,
+Quello è un aquilone,Are wa tako desu,あれはたこです,Speciale,S3,Frase,
+Questa non è una castagna,Kore wa kuri dewa arimasen,これはくりではありません,Speciale,S3,Frase,
+Codesto non è un caco,Sore wa kaki dewa arimasen,それはかきではありません,Speciale,S3,Frase,
+Quello non è il bambù,Are wa take dewa arimasen,あれはたけではありません,Speciale,S3,Frase,
+"Questo non è un cane, questo è un gatto.",Kore wa inu dewa arimasen. Kore wa neko desu.,これはいぬではありません。これはねこです。,Speciale,S3,Frase,
+"Questa non è la bocca, è il naso.",Kore wa kuchi dewa arimasen. Hana desu.,これはくちではありません。はなです。,Speciale,S3,Frase,
+"Codesta non è una castagna, codesta è una caramella.",Sore wa kuri dewa arimasen. Sore wa ame desu.,それはくりではありません。それはあめです。,Speciale,S3,Frase,
+"Codesta non è una pera giapponese, è una pesca.",Sore wa nashi dewa arimasen. Momo desu.,それはなしではありません。ももです。,Speciale,S3,Frase,
+"Quello non è un crisantemo, è un giglio.",Are wa kiku dewa arimasen. Yuri desu.,あれはきくではありません。ゆりです。,Speciale,S3,Frase,
+Corna,Tsuno,つの,A,A3,Creature,
+Orco,Oni,おに,A,A3,Creature,
+Mucca,Ushi,うし,A,A3,Creature,
+Montagna,Yama,やま,A,A3,Paesaggio,
+Cielo,Sora,そら,A,A3,Paesaggio,
+Gru,Tsuru,つる,A,A3,Creature,
+Corda,Himo,ひも,A,A3,Oggetti,
+Neve,Yuki,ゆき,A,A3,Paesaggio,
+Bianco,Shiro,しろ,A,A3,Colori,
+Nero,Kuro,くろ,A,A3,Colori,
+Luna,Tsuki,つき,A,A3,Paesaggio,
+Stelle,Hoshi,ほし,A,A3,Paesaggio,
+Sera,Yoru,よる,A,A3,Paesaggio,
+Giorno,Hiru,ひる,A,A3,Paesaggio,
+Mare,Umi,うみ,A,A3,Paesaggio,
+Nuvola,Kumo,くも,A,A3,Paesaggio,
+Melanzana,Nasu,なす,A,A3,Cibo,
+Fagiolo,Mame,まめ,A,A3,Cibo,
+Granchio,Kani,かに,A,A3,Creature,
+Tartaruga,Kame,かめ,A,A3,Creature,
+Questo è un orco,Kore wa oni desu,これはおにです,A,A3,Frase,
+Codesto è un orco,Sore wa oni desu,それはおにです,A,A3,Frase,
+Quello è un orco,Are wa oni desu,あれはおにです,A,A3,Frase,
+Questa è una mucca,Kore wa ushi desu,これはうしです,A,A3,Frase,
+Codesta è una mucca,Sore wa ushi desu,それはうしです,A,A3,Frase,
+Quella è una mucca,Are wa ushi desu,あれはうしです,A,A3,Frase,
+Questo è un corno,Kore wa tsuno desu,これはつのです,A,A3,Frase,
+Codesto è un corno,Sore wa tsuno desu,それはつのです,A,A3,Frase,
+Quello è un corno,Are wa tsuno desu,あれはやまです,A,A3,Frase,
+Quello è il cielo,Are wa sora desu,あれはそらです,A,A3,Frase,
+Questa è una gru,Kore wa tsuru desu,これはつるです,A,A3,Frase,
+Codesta è una gru,Sore wa tsuru desu,それはつるです,A,A3,Frase,
+Quella è una gru,Are wa tsuru desu,あれはつるです,A,A3,Frase,
+Questa è una corda,Kore wa himo desu,これはひもです,A,A3,Frase,
+Codesta è una corda,Sore wa himo desu,それはひもです,A,A3,Frase,
+Questa è la neve,Kore wa yuki desu,これはゆきです,A,A3,Frase,
+Codesta è la neve,Sore wa yuki desu,それはゆきです,A,A3,Frase,
+Quella è la luna,Are wa tsuki desu,あれはつきです,A,A3,Frase,
+Quella è una stella,Are wa hoshi desu,あれはほしです,A,A3,Frase,
+Quello è il mare,Are wa umi desu,あれはうみです,A,A3,Frase,
+Quella è una nuvola,Are wa kumo desu,あれはくもです,A,A3,Frase,
+Questa è una melanzana,Kore wa nasu desu,これはなすです,A,A3,Frase,
+Codesta è una melanzana,Sore wa nasu desu,それはなすです,A,A3,Frase,
+Questo è un fagiolo,Kore wa mame desu,これはまめです,A,A3,Frase,
+Codesto è un fagiolo,Sore wa mame desu,それはまめです,A,A3,Frase,
+Questo è un granchio,Kore wa kani desu,これはかにです,A,A3,Frase,
+Codesto è un granchio,Sore wa kani desu,それはかにです,A,A3,Frase,
+Questa è una tartaruga,Kore wa kame desu,これはかめです,A,A3,Frase,
+Codesta è una tartaruga,Sore wa kame desu,それはかめです,A,A3,Frase,
+Pescecane,Same,さめ,A,A4,Creature,
+Scimmia,Saru,さる,A,A4,Creature,
+Cicala,Semi,せみ,A,A4,Creature,
+Ape,Hachi,はち,A,A4,Creature,
+Tigre,Tora,とら,A,A4,Creature,
+Scoiattolo,Risu,りす,A,A4,Creature,
+Pasta di riso,Mochi,もち,A,A4,Cibo,
+Ascia,Ono,おの,A,A4,Oggetti,
+Palla,Mari,まり,A,A4,Oggetti,
+Tetto,Yane,やね,A,A4,Casa,
+Insetto,Mushi,むし,A,A4,Creature,
+Aquila,Washi,わし,A,A4,Creature,
+Pioggia,Ame,あめ,A,A4,Paesaggio,
+Fiume,Kawa,かわ,A,A4,Paesaggio,
+Ragno,Kumo,くも,A,A4,Creature,
+Vapore,Yuge,ゆげ,A,A4,Paesaggio,
+Semi,Tane,たね,A,A4,Piante,
+Formica,Ari,あり,A,A4,Creature,
+Seppia,Ika,いか,A,A4,Creature,
+Conchiglia,Kai,かい,A,A4,Creature,
+Codesto è un pescecane,Sore wa same desu,それはさめです,A,A4,Frase,
+"Quello non è un pescecane, quella è una scimmia.",Are wa same dewa arimasen. Are wa saru desu.,あれはさめではありません。あれはさるです。,A,A4,Frase,
+Questa è una cicala,Kore wa semi desu,これはせみです,A,A4,Frase,
+Codesta è una cicala,Sore wa semi desu,それはせみです,A,A4,Frase,
+"Questa non è una cicala, è un'ape.",Kore wa semi dewa arimasen. Hachi desu.,これはせみではありません。はちです。,A,A4,Frase,
+Quella è una tigre,Are wa tora desu,あれはとらです,A,A4,Frase,
+"Quella non è una scimmia, quella è una tigre.",Are wa saru dewa arimasen. Are wa tora desu.,あれはさるではありません。あれはとらです。,A,A4,Frase,
+Questo è uno scoiattolo,Kore wa risu desu,これはりすです,A,A4,Frase,
+Codesto è uno scoiattolo,Sore wa risu desu,それはりすです,A,A4,Frase,
+Questa è la pasta di riso,Kore wa mochi desu,これはもちです,A,A4,Frase,
+Codesta è un'ascia,Sore wa ono desu,それはおのです,A,A4,Frase,
+Codesta è una palla,Sore wa mari desu,それはまりです,A,A4,Frase,
+Quello è il tetto,Are wa yane desu,あれはやねです,A,A4,Frase,
+Questo è un insetto,Kore wa mushi desu,これはむしです,A,A4,Frase,
+Quella è un'aquila,Are wa washi desu,あれはわしです,A,A4,Frase,
+Quello è un fiume,Are wa kawa desu,あれはかわです,A,A4,Frase,
+"Questa non è un'ape, è un ragno.",Kore wa hachi dewa arimasen. Kumo desu.,これははちではありません。くもです。,A,A4,Frase,
+Codesto è vapore,Sore wa yuge desu,それはゆげです,A,A4,Frase,
+Questi sono semi,Kore wa tane desu,これはたねです,A,A4,Frase,
+"Questo non è un ragno, questa è una formica.",Kore wa kumo dewa arimasen. Kore wa ari desu.,これはくもではありません。これはありです。,A,A4,Frase,
+Codesta è una seppia,Sore wa ika desu,それはいかです,A,A4,Frase,
+Questa è una conchiglia,Kore wa kai desu,これはかいです,A,A4,Frase,
+Codesta è una conchiglia,Sore wa kai desu,それはかいです,A,A4,Frase,
+Questo è un libro?,Kore wa hon desu ka,これはほんですか。,Speciale,S4,Frase,
+Questa è una caramella?,Kore wa ame desu ka,これはあめですか。,Speciale,S4,Frase,
+Codesto è un ragno?,Sore wa kumo desu ka,それはくもですか。,Speciale,S4,Frase,
+Quella è un'aquila?,Are wa washi desu ka,あれはわしですか。,Speciale,S4,Frase,
+Queste sono delle formiche?,Korera wa ari desu ka,これはありですか。,Speciale,S4,Frase,
+"Questo è un libro?
+Sì, questo è un libro.","Kore wa hon desu ka.
+Hai, kore wa hon desu.","これはほんですか。
+はい、これはほんです。",Speciale,S4,Frase,
+"Codesto è un ragno?
+Sì, è un ragno.","Sore wa kumo desu ka.
+Hai, kumo desu.","それはくもですか。
+はい、くもです。",Speciale,S4,Frase,
+"Quella è un'aquila?
+Sì, quella è un'aquila.","Are wa washi desu ka.
+Hai, are wa washi desu.","あれはわしですか。
+はい、あれはわしです。",Speciale,S4,Frase,
+"Questo è un ragno?
+No, questa è una formica.","Kore wa kumo desu ka.
+Iie, kore wa ari desu.","これはくもですか。
+いいえ、これはありです。",Speciale,S4,Frase,
+"Questo è un ragno?
+No, questo non è un ragno. Questa è una formica.","Kore wa kumo desu ka.
+Iie, kore wa kumo dewa arimasen. Kore wa ari desu.","これはくもですか。
+いいえ、これはくもではありません。これはありです。",Speciale,S4,Frase,
+Questo che cos'è?,Kore wa nan desu ka,これはなんですか,Speciale,S4,Frase,
+Codesto che cos'è?,Sore wa nan desu ka,それはなんですか,Speciale,S4,Frase,
+Quello che cos'è?,Are wa nan desu ka,あれはなんですか,Speciale,S4,Frase,
+"Questo che cos'è?
+Questo è un ragno.","Kore wa nan desu ka.
+Kore wa kumo desu.","これはなんですか。
+これはくもです。",Speciale,S4,Frase,
+"Codesto che cos'è?
+Codesto è un libro.","Sore wa nan desu ka.
+Sore wa hon desu.","それはなんですか。
+それはほんです。",Speciale,S4,Frase,
+"Quella che cos'è?
+Quella è un'aquila.","Are wa nan desu ka.
+Are wa washi desu.","あれはなんですか。
+あれはわしです。",Speciale,S4,Frase,
+"Questo che cos'è?
+Questo è un cane.
+Anche questo è un cane?
+Sì, anche questo è un cane.","Kore wa nan desu ka.
+Kore wa inu desu.
+Kore mo inu desu ka.
+Hai, kore mo inu desu.","これはなんですか。
+これはいぬです。
+これもいぬですか。
+はい、これもいぬです。",Speciale,S4,Frase,
+"Questo che cos'è?
+Questo è un cane.
+Anche questo è un cane?
+No, questo è un gatto.","Kore wa nan desu ka.
+Kore wa inu desu.
+Kore mo inu desu ka.
+Iie, kore wa neko desu.","これはなんですか。
+これはいぬです。
+これもいぬですか。
+いいえ、これはねこです。",Speciale,S4,Frase,
+"Codesta che cos'è?
+Codesta è una mucca.
+Anche codesta è una mucca?
+Sì, anche quella è una mucca.
+Anche quella è una mucca?
+No, quello è un cavallo.","Sore wa nan desu ka.
+Sore wa ushi desu.
+Sore mo ushi desu ka.
+Hai, sore mo ushi desu.
+Are mo ushi desu ka.
+Iie, are wa uma desu.","それはなんですか。
+それはうしです。
+それもうしですか。
+はい、それもうしです。
+あれもうしですか。
+いいえ、あれはうまです。",Speciale,S4,Frase,
+"Questa è una caramella?
+Sì, questa è una caramella.","Kore wa ame desu ka.
+Hai, kore wa ame desu.","これはあめですか。
+はい、これはあめです。",Speciale,S4,Frase,
+"Questi sono gli occhi?
+No, queste sono le mani.","Kore wa me desu ka.
+Iie, kore wa te desu.","これはめですか。
+いいえ、これはてです。",Speciale,S4,Frase,
+"Codesto è un cane?
+Sì, codesto è un cane.","Sore wa inu desu ka.
+Hai, sore wa inu desu.","それはいぬですか。
+はい、それはいぬです。",Speciale,S4,Frase,
+"Codesto è un gatto?
+No, codesto è un cane.","Sore wa neko desu ka.
+Iie, sore wa inu desu.","それはねこですか。
+いいえ、それはいぬです。",Speciale,S4,Frase,
+"Codesto è un gatto?
+No, codesto non è un gatto. Codesto è un cane.","Sore wa neko desu ka.
+Iie, sore wa neko dewa arimasen. Sore wa inu desu.","それはねこですか。
+いいえ、それはねこではありません。それはいぬです。",Speciale,S4,Frase,
+"Questo che cos'è?
+Questo è un ombrello.","Kore wa nan desu ka.
+Kore wa kasa desu.","これはなんですか。
+これはかさです。",Speciale,S4,Frase,
+"Quella che cos'è?
+Quella è un'aquila.
+Anche quella è un'aquila?
+No, quello è un piccione.","Are wa nan desu ka.
+Are wa washi desu.
+Are mo washi desu ka.
+Iie, are wa hato desu.","あれはなんですか。
+あれはわしです。
+あれもわしですか。
+いいえ、あれははとです。",Speciale,S4,Frase,
+"Questa che cos'è?
+Questa è una caramella.
+Anche codesta è una caramella?
+No, codesta è una castagna.","Kore wa nan desu ka.
+Kore wa ame desu.
+Sore mo ame desu ka.
+Iie, sore wa kuri desu.","これはなんですか。
+これはあめです。
+それもあめですか。
+いいえ、それはくりです。",Speciale,S4,Frase,
+"Questo è un libro?
+Sì, codesto è un libro.","Kore wa hon desu ka.
+Hai, sore wa hon desu.","これはほんですか。
+はい、それはほんです。",Speciale,S4,Frase,
+"Codesto è un libro?
+Sì, questo è un libro.","Sore wa hon desu ka.
+Hai, kore wa hon desu.","それはほんですか。
+はい、これはほんです。",Speciale,S4,Frase,
+"Questa è una castagna?
+No, codesta è una caramella.","Kore wa kuri desu ka.
+Iie, sore wa ame desu.","これはくりですか。
+いいえ、それはあめです。",Speciale,S4,Frase,
+"Questa è una castagna?
+Sì, codesta è una castagna.
+Anche questa è una castagna?
+No, codesta è una pera giapponese.","Kore wa kuri desu ka.
+Hai, sore wa kuri desu.
+Kore mo kuri desu ka.
+Iie, sore wa nashi desu.","これはくりですか。
+はい、それはくりです。
+これもくりですか。
+いいえ、それはなしです。",Speciale,S4,Frase,
+"Queste sono delle pere giapponesi?
+Si, codeste sono delle pere giapponesi.
+Anche queste sono delle pere giapponesi?
+No, codeste sono delle pesche.","Korera wa nashi desu ka.
+Hai, sorera wa nashi desu.
+Korera mo nashi desu ka.
+Iie, sorera wa momo desu.","これらはなしですか。
+はい、それらはなしです。
+これらもなしですか。
+いいえ、それらはももです。",Speciale,S4,Frase,
+"Questa che cos'è?
+Codesta è un'ape.","Kore wa nan desu ka.
+Sore wa hachi desu.","これはなんですか。
+それははちです。",Speciale,S4,Frase,
+"Codesta che cos'è?
+Questa è una palla.","Sore wa nan desu ka.
+Kore wa mari desu.","それはなんですか。
+これはまりです。",Speciale,S4,Frase,
+Orso,Kuma,くま,A,A5,Creature,
+Cervo,Shika,しか,A,A5,Creature,
+Carpa,Koi,こい,A,A5,Creature,
+Mosca,Hae,はえ,A,A5,Creature,
+Slitta,Sori,そり,A,A5,Oggetti,
+Nave,Fune,ふね,A,A5,Oggetti,
+Polipo,Tako,たこ,A,A5,Creature,
+Ponte,Hashi,はし,A,A5,Paesaggio,
+Filo,Ito,いと,A,A5,Oggetti,
+Ago,Hari,はり,A,A5,Oggetti,
+Stanza,Heya,へや,A,A5,Casa,
+Negozio,Mise,みせ,A,A5,Luogo,
+Carta,Kami,かみ,A,A5,Oggetti,
+Zappa,Kuwa,くわ,A,A5,Oggetti,
+Terra,Tsuchi,つち,A,A5,Paesaggio,
+Giardino,Niwa,にわ,A,A5,Casa,
+Tappo,Futa,ふた,A,A5,Oggetti,
+Miele,Mitsu,みつ,A,A5,Cibo,
+Foresta,Mori,もり,A,A5,Luogo,
+Cotone,Wata,わた,A,A5,Oggetti,
+Quello è un orso,Are wa kuma desu,あれはくまです,A,A5,Frase,
+Codesto non è un orso. Codesto è un cervo.,Sore wa kuma dewa arimasen. Sore wa shika desu.,それはくまではありません。それはしかです。,A,A5,Frase,
+Questa è una carpa,Kore wa koi desu,これはこいです,A,A5,Frase,
+Questa è una mosca,Kore wa hae desu,これははえです,A,A5,Frase,
+Codesta è una mosca,Sore wa hae desu,それははえです,A,A5,Frase,
+Codesta è una slitta,Sore wa sori desu,それはそりです,A,A5,Frase,
+"Codesta che cos'è?
+Codesta è una slitta.","Sore wa nan desu ka.
+Sore wa sori desu.","それはなんですか。
+それはそりです。",A,A5,Frase,
+"Quella è una nave?
+Sì, quella è una nave.","Are wa fune desu ka.
+Hai, are wa fune desu.","あれはふねですか。
+はい、あれはふねです。",A,A5,Frase,
+"Quella che cos'è?
+Quella è una nave.","Are wa nan desu ka.
+Are wa fune desu.","あれはなんですか。
+あれはふねです。",A,A5,Frase,
+Codesto è un polipo,Sore wa tako desu,それはたこです,A,A5,Frase,
+"Quello è un ponte?
+Sì, quello è un ponte.","Are wa hashi desu ka.
+Hai, are wa hashi desu.","あれははしですか。
+はい、あれははしです。",A,A5,Frase,
+Questo è un filo,Kore wa ito desu,これはいとです,A,A5,Frase,
+"Questo che cos'è?
+Questo è un filo.","Kore wa nan desu ka.
+Kore wa ito desu.","これはなんですか。
+これはいとです。",A,A5,Frase,
+Questo è un ago,Kore wa hari desu,これははりです,A,A5,Frase,
+"Questo è un filo?
+No, questo non è un filo. Questo è un ago.","Kore wa ito desu ka.
+Iie, kore wa ito dewa arimasen. Kore wa hari desu.","これはいとですか。
+いいえ、これはいとではありません。これははりです。",A,A5,Frase,
+Questa è una stanza,Kore wa heya desu,これはへやです,A,A5,Frase,
+Questa è carta,Kore wa kami desu,これはかみです,A,A5,Frase,
+"Questa che cos'è?
+È carta.","Kore wa nan desu ka.
+Kami desu.","これはなんですか。
+かみです。",A,A5,Frase,
+"Codesta che cos'è?
+Codesta è una zappa.","Sore wa nan desu ka.
+Sore wa kuwa desu.","それはなんですか。
+それはくわです。",A,A5,Frase,
+Questa è terra,Kore wa tsuchi desu,これはつちです,A,A5,Frase,
+"Quello che cos'è?
+Quello è un giardino.","Are wa nan desu ka.
+Are wa niwa desu.","あれはなんですか。
+あれはにわです。",A,A5,Frase,
+"Questo è un tappo?
+Sì, è un tappo.","Kore wa futa desu ka.
+Hai, futa desu.","これはなんですか。
+はい、ふたです。",A,A5,Frase,
+"Questo che cos'è?
+Questo è miele.","Kore wa nan desu ka.
+Kore wa mitsu desu.","これはなんですか。
+これはみつです。",A,A5,Frase,
+Quella è la foresta,Are wa mori desu,あれはもりです,A,A5,Frase,
+"Quello è un giadino?
+No, quella è una foresta.","Are wa niwa desu ka.
+Iie, are wa mori desu.","あれはにわですか。
+いいえ、あれはもりです。",A,A5,Frase,
+Codesto è cotone,Sore wa wata desu,それはわたです,A,A5,Frase,
+"Codesto è cotone?
+Sì, codesto è cotone.","Sore wa wata desu ka.
+Hai, sore wa wata desu.","それはわたですか。
+はい、それはわたです。",A,A5,Frase,
+Testa,Atama,あたま,A,A6,Corpo,
+Schiena,Senaka,せなか,A,A6,Corpo,
+Ventaglio,Uchiwa,うちわ,A,A6,Oggetti,
+Libro illustrato,Ehon,えほん,A,A6,Oggetti,
+Medicina,Kusuri,くすり,A,A6,Oggetti,
+Tofu,Toufu,とうふ,A,A6,Cibo,
+Filo di lana,Keito,けいと,A,A6,Oggetti,
+Fumo,Kemuri,けむり,A,A6,Paesaggio,
+Leone marino,Ashika,あしか,A,A6,Creature,
+Anatra,Ahiru,あひる,A,A6,Creature,
+Pulcino,Hiyoko,ひよこ,A,A6,Creature,
+Lucciola,Hotaru,ほたる,A,A6,Creature,
+Fungo,Kinoko,きのこ,A,A6,Piante,
+Fiori di ciliegio,Sakura,さくら,A,A6,Piante,
+Anguria,Suika,すいか,A,A6,Cibo,
+Pasta di pesce bollita,Chikuwa,ちくわ,A,A6,Cibo,
+Denaro,Okane,おかね,A,A6,Oggetti,
+Carta da gioco giapponese,Karuta,カルタ,A,A6,Oggetti,
+Tavolo invernale,Kotatsu,こたつ,A,A6,Oggetti,
+Portafoglio,Saifu,さいふ,A,A6,Oggetti,
+Questa è la testa,Kore wa atama desu,これはあたまです,A,A6,Frase,
+Codesta è la schiena,Sore wa senaka desu,それはせなかです,A,A6,Frase,
+"Questo che cos'è?
+Codesto è un ventaglio.","Kore wa nani desu ka.
+Sore wa uchiwa desu.","これはなにですか。
+それはうちわです。",A,A6,Frase,
+"Questo è un libro illustrato?
+Sì, è un libro illustrato.","Kore wa ehon desu ka.
+Hai, ehon desu.","これはえほんですか。
+はい、えほんです。",A,A6,Frase,
+"Codesta che cos'è?
+Questa è una medicina.","Sore wa nani desu ka.
+Kore wa kusuri desu.","それはなにですか。
+これはくすりです。",A,A6,Frase,
+"Questo è tofu?
+Si, codesto è tofu.
+Anche questo è tofu?
+Sì, anche questo è tofu.","Kore wa toufu desu ka.
+Hai, sore wa toufu desu.
+Kore mo toufu desu ka.
+Hai, sore mo toufu desu.","これはとうふですか。
+はい、それはとうふです。
+これもとうふですか。
+はい、それはとうふです。",A,A6,Frase,
+Codesto è un filo di lana,Sore wa keito desu,それはけいとです,A,A6,Frase,
+Quello è fumo,Are wa kemuri desu,あれはけむりです,A,A6,Frase,
+Codesto è un leone marino,Sore wa ashika desu,それはあしかです,A,A6,Frase,
+Codesta è un'anatra,Sore wa ahiru desu,それはあひるです,A,A6,Frase,
+Questo è un pulcino,Kore wa hiyoko desu,これはひよこです,A,A6,Frase,
+Questa è una lucciola,Kore wa hotaru desu,これはほたるです,A,A6,Frase,
+"Questo che cos'è?
+Codesto è un fungo.","Kore wa nani desu ka.
+Sore wa kinoko desu.","これはなにですか。
+それはきのこです。",A,A6,Frase,
+"Quelli che cosa sono?
+Quelli sono fiori di ciliegio.","Are wa nani desu ka.
+Are wa sakura desu.","あれはなにですか。
+あれはさくらです。",A,A6,Frase,
+"Questa è un'anguria?
+Sì, codesta è un'anguria.","Kore wa suika desu ka.
+Hai, sore wa suika desu.","これはすいかですか。
+はい、それはすいかです。",A,A6,Frase,
+"Questa è un'anguria?
+No, codesta è pasta di pesce bollita.","Kore wa suika desu ka.
+Iie, sore wa chikuwa desu.","これはすいかですか。
+いいえ、それはちくわです。",A,A6,Frase,
+"Questo che cos'è?
+È denaro.","Kore wa nani desu ka.
+Okane desu.","これはなにですか。
+おかねです。",A,A6,Frase,
+"Questo cos'è?
+Codesta è una carta da gioco giapponese.
+Anche questa è una carta da gioco giapponese?
+Sì, anche codesta è una carta da gioco giapponese.","Kore wa nani desu ka.
+Sore wa karuta desu.
+Kore mo karuta desu ka.
+Hai, sore mo karuta desu.","これはなにですか。
+それはカルタです。
+これもカルタですか。
+はい、それはカルタです。",A,A6,Frase,
+Codesto è un tavolo invernale,Sore wa kotatsu desu,それはこたつです,A,A6,Frase,
+"Questo che cos'è?
+Codesto è un portafoglio.","Kore wa nani desu ka.
+Sore wa saifu desu.","これはなにですか。
+それはさいふです。",A,A6,Frase,
+Io,Watakushi,わたくし,Speciale,S6,Pronome,Molto formale
+Io,Watashi,わたし,Speciale,S6,Pronome,Formale
+Io,Boku,ぼく,Speciale,S6,Pronome,Informale uomini
+Io,Ore,おれ,Speciale,S6,Pronome,Molto informale uomini
+Giappone,Nihon,にほん,Speciale,S6,Nazione,
+Giapponese,Nihonjin,にほんじん,Speciale,S6,Nazionalità,
+Italia,Itaria,イタリア,Speciale,S6,Nazione,
+Italiano,Itariajin,イタリアじん,Speciale,S6,Nazionalità,
+Io sono Kaori,Watashi wa Kaori desu,わたしはかおりです,Speciale,S6,Frase,
+Io sono giapponese,Watashi wa nihon jin desu,わたしはにほんじんです,Speciale,S6,Frase,
+Tu,Anata,あなた,Speciale,S6,Pronome,Formale
+Tu,Kimi,きみ,Speciale,S6,Pronome,Informale uomini
+Tu,Omae,おまえ,Speciale,S6,Pronome,Molto informale uomini
+"Tu sei Kaori?
+Sì, io sono Kaori.","Anata wa Kaori desu ka.
+Hai, watashi wa Kaori desu.","あなたはかおりですか。
+はい、わたしはかおりです。",Speciale,S6,Frase,
+"Tu sei Kaori?
+No, io sono Tomoko.","Anata wa Kaori desu ka.
+Iie, watashi wa Tomoko desu.","あなたはかおりですか。
+いいえ、わたしはともこです。",Speciale,S6,Frase,
+Tu sei giapponese,Anata wa nihon jin desu,あなたはにほんじんです,Speciale,S6,Frase,
+Tu sei giapponese?,Anata wa nihon jin desu ka,あなたはにほんじんですか,Speciale,S6,Frase,
+Tu non sei giapponese,Anata wa nihon jin dewa arimasen,あなたはにほんじんではありません,Speciale,S6,Frase,
+Lui,Kare,かれ,Speciale,S6,Pronome,
+Lei,Kanojo,かのじょ,Speciale,S6,Pronome,
+Lui è Hiro,Kare wa Hiro san desu,かれはひろさんです,Speciale,S6,Frase,
+"Lui è Hiro?
+Sì, lui è Hiro.","Kare wa Hiro san desu ka.
+Hai, kare wa Hiro san desu.","かれはひろさんですか。
+はい、かれはひろさんです。",Speciale,S6,Frase,
+"Lui è Hiro?
+No, lui è Akira.","Kare wa Hiro san desu ka.
+Iie, kare wa Akira san desu.","かれはひろさんですか。
+いいえ、かれはあきらさんです。",Speciale,S6,Frase,
+"Lui non è Hiro, lui è Akira.",Kare wa Hiro san dewa arimasen. Kare wa Akira desu.,かれはひろさんではありません。かれはあきらさんです。,Speciale,S6,Frase,
+"Lui non è Hiro, è Akira.",Kare wa Hiro san dewa arimasen. Akira desu.,かれはひろさんではありません。あきらさんです。,Speciale,S6,Frase,
+Lei è Aki,Kanojo wa Aki san desu,かのじょはあきさんです,Speciale,S6,Frase,
+"Lei è Aki?
+Sì, lei è Aki.","Kanojo wa Aki san desu ka.
+Hai, kanojo wa Aki san desu.","かのじょはあきさんですか。
+はい、かのじょはあきさんです。",Speciale,S6,Frase,
+"Lei è Aki?
+No, lei è Midori.","Kanojo wa Aki san desu ka.
+Iie, kanojo wa Midori san desu.","かのじょはあきさんですか。
+いいえ、かのじょはみどりさんです。",Speciale,S6,Frase,
+"Lei non è Aki, lei è Midori.",Kanojo wa Aki san dewa arimasen. Kanojo wa Midori desu.,かのじょはあきさんではありません。かのじょはみどりさんです。,Speciale,S6,Frase,
+"Lei non è Aki, è Midori.",Kanojo wa Aki san dewa arimasen. Midori desu.,かのじょはあきさんではありません。みどりさんです。,Speciale,S6,Frase,
+Noi,Watakushitachi,わたくしたち,Speciale,S6,Pronome,Molto formale
+Noi,Watashitachi,わたしたち,Speciale,S6,Pronome,Formale
+Noi,Bokutachi,ぼくたち,Speciale,S6,Pronome,Informale
+Noi,Bokura,ぼくら,Speciale,S6,Pronome,Informale familiare
+Noi,Oretachi,おれたち,Speciale,S6,Pronome,Molto informale
+Noi siamo giapponesi,Watashitachi wa nihon jin desu,わたしたちはにほんじんです,Speciale,S6,Frase,
+"Noi non siamo giapponesi, noi siamo italiani.",Watashitachi wa nihon jin dewa arimasen. Watashitachi wa itaria jin desu.,わたしたちはにほんじんではありません。わたしたちはイタリアじんです。,Speciale,S6,Frase,
+Voi,Anatagata,あなたかた,Speciale,S6,Pronome,Formale
+Voi,Anatatachi,あなたたち,Speciale,S6,Pronome,Informale
+Voi,Kimitachi,きみたち,Speciale,S6,Pronome,Informale uomini
+Voi,Omaetachi,おまえたち,Speciale,S6,Pronome,Molto informale uomini
+Voi siete giapponesi,Anatatachi wa nihon jin desu,あなたたちはにほんじんです,Speciale,S6,Frase,Informale
+"Voi siete italiani?
+No, noi siamo giapponesi.","Anatatachi wa itaria jin desu ka.
+Iie, watashitachi wa nihon jin desu.","あなたたちはイタリアじんですか。
+いいえ、わたしたちはにほんじんです。",Speciale,S6,Frase,Informale
+"Voi siete italiani?
+No, noi siamo giapponesi.","Anatagata wa itaria jin desu ka.
+Iie, watashitachi wa nihon jin desu.","あなたがたはイタリアじんですか。
+いいえ、わたしたちはにほんじんです。",Speciale,S6,Frase,Formale
+Essi,Karera,かれら,Speciale,S6,Pronome,
+Esse,Kanojotachi,かのじょたち,Speciale,S6,Pronome,
+Loro sono giapponesi,Karera wa nihon jin desu,かれらはにほんじんです,Speciale,S6,Frase,
+"Loro non sono giapponesi, sono italiane.",Kanojotachi wa nihon jin dewa arimasen. Itaria jin desu.,かのじょたちはにほんじんではありません。イタリアじんです。,Speciale,S6,Frase,
+Questo è il mio libro,Kore wa watashi no hon desu,これはわたしのほんです,Speciale,S7,Frase,
+"Questo è il tuo libro?
+Sì, questo è il mio libro.","Kore wa anata no hon desu ka.
+Hai, kore wa watashi no hon desu.","これはあなたのほんですか。
+はい、これはわたしのほんです。",Speciale,S7,Frase,
+Questa è la nostra casa,Kore wa watashitachi no ie desu,これはわたしのいえです,Speciale,S7,Frase,
+"Questa è la vostra casa?
+No, questa non è la nostra casa.","Kore wa anatagata no ie desu ka.
+Iie,  kore wa watashitachi no ie dewa arimasen.","これはあなたがたのいえですか。
+いいえ、これはわたしたちのいえではありません。",Speciale,S7,Frase,Formale
+Codesto è il mio cane,Sore wa watashi no inu desu,それはわたしのいぬです,Speciale,S7,Frase,
+"Questo che cos'è?
+Codesto è il mio ombrello.","Kore wa nani desu ka.
+Sore wa watashi no kasa desu.","これはなにですか。
+それはわたしのかさです。",Speciale,S7,Frase,
+Quella è la mia casa,Are wa watashi no ie desu,あれはわたしのいえです,Speciale,S7,Frase,
+Codesti sono i miei libri,Sorera wa watashi no hon desu,それらはわたしのほんです,Speciale,S7,Frase,
+"Questo è il tuo libro?
+Sì, codesto è il mio libro.","Kore wa anata no hon desu ka.
+Hai, sore wa watashi no hon desu.","これはあなたのほんですか。
+はい、それはわたしのほんです。",Speciale,S7,Frase,
+"Questo è il libro di Kaori?
+Sì, è di Kaori.","Kore wa Kaori san no hon desu ka.
+Hai, Kaori san no desu.","これはかおりさんのほんですか。
+はい、かおりさんのです。",Speciale,S7,Frase,
+Delfino,Iruka,いるか,A,A7,Creature,
+Rana,Kaeru,かえる,A,A7,Creature,
+Viola (fiore),Sumire,すみれ,A,A7,Piante,
+Spugna di luffa,Hechima,へちま,A,A7,Piante,
+Ferrovia,Senro,せんろ,A,A7,Luogo,
+Tamburo giapponese,Taiko,たいこ,A,A7,Oggetti,
+Corvo,Karasu,からす,A,A7,Creature,
+Volpe,Kitsune,きつね,A,A7,Creature,
+Mandarino,Mikan,みかん,A,A7,Cibo,
+Verdura,Yasai,やさい,A,A7,Cibo,
+Armadio,Tansu,たんす,A,A7,Oggetti,
+Tavolo,Tsukue,つくえ,A,A7,Oggetti,
+Giraffa,Kirin,きりん,A,A7,Creature,
+Bruco,Kemushi,けむし,A,A7,Creature,
+Cubi di legno,Tsumiki,つみき,A,A7,Oggetti,
+Orologio,Tokei,とけい,A,A7,Oggetti,
+Pesce,Sakana,さかな,A,A7,Creature,
+Procione,Tanuki,たぬき,A,A7,Creature,
+Disegni da colorare,Nurie,ぬりえ,A,A7,Oggetti,
+Forbici,Hasami,はさみ,A,A7,Oggetti,
+Quello è un delfino,Are wa iruka desu,あれはいるかです,A,A7,Frase,
+"Questa è una rana?
+Sì, è una rana.","Kore wa kaeru desu ka.
+Hai, kaeru desu.","これはかえるですか。
+はい、かえるです。",A,A7,Frase,
+Questa è una viola,Kore wa sumire desu,これはすみれです,A,A7,Frase,
+Questa è una spugna di luffa,Kore wa hechima desu,これはへちまです,A,A7,Frase,
+Codesta è una ferrovia,Sore wa senro desu,それはせんろです,A,A7,Frase,
+Questo è il mio tamburo giapponese,Kore wa watashi no taiko desu,これはわたしのたいこです,A,A7,Frase,
+Quelli sono dei corvi,Arera wa karasu desu,あれらはからすです,A,A7,Frase,
+Quella è una volpe,Are wa kitsune desu,あれはきつねです,A,A7,Frase,
+"Questi sono i vostri mandarini?
+Sì, Codesti sono i nostri mandarini.","Korera wa anatagata no mikan desu ka.
+Hai, sorera wa watashitachi no mikan desu.","これらはあなたがたのみかんですか。
+はい、それらはわたしたちのみかんです。",A,A7,Frase,Formale
+"Codesta che cos'è?
+Questa è verdura.","Sorera wa nani desu ka.
+Korera wa yasai desu.","それらはなにですか。
+これらはやさいです。",A,A7,Frase,
+"Queso che cos'è?
+Codest è il mio armadio.","Kore wa nani desu ka.
+Sore wa watasi no tansu desu.","これはなにですか。
+それはわたしのたんすです。",A,A7,Frase,
+"Questo è il tuo tavolo?
+Sì, codesto è il mio tavolo.","Kore wa anata no tsukue desu ka.
+Hai, sore wa watashi no tsukue desu.","これはあなたのつくえですか。
+はい、それはわたしのつくえです。",A,A7,Frase,
+Quella è una giraffa,Are wa kirin desu,あれはきりんです,A,A7,Frase,
+"Questo che cos'è?
+È un bruco.","Kore wa nani desu ka.
+Kemushi desu.","これはなにですか。
+けむしです。",A,A7,Frase,
+Questi sono dei cubi di legno,Kore wa tsumiki desu,これはつみきです,A,A7,Frase,
+"Questo è il suo orologio?
+Sì, codesto è il suo orologio.","Kore wa kare no tokei desu ka.
+Hai, sore wa kare no tokei desu.","これはかれのとけいですか。
+はい、それはかれのとけいです。",A,A7,Frase,
+Questi sono dei pesci,Korera wa sakana desu,これらはさかなです,A,A7,Frase,
+Quelli sono dei procioni,Arera wa tanuki desu,あれらはたぬきです,A,A7,Frase,
+"Questi sono i tuoi disegni da colorare?
+No, questi non sono i miei disegni da colorare.","Korera wa anata no nurie desu ka.
+Iie, korera wa watashi no nurie dewa arimasen.","これらはあなたのぬりえですか。
+いいえ、これらはわたしのぬりえではありません。",A,A7,Frase,
+"Queste sono delle forbici?
+Sì, sono delle forbici.","Kore wa hasami desu ka.
+Hai, hasami desu.","これははさみですか。
+はい、はさみです。",A,A7,Frase,
+Questa è la mia casa,Kore wa watashi no ie desu,これはわたしたちのいえです,Ascolto,As1,Frase,
+Codesto è un albero,Sore wa ki desu,それはきです,Ascolto,As1,Frase,
+"Codesto è un cane?
+Sì, codesto è un cane.
+Anche quello è un cane?
+No, quello è un gatto.","Sore wa inu desu ka.
+Hai, sore wa inu desu.
+Are mo inu desu ka.
+Iie, are wa neko desu.","それはいぬですか。
+はい、それはいぬです。
+あれはいぬですか。
+いいえ、あれはねこです。",Ascolto,As1,Frase,
+"Questo è il tuo cane?
+Sì, codesto è il mio cane.","Kore wa anata no inu desu ka.
+Hai, sore wa watashi no inu desu.","これはあなたのいぬですか。
+はい、それはわたしたちのいぬです。",Ascolto,As1,Frase,
+Questo è un ombrello,Kore wa kasa desu,これはかさです,Ascolto,As1,Frase,
+Codeste sono delle scarpe,Sore wa kutsu desu,それはくつです,Ascolto,As1,Frase,
+Quelli sono dei cavalli,Arera wa uma desu,あれはうまです,Ascolto,As1,Frase,
+"Quelli sono dei piccioni?
+Sì, sono dei piccioni.","Arera wa hato desu ka.
+Hai, hato desu.","あれははとですか。
+はい、はとです。",Ascolto,As1,Frase,
+"Questo non è una mucca, è un cavallo.",Kore wa ushi dewa arimasen. Uma desu.,これはうしではありません。うまです。,Ascolto,As1,Frase,
+"Questo è il vostro ombrello?
+No, non è nostro.","Kore wa anatagata no kasa desu ka.
+Iie, watashitachi no dewa arimasen.","これはあなたがたのかさですか。
+いいえ、わたしたちのではありません。",Ascolto,As1,Frase,Formale
+"Tu sei Tomoko?
+Sì, io sono Tomoko.","Anata wa Tomoko san desu ka.
+Hai, watashi wa Tomoko desu.","あなたはともこさんですか。
+はい、わたしはともこです。",Ascolto,As1,Frase,
+"Io sono giapponese. Anche tu sei giapponese?
+Sì, anch'io sono giapponese.","Watashi wa nihon jin desu. Anata mo nihon jin desu ka.
+Hai, watashi mo nihon jin desu.","わたしはにほんじんです。あなたもにほんじんですか。
+はい、わたしもにほんじんです。",Ascolto,As1,Frase,
+"Mario è italiano?
+Sì, è italiano.
+Anche Paolo è italiano?
+Sì, anche Paolo è italiano.","Mario san wa itaria jin desu ka.
+Hai, itaria jin desu.
+Paoro san mo itaria jin desu ka.
+Hai, Paoro san mo itaria jin desu.","マリオさんはイタリアじんですか。
+はい、イタリアじんです。
+パオロさんもイタリアじんですか。
+はい、パオロさんもイタリアじんです。",Ascolto,As1,Frase,
+Questi sono i miei libri,Korera wa watashi no hon desu,これはわたしのほんです,Ascolto,As1,Frase,
+"Questa non è una castagna, è una caramella.",Kore wa kuri dewa arimasen. Ame desu.,これはくりではありません。あめです。,Ascolto,As1,Frase,
+Quello è un aquilone,Are wa tako desu,あれはたこです,Ascolto,As1,Frase,
+Quello è un polipo,Are wa tako desu,あれはたこです,Ascolto,As1,Frase,
+"Codesta è una pera giapponese?
+No, codesta è una pesca.","Sore wa nashi desu ka.
+Iie, sore wa momo desu.","それはなしですか。
+いいえ、それはももです。",Ascolto,As1,Frase,
+Quella è una montagna,Are wa yama desu,あれはやまです,Ascolto,As1,Frase,
+Questa è la nostra palla,Kore wa watashitachi no mari desu,これはわたしたちのほりです,Ascolto,As1,Frase,
+"Questa è una formica?
+No, questo è un ragno.
+Anche questo è un ragno?
+No, questa è una formica.","Kore wa ari desu ka.
+Iie, kore wa kumo desu.
+Kore mo kumo desu ka.
+Iie, kore wa ari desu.","これはありですか。
+いいえ、これはくもです。
+これもくもですか。
+いいえ、これはありです。",Ascolto,As1,Frase,
+Quelli sono dei cervi,Arera wa shika desu,あれらはしかです,Ascolto,As1,Frase,
+Questa non è una mosca. Questa è un'ape.,Kore wa hae dewa arimasen. Kore wa hachi desu.,これははえではありません。これははちです。,Ascolto,As1,Frase,
+"Questo che cos'è?
+Codesto è un fungo.","Kore wa nan desu ka.
+Sore wa kinoko desu.","これはなんですか。
+それはきのこです。",Ascolto,As1,Frase,
+"Quello è un piccione?
+No, quello è un corvo.","Are wa hato desu ka.
+Iie, are wa karasu desu.","あれははとですか。
+いいえ、あれはからすです。",Ascolto,As1,Frase,
+"Questo è l'orologio di Kaori?
+Sì, è di Kaori.","Kore wa Kaori san no tokei desu ka.
+Hai, Kaori san no desu.","これはかおりさんのとけいですか。
+はい、かおりさんのです。",Ascolto,As1,Frase,
+"Codesto è l'armadio di Kaori?
+Sì, è di Kaori.
+Anche questo è l'armadio di Kaori?
+No, questo è il mio armadio.","Sore wa Kaori san no tansu desu ka.
+Hai, Kaori san no desu.
+Kore mo Kaori san no tansu desu ka.
+Iie, kore wa watashi no tansu desu.","それはかおりさんのたんすですか。
+はい、かおりさんのです。
+これもかおりさんのたんすですか。
+いいえ、これはわたしのたんすです。",Ascolto,As1,Frase,
+"Questo è il tuo portafoglio?
+No, codesto non è mio.
+Questi sono i tuoi soldi?
+Sì, codesti sono i miei soldi.","Kore wa anata no saifu desu ka.
+Iie, sore wa watashi no dewa arimasen.
+Kore wa anata no okane desu ka.
+Hai, sore wa watashi no okane desu.","これはあなたのさいふですか。
+いいえ、それはわたしのではありません。
+これはあなたのおかねですか。
+はい、それはわたしのおかねです。",Ascolto,As1,Frase,
+Questo,Kono,この,Speciale,S8,Aggettivo,Aggettivo dimostrativo
+Codesto,Sono,その,Speciale,S8,Aggettivo,Aggettivo dimostrativo
+Quello,Ano,あの,Speciale,S8,Aggettivo,Aggettivo dimostrativo
+Interessante,Omoshiroi,おましろい,Speciale,S8,Aggettivo,
+Questo è un libro interessante,Kore wa omoshiroi hon desu,これはおもしろいです,Speciale,S8,Frase,
+Questo libro è interessante,Kono hon wa omoshiroi desu,このほんはおもしろいです,Speciale,S8,Frase,
+Altro,Takai,たかい,Speciale,S8,Aggettivo,
+Giovane,Wakai,わかい,Speciale,S8,Aggettivo,
+Grande,Ookii,おおきい,Speciale,S8,Aggettivo,
+Bello,Utsukushii,うつくしい,Speciale,S8,Aggettivo,
+Questo albero è alto,Kono ki wa takai desu,このきはたかいです,Speciale,S8,Frase,
+Questo ombrello è grande,Kono kasa wa ookii desu,このかさはおおきいです,Speciale,S8,Frase,
+Codesto fiore è bello,Sono hana wa utsukushii desu,そのはなはうつくしいです,Speciale,S8,Frase,
+"Codesto gatto è giovane?
+Sì, codesto gatto è giovane.","Sono neko wa wakai desu ka.
+Hai, sono neko wa wakai desu.","そのねこはわかいですか。
+はい、そのねこはわかいです。",Speciale,S8,Frase,
+Quella nave è grande,Ano fune wa ookii desu,あのふねはおおきいです,Speciale,S8,Frase,
+Questi,Korerano,これらの,Speciale,S8,Aggettivo,Aggettivo dimostrativo
+Codesti,Sorerano,それらの,Speciale,S8,Aggettivo,Aggettivo dimostrativo
+Quelli,Arerano,あれらの,Speciale,S8,Aggettivo,Aggettivo dimostrativo
+Quegli alberi sono alti,Korerano ki wa takai desu,これらのきはたかいです,Speciale,S8,Frase,
+Quegli ombrelli sono grandi,Korerano kasa wa ookii desu,これらのかさはおおきいです,Speciale,S8,Frase,
+Codesti fiori sono belli,Sorerano hana wa utsukushii desu,それらのはなはうつくしいです,Speciale,S8,Frase,
+"Codesti gatti sono giovani?
+Sì, codesti gatti sono giovani.","Sorerano neko wa wakai desu ka.
+Hai, sorerano neko wa wakai desu","それらのねこはわかいですか。
+はい、それらのねこはわかいです。",Speciale,S8,Frase,
+Quelle navi sono grandi,Arerano fune wa ookii desu,あれらのふねはおおきいです,Speciale,S8,Frase,
+Questo libro è mio,Kono hon wa watashi no desu,このほんはわたしのです,Speciale,S8,Frase,
+Quei libri sono miei,Korerano hon wa watashi no desu,これらのほんわたしのです,Speciale,S8,Frase,
+"Codesto gatto è tuo?
+Sì, è mio.","Sono neko wa anata no desu ka.
+Hai, watashi no desu.","そのねこはあなたのですか。
+はい、わたしのです。",Speciale,S8,Frase,
+"Quella casa è vostra?
+Sì, quella casa è nostra.","Ano ie wa anatatachi no desu ka.
+Hai, ano ie wa watashitachi no desu.","あのいえはあなたたちのですか。
+はい、あのいえはわたしたちのです。",Speciale,S8,Frase,
+Questo libro è di Kaori,Kono hon wa Kaori san no desu,このほんはかおりさんのです,Speciale,S8,Frase,
+Codesto ombrello è di Akira,Sono kasa wa Akira san no desu,そのかさはあきらさんのです,Speciale,S8,Frase,
+Quella casa è di Midori,Ano ie wa Midori san no desu,あのいえはみどりさんのです,Speciale,S8,Frase,
+Lui è Hiro,Kore wa Hiro san desu,これはひろさんです,Speciale,S8,Frase,
+Lei è Aki,Kanojo wa Aki san desu,かのじょはあきさんです,Speciale,S8,Frase,
+Persona,Kata,かた,Speciale,S8,Soggetto,Formale
+Signore/a,Kata,かた,Speciale,S8,Soggetto,Formale
+Uomo,Otoko,おとこ,Speciale,S8,Soggetto,Formale
+Donna,Onna,おんな,Speciale,S8,Soggetto,Formale
+Questa persona è Kaori,Kono kata wa Kaori san desu,このかたはかおりさんです,Speciale,S8,Frase,
+Codesta persona è Kaori,Sono kata wa Kaori san desu,そのかたはかおりさんです,Speciale,S8,Frase,
+Quella persona è Kaori,Ano kata wa Kaori san desu,あのかたはかおりさんです,Speciale,S8,Frase,
+Questa persona chi è?,Kono kata wa donata desu ka,このかたはどなたですか,Speciale,S8,Frase,
+Codesta persona chi è?,Sono kata wa donata desu ka,そのかたはどなたですか,Speciale,S8,Frase,
+Quella persona chi è?,Ano kata wa donata desu ka,あのかたはどなたですか,Speciale,S8,Frase,
+"Codesta persona chi è?
+Codesta persona è Akira.","Sono kata wa donata desu ka.
+Sono kata wa Akira san desu.","そのかたはどなたですか。
+そのかたはあきらさんです。",Speciale,S8,Frase,
+"Codesto uomo chi è?
+È Hiro.","Sono otoko no kata wa donata desu ka.
+Hiro san desu.","そのおとこのかたはどなたですか。
+ひろさんです。",Speciale,S8,Frase,
+"Quella donna chi è?
+È Kaori.","Ano onna no kata wa donata desu ka.
+Kaori san desu.","あのおんなのかたはどなたですか。
+かおりさんです。",Speciale,S8,Frase,
+Persona,Hito,ひと,Speciale,S8,Soggetto,Informale
+Signore/a,Hito,ひと,Speciale,S8,Soggetto,Informale
+Persone,Katagata,かたがた,Speciale,S8,Soggetto,Formale
+Persone,Hitobito,ひとびと,Speciale,S8,Soggetto,Informale
+Codeste persone chi sono?,Sono katagata wa donata desu ka,そのかたがたはどなたですか,Speciale,S8,Frase,Formale
+Codeste persone chi sono?,Sono hitobito wa dare desu ka,そのひとびとはだれですか,Speciale,S8,Frase,Informale
+Bambino/a,Kodomo,こども,Speciale,S8,Soggetto,
+Ragazzo/a,Kodomo,こども,Speciale,S8,Soggetto,
+Bambini/e,Kodomotachi,こどもたち,Speciale,S8,Soggetto,
+Ragazzi/e,Kodomotachi,こどもたち,Speciale,S8,Soggetto,
+Bambino/Ragazzo,Otoko no ko,おとこのこ,Speciale,S8,Soggetto,
+Bambina/Ragazza,Onna no ko,おんなのこ,Speciale,S8,Soggetto,
+Bambini/Ragazzi,Otoko no kotachi,おとこのこたち,Speciale,S8,Soggetto,
+Bambine/Ragazze,Onna no kotachi,おんなのこたち,Speciale,S8,Soggetto,
+"Codesto bambino chi è?
+È Hiro.","Sono kodomo wa dare desu ka.
+Hiro chan desu.","そのこどもはだれですか。
+ひろちゃんです。",Speciale,S8,Frase,Informale
+Animale,Doubutsu,どうぶつ,Speciale,S8,Soggetto,
+Questo che animale è?,Kono doubutsu wa nan desu ka,このどうぶつはなんですか,Speciale,S8,Frase,
+Questo che insetto è?,Kono mushi wa nan desu ka,このむしはなんですか,Speciale,S8,Frase,
+Questo che pesce è?,Kono sakana wa nan desu ka,このさかなはなんですか,Speciale,S8,Frase,
+"Questo che animale è?
+Questo animale è un cavallo.","Kono doubutsu wa nan desu ka.
+Kono doubutsu wa uma desu.","このどうぶつはなんですか。
+このどうぶつはうまです。",Speciale,S8,Frase,
+"Codesto che animale è?
+È una tigre.","Sono doubutsu wa nan desu ka.
+Tora desu.","そのどうぶつはなんですか。
+とらです。",Speciale,S8,Frase,
+"Quello che animale è?
+È un cervo.","Ano doubutsu wa nan desu ka.
+Shika desu.","あのどうぶつはなんですか。
+しかです。",Speciale,S8,Frase,
+"Questo che insetto è?
+Questo insetto è una formica.","Kono mushi wa nan desu ka.
+Kono mushi wa ari desu.","このもしはなんですか。
+このもしはありです。",Speciale,S8,Frase,
+"Questo che insetto è?
+È un'ape.","Sono mushi wa nan desu ka.
+Hachi desu.","そのもしはなんですか。
+はちです。",Speciale,S8,Frase,
+"Questo che pesce è?
+Questo pesce è una carpa.","Kono sakana wa nan desu ka.
+Kono sakana wa koi desu.","このさかなはなんですか。
+このさかなはこいです。",Speciale,S8,Frase,
+Nuovo,Atarashii,あたらしい,Speciale,S10,Aggettivo,
+Questo libro non è interessante,Kono hon wa omoshiroku arimasen,このほんはおもしろくありません,Speciale,S10,Frase,
+Codesto libro è nuovo,Sono hon wa atarashii desu,そのほんはあたらしいです,Speciale,S10,Frase,
+Codesto libro non è nuovo,Sono hon wa atarashiku arimasen,そのほんはあたらしくありません,Speciale,S10,Frase,
+Quella montagna è alta,Ano yama wa takai desu,あのやまはたかいです,Speciale,S10,Frase,
+Quella montagna non è alta,Ano yama wa takaku arimasen,あのやまはたかくありません,Speciale,S10,Frase,
+Tranquillo,Shizukana,しずかな,Speciale,S10,Aggettivo,
+Gentile,Shinsetsuna,しんせつな,Speciale,S10,Aggettivo,
+Questo bambino è tranquillo,Kono kodomo wa shizuka desu,このこどもはしずかです,Speciale,S10,Frase,
+Questo bambino non è tranquillo,Kono kodomo wa shizuka dewa arimasen,このこどもはしずかではありません,Speciale,S10,Frase,
+Akira è gentile,Akira san wa shinsetsu desu,あきらさんはしんせつです,Speciale,S10,Frase,
+Akira non è gentile,Akira san wa shinsetsu dewa arimasen,あきらさんはしんせつではありません,Speciale,S10,Frase,
+Domani,Ashita,あした,Speciale,S10,Avverbio,
+Il cielo è blu,Sora wa aoi desu,そらはあおいです,Speciale,S10,Frase,
+Il cielo non è blu,Sora wa aoku arimasen,そらはあおくありません,Speciale,S10,Frase,
+Domani il cielo è blu,Ashita sora wa aoi desu,あしたそらはあおいです,Speciale,S10,Frase,
+Domani il cielo non è blu,Ashita sora wa aoku arimasen,あしたそらはあおくありません,Speciale,S10,Frase,
+Il cielo sarà blu,Sora wa aoi deshou,そらはあおいでしょう,Speciale,S10,Frase,
+Il cielo non sarà blu,Sora wa aoku naideshou,そらはあおくないでしょう,Speciale,S10,Frase,
+Semplice,Kantanna,かんたんな,Speciale,S10,Aggettivo,
+Questo libro è semplice,Kono hon wa kantan desu,このほんはかんたんです,Speciale,S10,Frase,
+Questo libro non è semplice,Kono hon wa kantan dewa arimasen,このほんはかんたんではありません,Speciale,S10,Frase,
+Questo libro sarà semplice,Kono hon wa kantan deshou,このほんはかんたんでしょう,Speciale,S10,Frase,
+Questo libro non sarà semplice,Kono hon wa kantan dewa naideshou,このほんはかんたんではないでしょう,Speciale,S10,Frase,
+È interessante,Omoshiroi desu,おもしろいです,Speciale,S10,Tempi verbali,Formale
+Non è interessante,Omoshiroku arimasen,おもしろくありません,Speciale,S10,Tempi verbali,Formale
+Sarà interessante,Omoshiroi deshou,おもしろいでしょう,Speciale,S10,Tempi verbali,Formale
+Non sarà interessante,Omoshiroku naideshou,おもしろくないでしょう,Speciale,S10,Tempi verbali,Formale
+Non è interessante,Omoshiroku nai,おもしろくない,Speciale,S10,Tempi verbali,Informale
+Sarà interessante,Omoshiroi darou,おもしろいだろう,Speciale,S10,Tempi verbali,Informale
+Non sarà interessante,Omoshiroku naidarou,おもしろくないだろう,Speciale,S10,Tempi verbali,Informale
+Importante,Taisetsuna,たいせつな,Speciale,S10,Aggettivo,
+È importante,Taisetsu desu,たいせつです,Speciale,S10,Tempi verbali,Formale
+Non è importente,Taisetsu dewa arimasen,たいせつではありません,Speciale,S10,Tempi verbali,Formale
+Sarà importente,Taisetsu deshou,たいせつでしょう,Speciale,S10,Tempi verbali,Formale
+Non sarà importante,Taisetsu dewa naideshou,たいせつではないでしょう,Speciale,S10,Tempi verbali,Formale
+È importante,Taisetsu da,たいせつだ,Speciale,S10,Tempi verbali,Informale
+Non è importente,Taisetsu dewa nai,たいせつではない,Speciale,S10,Tempi verbali,Informale
+Sarà importente,Taisetsu darou,たいせつだろう,Speciale,S10,Tempi verbali,Informale
+Non sarà importante,Taisetsu dewa naidarou,たいせつではないでろう,Speciale,S10,Tempi verbali,Informale
+Questo libro era interessante,Kono hon wa omoshirokatta desu,このほんはおもしろかったです,Speciale,S11,Frase,
+Codesto libro era nuovo,Sono hon wa atarashikatta desu,そのほんはあたらしかったです,Speciale,S11,Frase,
+Codesto bambino era tranquillo,Sono kodomo wa shizuka deshita,そのこどもはしぶかでした,Speciale,S11,Frase,
+Quei bambini erano gentili,Ano kodomotachi wa shinsetsu deshita,あのこどもたちはしんせつでした,Speciale,S11,Frase,
+Questo libro non era interessante,Kono hon wa omoshiroku arimasen deshita,このほんはおもしろくありませんでした,Speciale,S11,Frase,
+Codesto bambino non era gentile,Sono kodomo wa shinsetsu dewa arimasen deshita,そのこどもはしんせつではありませんでした,Speciale,S11,Frase,
+Questo libro forse era interessante,Kono hon wa omoshirokatta deshou,このほんはおもしろかったでしょう,Speciale,S11,Frase,
+Codesto libro forse era nuovo,Kono hon wa atarashikatta deshou,このほんはあたらしかったでしょう,Speciale,S11,Frase,
+Codesto bambino forse era tranquillo,Sono kodomo wa shizuka datta deshou,そのこどもはしぶかなだったでしょう,Speciale,S11,Frase,
+Quei bambini forse erano gentili,Ano kodomotachi wa shinsetsu datta deshou,あのこどもたちはしんせつだったでしょう,Speciale,S11,Frase,
+Questo libro forse non era interessante,Kono hon wa omoshiroku nakatta deshou,このほんはおもしろくなかったでしょう,Speciale,S11,Frase,
+Codesto bambino forse non era gentile,Kono kodomo wa shinsetsu dewa nakatta deshou,このこどもはしんせつではなかったでしょう,Speciale,S11,Frase,
+Il cielo era blu,Sora wa aokatta desu,そらはあおかったでしょう,Speciale,S11,Frase,
+Il cielo non era blu,Sora wa aoku arimasen deshita,そらはあおくありませんでした,Speciale,S11,Frase,
+Il cielo forse era blu,Sora wa aokatta deshou,そらはあおかったでしょう,Speciale,S11,Frase,
+Il cielo forse non era blu,Sora wa aoku nakatta deshou,そらはあおくなかったでしょう,Speciale,S11,Frase,
+Akira era gentile,Akira san wa shinsetsu deshita,あきらさんはしんせつでした,Speciale,S11,Frase,
+Akira non era gentile,Akira san wa shinsetsu dewa arimasen deshita,あきらさんはしんせつではありませんでした,Speciale,S11,Frase,
+Akira forse era gentile,Akira san wa shinsetsu datta deshou,あきらさんはしんせつだったでしょう,Speciale,S11,Frase,
+Akira forse non era gentile,Akira san wa shinsetsu dewa nakatta deshou,あきらさんはしんせつではなかったでしょう,Speciale,S11,Frase,
+Era interessante,Omoshirokatta desu,おもしろかったです,Speciale,S11,Tempi verbali,Formale
+Non era interessante,Omoshiroku arimasen deshita,おもしろくありませんでした,Speciale,S11,Tempi verbali,Formale
+Forse era interessante,Omoshirokatta deshou,おもしろかったでしょう,Speciale,S11,Tempi verbali,Formale
+Forse non era interessante,Omoshiroku nakatta deshou,おもしろくなかったでしょう,Speciale,S11,Tempi verbali,Formale
+Era interessante,Omoshirokatta,おもしろかった,Speciale,S11,Tempi verbali,Informale
+Non era interessante,Omoshiroku nakatta,おもしろくなかった,Speciale,S11,Tempi verbali,Informale
+Forse era interessante,Omoshirokatta darou,おもしろかっただろう,Speciale,S11,Tempi verbali,Informale
+Forse non era interessante,Omoshiroku nakatta darou,おもしろくなかっただろう,Speciale,S11,Tempi verbali,Informale
+Era importante,Taisetsu deshita,たいせつでした,Speciale,S11,Tempi verbali,Formale
+Non era importante,Taisetsu dewa arimasen deshita,たいせつではありませんでした,Speciale,S11,Tempi verbali,Formale
+Forse era importante,Taisetsu datta deshou,たいせつだったでしょう,Speciale,S11,Tempi verbali,Formale
+Forse non era importante,Taisetsu dewa nakata deshou,たいせつではなかったでしょう,Speciale,S11,Tempi verbali,Formale
+Era importante,Taisetsu datta,たいせつだった,Speciale,S11,Tempi verbali,Informale
+Non era importante,Taisetsu dewa nakatta,たいせつではなかった,Speciale,S11,Tempi verbali,Informale
+Forse era importante,Taisetsu datta darou,たいせつだっただろう,Speciale,S11,Tempi verbali,Informale
+Forse non era importante,Taisetsu dewa nakatta darou,たいせつではなかっただろう,Speciale,S11,Tempi verbali,Informale

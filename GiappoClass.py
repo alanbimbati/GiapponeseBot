@@ -6,92 +6,111 @@ from sqlalchemy         import create_engine
 from sqlalchemy         import update
 from sqlalchemy.orm     import sessionmaker
 from model import Utente, db_connect, create_table
+from model import Word
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
 
 class GiappoBot:
     domanda  = ""
     risposta = ""
     traduci_da = ""
     traduci_in = ""
-    def __init__(self, bot, canale_log, sheet):
+
+    def __init__(self, bot, canale_log):
         self.bot        = bot
         self.canale_log = canale_log
-        self.sheet      = sheet
-        
         engine = db_connect()
         create_table(engine)
         self.Session = sessionmaker(bind=engine)
 
-    def ItaToRomanji(self):
-        riga = random.randint(1,self.NumRows())
-        self.domanda  = self.sheet.cell(riga, 1).value
-        self.risposta = self.sheet.cell(riga, 2).value
-        self.traduci_da = "Italiano"
-        self.traducu_in = "Romanji"
+    def ItaToRomanji(self, chatid):
+        self.TranslateFromTo(chatid, "Italiano", "Romanji")
 
-    def ItaToKatana(self):
-        riga = random.randint(1,self.NumRows())
-        while self.sheet.cell(riga, 3).value == "":
-            riga = random.randint(1,self.NumRows())
-            self.domanda  = self.sheet.cell(riga, 1).value
-            self.risposta = self.sheet.cell(riga, 3).value
-        self.traduci_da = "Italiano"
-        self.traducu_in = "Katana"
+    def ItaToKatana(self, chatid):
+        self.TranslateFromTo(chatid, "Italiano", "Katana")
 
-    def RomanjiToIta(self):
-        riga = random.randint(1,self.NumRows())
-        self.domanda  = self.sheet.cell(riga, 2).value
-        self.risposta = self.sheet.cell(riga, 1).value
-        self.traduci_da = "Romanji"
-        self.traducu_in = "Italiano"
+    def RomanjiToIta(self, chatid):
+        self.TranslateFromTo(chatid, "Romanji", "Italiano")
 
-    def KatanaToIta(self):
+    def KatanaToIta(self, chatid):
+        self.TranslateFromTo(chatid, "Katana", "Italiano")
+        
+    def TranslateFromTo(self, chatid, translate_by, translate_to):
+        session = self.Session()
+        self.clean(chatid)
         riga = random.randint(1,self.NumRows())
-        while self.sheet.cell(riga, 3).value == "":
-            riga = random.randint(1,self.NumRows())
-            self.domanda  = self.sheet.cell(riga, 3).value
-            self.risposta = self.sheet.cell(riga, 1).value
-        self.traduci_da = "Katana"
-        self.traducu_in = "Italiano"
+        word = session.query(Word).filter_by(id=riga).first()
+        item={}
 
-    def TuttoRandom(self):
+        if translate_by == "Italiano":
+            item['domanda'] = word.ita
+        elif translate_by == "Romanji":
+            item['domanda'] = word.romanji
+        elif translate_by == "Katana":
+            item['domanda'] = word.katana
+
+
+        if translate_to == "Italiano":
+            item['risposta'] = word.ita
+        elif translate_to == "Romanji":
+            item['risposta'] = word.romanji
+        elif translate_to == "Katana":
+            item['risposta'] = word.katana
+
+        item['traduci_in'] = translate_to
+        item['traduci_da'] = translate_by
+        print(item)
+        self.update_user(chatid, item)
+        session.close()
+
+
+    def TuttoRandom(self, chatid):
         scelta = random.randint(1,4)
         if scelta == 1:
-            self.ItaToKatana()
+            self.ItaToKatana(chatid)
         elif scelta == 2:
-            self.ItaToRomanji()
+            self.ItaToRomanji(chatid)
         elif scelta == 3:
-            self.RomanjiToIta()
+            self.RomanjiToIta(chatid)
         elif scelta == 4:
-            self.KatanaToIta()
+            self.KatanaToIta(chatid)
         else:
             print("ERROR")
 
-    def clean(self):
-        self.traduci_in = ""
-        self.traduci_da = ""
-        self.risposta   = ""
-        self.domanda    = ""
+    def clean(self, chatid):
+        item = {}
+        item['traduci_in'] = ""
+        item['traduci_da'] = ""
+        item['domanda'] = ""
+        item['risposta'] = ""
+        self.update_user(chatid, item)
 
     def NumRows(self):
-        return len(self.sheet.get_all_records())
+        session = self.Session()
+        nrows= session.query(Word).count()
+        session.close()
+        return nrows 
+        
 
     def CorrectAnswer(self, chatid):
-        session = self.Session()
         utente = self.getUtente(chatid)
-        utente.exp += 10
-        utente.money += random.randint(5,20)
+        item = {}
+        item['exp'] = utente.exp + 10
+        item['money'] = utente.money+ random.randint(5,20)
+
         if utente.exp%100==0:
-            utente.livello += 1
-        session.commit()
+            item['livello'] = utente.livello+ 1
+        self.update_user(chatid,item)
+
 
     def WrongAnswer(self, chatid):
-        sesssion = self.Session()
         utente = self.getUtente(chatid)
-        utente.exp += 1
-        utente.money += random.randint(1,5)
+        item = {}
+        item['exp'] = utente.exp +1
+        item['monny'] = utente.money+ random.randint(1,5)
         if utente.exp%100==0:
-            utente.livello += 1
-        session.commit() 
+            item['livello'] = utente.livello+ 1
+        self.update_user(chatid,item)
 
     def printMe(self, chatid):
         me = self.getUtente(chatid)
@@ -130,16 +149,68 @@ class GiappoBot:
                 session.close()
 
     def buyHalfWord(self, chatid):
-        session = self.Session()
         utente = self.getUtente(chatid)
         if utente.money >=50:
-            utente.money -= 50
-            session.commit()
-            return g.risposta[:int(len(g.risposta)/2)]
+            self.update_user(chatid, money = utente.money- 50)
+            return utente.risposta[:int(len(utente.risposta)/2)]
         else:
             return "No money, no party"
         
+    def skip(self, chatid):
+        utente = self.getUtente(chatid)
+        if utente.money >=50:
+            self.update_user(chatid, money = utente.money- 50)
+            return "Domanda saltata"
+        else:
+            return "No money, no party"
 
     def getUtente(self, chatid):
         session = self.Session()
-        return session.query(Utente).filter_by(id_telegram = chatid).first()
+        utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
+        session.close()
+        return utente
+
+    def update_user(self, chatid, kwargs):
+        session = self.Session()
+        utente = session.query(Utente).filter_by(id_telegram = chatid).first()
+
+        for key, value in kwargs.items():  # `kwargs.iteritems()` in Python 2
+            setattr(utente, key, value) 
+
+        session.commit()
+        session.close()
+
+    def populaDB(self):
+        session = self.Session()
+        scope = ["https://spreadsheets.google.com/feeds",'https://www.googleapis.com/auth/spreadsheets',"https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive"]
+        creds = ServiceAccountCredentials.from_json_keyfile_name("creds.json", scope)
+        client = gspread.authorize(creds)
+        sheet = client.open("Studio Giapponese").sheet1
+        nrows = sheet.get_all_records()
+        
+        
+        for row in range(42,len(nrows)):
+            ita = sheet.cell(row,1).value
+            print(ita)
+            exist = session.query(Word).filter_by(ita=ita).first()
+            if exist is None:
+                try:
+                    word = Word()
+                    word.ita        = sheet.cell(row,1).value
+                    word.romanji    = sheet.cell(row,2).value
+                    word.katana     = sheet.cell(row,3).value
+                    word.libro      = sheet.cell(row,4).value
+                    word.lezione    = sheet.cell(row,5).value
+                    word.Tag        = sheet.cell(row,6).value
+                    word.Altro      = sheet.cell(row,7).value
+
+                    session.add(word)
+                    session.commit()
+                except:
+                    session.rollback()
+                    raise
+                finally:
+                    session.close()
+
+
+        
