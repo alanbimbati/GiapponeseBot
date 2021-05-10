@@ -24,23 +24,25 @@ class GiappoBot:
         create_table(engine)
         self.Session = sessionmaker(bind=engine)
 
-    def ItaToRomanji(self, chatid):
-        self.TranslateFromTo(chatid, "Italiano", "Romanji")
+    def ItaToRomanji(self, chatid, words):
+        self.TranslateFromTo(chatid, "Italiano", "Romanji", words)
 
-    def ItaToKatana(self, chatid):
-        self.TranslateFromTo(chatid, "Italiano", "Katana")
+    def ItaToKatana(self, chatid, words):
+        self.TranslateFromTo(chatid, "Italiano", "Katana", words)
 
-    def RomanjiToIta(self, chatid):
-        self.TranslateFromTo(chatid, "Romanji", "Italiano")
+    def RomanjiToIta(self, chatid, words):
+        self.TranslateFromTo(chatid, "Romanji", "Italiano", words)
 
-    def KatanaToIta(self, chatid):
-        self.TranslateFromTo(chatid, "Katana", "Italiano")
+    def KatanaToIta(self, chatid, words):
+        self.TranslateFromTo(chatid, "Katana", "Italiano", words)
         
-    def TranslateFromTo(self, chatid, translate_by, translate_to):
-        session = self.Session()
+    def TranslateFromTo(self, chatid, translate_by, translate_to, words):
+        print("Translate from ", translate_by, "to ",translate_to)
         self.clean(chatid)
-        riga = random.randint(1,self.NumRows())
-        word = session.query(Word).filter_by(id=riga).first()
+        # words = session.query(Word).all()
+        index = random.randint(0,len(words)-1)
+        print(index, len(words))
+        word = words[index]
         item={}
 
         if translate_by == "Italiano":
@@ -59,25 +61,40 @@ class GiappoBot:
 
         if item['risposta'] == "" or item['domanda']=="":
             self.clean(chatid)
-            self.TranslateFromTo(chatid, translate_by, translate_to)
+            self.TranslateFromTo(chatid, translate_by, translate_to, words)
 
         item['traduci_da'] = translate_by
         item['traduci_in'] = translate_to
         print(item)
         self.update_user(chatid, item)
-        session.close()
 
-
-    def TuttoRandom(self, chatid):
+    def domandaTag(self,chatid, tag):
+        session = self.Session()
+        words = session.query(Word)
+        words = words.filter_by(Tag=tag).all()
         scelta = random.randint(1,4)
         if scelta == 1:
-            self.ItaToKatana(chatid)
+            self.ItaToKatana(chatid, words)
         elif scelta == 2:
-            self.ItaToRomanji(chatid)
+            self.ItaToRomanji(chatid, words)
         elif scelta == 3:
-            self.RomanjiToIta(chatid)
+            self.RomanjiToIta(chatid, words)
         elif scelta == 4:
-            self.KatanaToIta(chatid)
+            self.KatanaToIta(chatid, words)
+        else:
+            print("ERROR")
+        session.close()
+
+    def TuttoRandom(self, chatid, words):
+        scelta = random.randint(1,4)
+        if scelta == 1:
+            self.ItaToKatana(chatid, words)
+        elif scelta == 2:
+            self.ItaToRomanji(chatid, words)
+        elif scelta == 3:
+            self.RomanjiToIta(chatid, words)
+        elif scelta == 4:
+            self.KatanaToIta(chatid, words)
         else:
             print("ERROR")
 
@@ -89,32 +106,24 @@ class GiappoBot:
         item['risposta'] = ""
         self.update_user(chatid, item)
 
-    def NumRows(self):
-        session = self.Session()
-        nrows= session.query(Word).count()
-        session.close()
-        return nrows 
-        
+    def changeExp(self, chatid, maxExp, maxMoney):
+        utente = self.getUtente(chatid)
+        item = {}
+        item['exp'] = utente.exp + maxExp
+        item['money'] = utente.money+ maxMoney
+
+        if utente.exp%100==0:
+            item['livello'] = utente.livello+ 1
+        self.update_user(chatid,item)
 
     def CorrectAnswer(self, chatid):
-        utente = self.getUtente(chatid)
-        item = {}
-        item['exp'] = utente.exp + 10
-        item['money'] = utente.money+ random.randint(5,20)
-
-        if utente.exp%100==0:
-            item['livello'] = utente.livello+ 1
-        self.update_user(chatid,item)
-
+        money = random.randint(1, 10)
+        exp = random.randint(2,5)
+        self.changeExp(chatid, exp, money)
 
     def WrongAnswer(self, chatid):
-        utente = self.getUtente(chatid)
-        item = {}
-        item['exp'] = utente.exp +1
-        item['monny'] = utente.money+ random.randint(1,5)
-        if utente.exp%100==0:
-            item['livello'] = utente.livello+ 1
-        self.update_user(chatid,item)
+        money = random.randint(1,5)*-1
+        self.changeExp(chatid, 1, money)
 
     def printMe(self, chatid):
         me = self.getUtente(chatid)
@@ -175,7 +184,7 @@ class GiappoBot:
     def update_user(self, chatid, kwargs):
         session = self.Session()
         utente = session.query(Utente).filter_by(id_telegram = chatid).first()
-
+        
         for key, value in kwargs.items():  # `kwargs.iteritems()` in Python 2
             setattr(utente, key, value) 
 
@@ -223,5 +232,4 @@ class GiappoBot:
         session = self.Session()
         utenti = session.query(Utente).order_by(desc(Utente.livello)).order_by(desc(Utente.exp)).all()
         return utenti
-
         

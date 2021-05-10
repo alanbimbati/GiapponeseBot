@@ -1,3 +1,4 @@
+#!/home/alan/MEGAsync/GiapponeseBot/python/bin/python3
 from GiappoClass import GiappoBot
 from telebot import types
 from telebot import TeleBot
@@ -15,124 +16,170 @@ bot = TeleBot(BOT_TOKEN)
 
 
 hideBoard = types.ReplyKeyboardRemove()  
-admin = ['62716473']
-autorizzati = ['391473447', '62716473']
+admin = {}
+admin['Alan'] = '62716473'
+admin['Lorena'] = '391473447'
+
+def authorize(message):
+    flag = 0
+    for superuser in admin:         
+        if str(message.chat.id) in admin[superuser]:
+            flag = 1
+    if flag ==0:
+        bot.reply_to(message, "Non sei autorizzato ad utilizzare questo bot")
+    return flag 
+
+def error(message, error):
+    print(str(error))
+    bot.send_message(CANALE_LOG, str(error)+"\n#Error")
+    bot.reply_to(message, "😔 C'è stato un problema...riavviamo con /start", reply_markup=hideBoard)
 
 @bot.message_handler(commands=['start'])
 def Start(message):
     if message.chat.type == "private":
-
         g = GiappoBot(BOT_TOKEN, CANALE_LOG)  
         g.CreateUtente(message)
         markup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
-        scelte = ['🇮🇹 ItaToRomanji 🇯🇵', '🇮🇹 ItaToKatana 🇯🇵', '🇯🇵 RomanjiToIta 🇮🇹', '🇯🇵 KatanaToIta 🇮🇹', '🎲 TuttoRandom', '👤 Scheda personale']
-        scelte.append("🏆 Classifica")
-        if str(message.chat.id) in admin:
-            scelte.append("Backup")
-            scelte.append("Restore")
-        
-        for scelta in scelte:
-            types.KeyboardButton(scelta)
-            markup.add(scelta)
 
+        markup.add('🇮🇹 ItaToRomanji 🇯🇵', '🇮🇹 ItaToKatana 🇯🇵')
+        markup.add('🇯🇵 RomanjiToIta 🇮🇹', '🇯🇵 KatanaToIta 🇮🇹')
+        markup.add('️#️⃣ Tag', '🎲 TuttoRandom')
+        markup.add('👤 Scheda personale','🏆 Classifica')
 
-        msg = bot.reply_to(message, "Quale operazione vuoi svolgere?", reply_markup=markup)
+        if authorize(message):
+            markup.add('Backup','Restore')
+
+        msg = bot.reply_to(message, "Cosa vuoi fare?", reply_markup=markup)
         bot.register_next_step_handler(msg, Menu)
     else:
         bot.reply_to(message, "Mi dispiace, questo bot funziona solo in privato")
 
-def Menu(message):  
+def Menu(message): 
+    try: 
+        # SQLalchemy session
+        engine = db_connect()
+        create_table(engine)
+        Session = sessionmaker(bind=engine)
+        session = Session()
+
+        g = GiappoBot(BOT_TOKEN, CANALE_LOG)  
+        chatid = message.chat.id
+
+        words = session.query(Word).all()
+
+
+
+        if "ItaToRomanji" in message.text:     
+            g.ItaToRomanji(chatid, words)
+            Question(message, chatid)
+        elif "ItaToKatana" in message.text:     
+            g.ItaToKatana(chatid, words)
+            Question(message, chatid)
+        elif "RomanjiToIta" in message.text:     
+            g.RomanjiToIta(chatid, words)
+            Question(message, chatid)
+        elif "KatanaToIta" in message.text:     
+            g.KatanaToIta(chatid, words)
+            Question(message, chatid)
+        elif "Tag" in message.text:
+            tags = engine.execute("SELECT tag FROM WORD").unique()
+            markup_tags = types.ReplyKeyboardMarkup(one_time_keyboard=True)
+            for tag in tags:
+                tag = str(tag).replace("(","").replace(")","").replace("'","").replace(",","")
+                types.KeyboardButton(tag)
+                markup_tags.add(tag)
+            msg = bot.reply_to(message, "Scegli il tag", reply_markup=markup_tags)
+            bot.register_next_step_handler(msg, Tag)
+        elif "TuttoRandom" in message.text:
+            g.TuttoRandom(chatid, words)
+            Question(message, chatid)
+        elif "Scheda" in message.text:
+            bot.reply_to(message, g.printMe(chatid),reply_markup=hideBoard)
+            time.sleep(2)
+            Start(message)
+        elif "classifica" in message.text.lower():
+            utenti = g.classifica()
+            if len(utenti)>=1:
+                classifica = "🥇 "+utenti[0].nome+" Lv."+str(utenti[0].livello)+"Exp. "+str(utenti[0].exp)+"\n"
+            if len(utenti)>=2:
+                classifica = classifica + "🥈 "+utenti[1].nome+" Lv."+str(utenti[1].livello)+"Exp. "+str(utenti[1].exp)+"\n"
+            if len(utenti)>=3:
+                classifica = classifica + "🥉 "+utenti[2].nome+" Lv."+str(utenti[2].livello)+"Exp. "+str(utenti[2].exp)+"\n"
+            bot.send_message(chatid, classifica)
+            Start(message)
+
+        if authorize(message):
+            if "Backup" in message.text:
+                doc = open('giappo.db', 'rb')
+                bot.send_document(chatid, doc, caption="#database #backup", reply_markup=hideBoard)
+                doc.close()
+                Start(message)
+            if "Restore" in message.text:
+                g.populaDB()  
+                Start(message)
+        session.close()
+    except Exception as e:
+        error(message, e)
+
+
+def Tag(message):
+    chatid = message.chat.id
+    g = GiappoBot(BOT_TOKEN, CANALE_LOG)
+    g.domandaTag(chatid, message.text)
+    Question(message, chatid)
+
+
+def Question(message, chatid):
     engine = db_connect()
     create_table(engine)
     Session = sessionmaker(bind=engine)
     session = Session()
-
-    g = GiappoBot(BOT_TOKEN, CANALE_LOG)  
-    chatid = message.chat.id
-
-    markup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
+    
+    markup = types.ReplyKeyboardMarkup(one_time_keyboard=True, row_width=2)
     indizi = ['💰 50: Metà parola', '💰 50: Skip']
     for indizio in indizi:
         types.KeyboardButton(indizio)
         markup.add(indizio)
+    utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
+    msg = bot.reply_to(message, "Traduci \""+utente.domanda+"\" in " + utente.traduci_in, reply_markup=markup)
+    bot.register_next_step_handler(msg, Answer)
 
-    if "ItaToRomanji" in message.text:     
-        g.ItaToRomanji(chatid)
-        utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
-        msg = bot.reply_to(message, "Traduci \""+utente.domanda+"\" in " + utente.traduci_in, reply_markup=markup)
-        bot.register_next_step_handler(msg, Answer)
-    elif "ItaToKatana" in message.text:     
-        g.ItaToKatana(chatid)
-        utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
-        msg = bot.reply_to(message, "Traduci \""+utente.domanda+"\" in " + utente.traduci_in, reply_markup=markup)
-        bot.register_next_step_handler(msg, Answer)
-    elif "RomanjiToIta" in message.text:     
-        g.RomanjiToIta(chatid)
-        utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
-        msg = bot.reply_to(message, "Traduci \""+utente.domanda+"\" in " + utente.traduci_in, reply_markup=markup)
-        bot.register_next_step_handler(msg, Answer)
-    elif "KatanaToIta" in message.text:     
-        g.KatanaToIta(chatid)
-        utente = session.query(Utente).filter_by(id_telegram = chatid).first() 
-        msg = bot.reply_to(message, "Traduci \""+utente.domanda+"\" in " + utente.traduci_in, reply_markup=markup)
-        bot.register_next_step_handler(msg, Answer)
-    elif "TuttoRandom" in message.text:
-        g.TuttoRandom(chatid)
-        utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
-        msg = bot.reply_to(message, "Traduci \""+utente.domanda+"\" in " + utente.traduci_in, reply_markup=markup)
-        bot.register_next_step_handler(msg, Answer)
-    elif "Scheda" in message.text:
-        bot.reply_to(message, g.printMe(chatid),reply_markup=hideBoard)
-        time.sleep(2)
-        Start(message)
-    elif "classifica" in message.text.lower():
-        utenti = g.classifica()
-        if len(utenti)>=1:
-            classifica = "🥇 "+utenti[0].nome+" Lv."+str(utenti[0].livello)+"\n"
-        if len(utenti)>=2:
-            classifica = classifica + "🥈 "+utenti[1].nome+" Lv."+str(utenti[1].livello)+"\n"
-        if len(utenti)>=3:
-            classifica = classifica + "🥉 "+utenti[2].nome+" Lv."+str(utenti[2].livello)+"\n"
-        bot.send_message(chatid, classifica)
-        Start(message)
-    elif "Backup" in message.text and str(chatid) in admin:
-        doc = open('giappo.db', 'rb')
-        bot.send_document(chatid, doc, caption="#database #backup", reply_markup=hideBoard)
-        doc.close()
-        Start(message)
-    elif "Restore" in message.text and str(chatid) in admin:
-        g.populaDB()  
-        Start(message)
     session.close()
-    
+
 def Answer(message):
     print("answer")
-    g = GiappoBot(BOT_TOKEN,CANALE_LOG)
-    chatid = message.chat.id
-    utente = g.getUtente(chatid)
-    level = utente.livello
-    if "💰" in message.text:
-        if "Metà parola" in message.text:
-            meta = g.buyHalfWord(chatid)
-            msg = bot.reply_to(message, meta) 
-            bot.register_next_step_handler(msg, Answer)
-        elif "Skip" in message.text:
-            meta = g.skip(chatid)
-            msg = bot.reply_to(message, meta)  
+
+    try:
+        g = GiappoBot(BOT_TOKEN,CANALE_LOG)
+        chatid = message.chat.id
+        utente = g.getUtente(chatid)
+        risposta_esatta = utente.risposta.replace("\n","")
+        risposta_data   = message.text.replace("\n","")
+
+        level = utente.livello
+        if "💰" in message.text:
+            if "Metà parola" in risposta_data:
+                meta = g.buyHalfWord(chatid)
+                msg = bot.reply_to(message, meta) 
+                bot.register_next_step_handler(msg, Answer)
+            elif "Skip" in risposta_data:
+                meta = g.skip(chatid)
+                msg = bot.reply_to(message, meta)  
+                Start(message)
+        elif risposta_data==risposta_esatta:
+            g.CorrectAnswer(chatid)
+            current_level = utente.livello 
+            if current_level != level:
+                bot.send_message(chatid, "Complimenti! Sei passato/a al livello "+str(current_level), reply_markup=hideBoard)
+            else:
+                bot.send_message(chatid, "Complimenti! Hai ottenuto 10 exp!", reply_markup=hideBoard)
             Start(message)
-    elif message.text==utente.risposta:
-        g.CorrectAnswer(chatid)
-        current_level = utente.livello 
-        if current_level != level:
-            bot.send_message(chatid, "Complimenti! Sei passato/a al livello "+str(current_level), reply_markup=hideBoard)
+
         else:
-            bot.send_message(chatid, "Complimenti! Hai ottenuto 10 exp!", reply_markup=hideBoard)
-        Start(message)
-
-    else:
-        bot.send_message(chatid, "Mi dispiace, la risposta era "+utente.risposta, reply_markup=hideBoard)
-        Start(message)
-
-
+            g.WrongAnswer(chatid)
+            bot.send_message(chatid, "Mi dispiace, la risposta era "+utente.risposta, reply_markup=hideBoard)
+            Start(message)
+    except Exception as e:
+        error(message, e)
 
 bot.infinity_polling()
