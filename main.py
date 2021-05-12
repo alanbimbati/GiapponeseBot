@@ -41,8 +41,8 @@ def Start(message):
         g.CreateUtente(message)
         markup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
 
-        markup.add('🇮🇹 ItaToRomanji 🇯🇵', '🇮🇹 ItaToKatana 🇯🇵')
-        markup.add('🇯🇵 RomanjiToIta 🇮🇹', '🇯🇵 KatanaToIta 🇮🇹')
+        markup.add('🇮🇹 ItaToRomaji 🇯🇵', '🇮🇹 ItaToKatana 🇯🇵')
+        markup.add('🇯🇵 RomajiToIta 🇮🇹', '🇯🇵 KatanaToIta 🇮🇹')
         markup.add('️#️⃣ Tag', '🎲 TuttoRandom')
         markup.add('👤 Scheda personale','🏆 Classifica')
 
@@ -68,13 +68,13 @@ def Menu(message):
 
         words = session.query(Word).all()
 
-        if "ItaToRomanji" in message.text:     
+        if "ItaToRomaji" in message.text:     
             g.ItaToRomanji(chatid, words)
             Question(message, chatid)
         elif "ItaToKatana" in message.text:     
             g.ItaToKatana(chatid, words)
             Question(message, chatid)
-        elif "RomanjiToIta" in message.text:     
+        elif "RomajiToIta" in message.text:     
             g.RomanjiToIta(chatid, words)
             Question(message, chatid)
         elif "KatanaToIta" in message.text:     
@@ -167,9 +167,9 @@ def Answer(message):
             g.CorrectAnswer(chatid)
             current_level = utente.livello 
             if current_level != level:
-                bot.send_message(chatid, "Complimenti! Sei passato/a al livello "+str(current_level), reply_markup=hideBoard)
+                bot.send_message(chatid, "🎉 Complimenti! Sei passato/a al livello "+str(current_level), reply_markup=hideBoard)
             else:
-                bot.send_message(chatid, "Complimenti! Hai ottenuto 10 exp!", reply_markup=hideBoard)
+                bot.send_message(chatid, "🎉 Complimenti hai risposto giusto!!", reply_markup=hideBoard)
             Start(message)
 
         else:

@@ -25,13 +25,13 @@ class GiappoBot:
         self.Session = sessionmaker(bind=engine)
 
     def ItaToRomanji(self, chatid, words):
-        self.TranslateFromTo(chatid, "Italiano", "Romanji", words)
+        self.TranslateFromTo(chatid, "Italiano", "Romaji", words)
 
     def ItaToKatana(self, chatid, words):
         self.TranslateFromTo(chatid, "Italiano", "Katana", words)
 
     def RomanjiToIta(self, chatid, words):
-        self.TranslateFromTo(chatid, "Romanji", "Italiano", words)
+        self.TranslateFromTo(chatid, "Romaji", "Italiano", words)
 
     def KatanaToIta(self, chatid, words):
         self.TranslateFromTo(chatid, "Katana", "Italiano", words)
@@ -48,14 +48,14 @@ class GiappoBot:
 
         if translate_by == "Italiano":
             item['domanda'] = word.ita
-        elif translate_by == "Romanji":
+        elif translate_by == "Romaji":
             item['domanda'] = word.romanji
         elif translate_by == "Katana":
             item['domanda'] = word.katana
 
         if translate_to == "Italiano":
             item['risposta'] = word.ita
-        elif translate_to == "Romanji":
+        elif translate_to == "Romaji":
             item['risposta'] = word.romanji
         elif translate_to == "Katana":
             item['risposta'] = word.katana
