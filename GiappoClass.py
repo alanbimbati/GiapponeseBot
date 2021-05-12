@@ -108,12 +108,13 @@ class GiappoBot:
         item['risposta'] = ""
         self.update_user(chatid, item)
 
-    def changeExp(self, chatid, maxExp, maxMoney):
+    def changeExp(self, chatid, Exp, Money):
         utente = self.getUtente(chatid)
         item = {}
-        item['exp'] = utente.exp + maxExp
-        item['money'] = utente.money+ maxMoney
-        item['livello'] = int(utente.exp/100)
+        item['exp'] = utente.exp + Exp
+        item['money'] = utente.money+ Money
+        item['livello'] = int(item['exp']/100)
+        print(item)
         self.update_user(chatid,item)
 
     def CorrectAnswer(self, chatid):
@@ -123,7 +124,8 @@ class GiappoBot:
 
     def WrongAnswer(self, chatid):
         money = random.randint(1,5)*-1
-        self.changeExp(chatid, 1, money)
+        exp = 1
+        self.changeExp(chatid, exp, money)
 
     def printMe(self, chatid):
         me = self.getUtente(chatid)

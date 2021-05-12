@@ -20,6 +20,9 @@ admin = {}
 admin['Alan'] = '62716473'
 admin['Lorena'] = '391473447'
 
+def cleanString(string):
+    return string.replace("\n","").replace(",","").replace(".","")
+
 def authorize(message):
     flag = 0
     for superuser in admin:         
@@ -121,10 +124,13 @@ def Menu(message):
 
 
 def Tag(message):
-    chatid = message.chat.id
-    g = GiappoBot(BOT_TOKEN, CANALE_LOG)
-    g.domandaTag(chatid, message.text)
-    Question(message, chatid)
+    try:
+        chatid = message.chat.id
+        g = GiappoBot(BOT_TOKEN, CANALE_LOG)
+        g.domandaTag(chatid, message.text)
+        Question(message, chatid)
+    except Exception as e:
+        error(message,e)
 
 
 def Question(message, chatid):
@@ -179,8 +185,6 @@ def Answer(message):
     except Exception as e:
         error(message, e)
 
-bot.infinity_polling()
+bot.polling()
 
 
-def cleanString(string):
-    return string.replace("\n","").replace(",","").replace(".","")
