@@ -9,8 +9,8 @@ from sqlalchemy.orm     import sessionmaker
 
 from model import Utente,Word, db_connect, create_table
 
-BOT_TOKEN = "1359089063:AAEig5IHLo_sRmyoGEzPbEv0PdylyyIglAo" #Giappo
-# BOT_TOKEN = "1685908798:AAGme7f1NrMoFQpaiHE1-4O1Br3FIMWOKIU" #TEST
+# BOT_TOKEN = "1359089063:AAEig5IHLo_sRmyoGEzPbEv0PdylyyIglAo" #Giappo
+BOT_TOKEN = "1090156197:AAGIWGYMqK_tfjsTHoAdZ3xby1lZ6GWy8Q8" #BimbatiHouse
 CANALE_LOG = "-1001469821841"
 bot = TeleBot(BOT_TOKEN)
 
@@ -54,6 +54,7 @@ def Start(message):
     else:
         bot.reply_to(message, "Mi dispiace, questo bot funziona solo in privato")
 
+@bot.callback_query_handler(func=lambda call: "Menu" in call.data)
 def Menu(message): 
     try: 
         # SQLalchemy session
@@ -66,8 +67,6 @@ def Menu(message):
         chatid = message.chat.id
 
         words = session.query(Word).all()
-
-
 
         if "ItaToRomanji" in message.text:     
             g.ItaToRomanji(chatid, words)
@@ -86,7 +85,6 @@ def Menu(message):
             markup_tags = types.ReplyKeyboardMarkup(one_time_keyboard=True)
             for tag in tags:
                 tag = str(tag).replace("(","").replace(")","").replace("'","").replace(",","")
-                types.KeyboardButton(tag)
                 markup_tags.add(tag)
             msg = bot.reply_to(message, "Scegli il tag", reply_markup=markup_tags)
             bot.register_next_step_handler(msg, Tag)
@@ -95,7 +93,7 @@ def Menu(message):
             Question(message, chatid)
         elif "Scheda" in message.text:
             bot.reply_to(message, g.printMe(chatid),reply_markup=hideBoard)
-            time.sleep(2)
+            time.sleep(1)
             Start(message)
         elif "classifica" in message.text.lower():
             utenti = g.classifica()
@@ -138,7 +136,6 @@ def Question(message, chatid):
     markup = types.ReplyKeyboardMarkup(one_time_keyboard=True, row_width=2)
     indizi = ['💰 50: Metà parola', '💰 50: Skip']
     for indizio in indizi:
-        types.KeyboardButton(indizio)
         markup.add(indizio)
     utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
     msg = bot.reply_to(message, "Traduci \""+utente.domanda+"\" in " + utente.traduci_in, reply_markup=markup)
@@ -153,8 +150,8 @@ def Answer(message):
         g = GiappoBot(BOT_TOKEN,CANALE_LOG)
         chatid = message.chat.id
         utente = g.getUtente(chatid)
-        risposta_esatta = utente.risposta.replace("\n","")
-        risposta_data   = message.text.replace("\n","")
+        risposta_esatta = cleanString(utente.risposta)
+        risposta_data   = cleanString(message.text)
 
         level = utente.livello
         if "💰" in message.text:
@@ -183,3 +180,7 @@ def Answer(message):
         error(message, e)
 
 bot.infinity_polling()
+
+
+def cleanString(string):
+    return string.replace("\n","").replace(",","").replace(".","")

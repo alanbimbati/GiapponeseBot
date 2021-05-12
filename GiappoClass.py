@@ -40,8 +40,9 @@ class GiappoBot:
         print("Translate from ", translate_by, "to ",translate_to)
         self.clean(chatid)
         # words = session.query(Word).all()
+        random.seed()
         index = random.randint(0,len(words)-1)
-        print(index, len(words))
+        print(index, len(words), words[index])
         word = words[index]
         item={}
 
@@ -72,6 +73,7 @@ class GiappoBot:
         session = self.Session()
         words = session.query(Word)
         words = words.filter_by(Tag=tag).all()
+        random.seed()
         scelta = random.randint(1,4)
         if scelta == 1:
             self.ItaToKatana(chatid, words)
@@ -111,9 +113,7 @@ class GiappoBot:
         item = {}
         item['exp'] = utente.exp + maxExp
         item['money'] = utente.money+ maxMoney
-
-        if utente.exp%100==0:
-            item['livello'] = utente.livello+ 1
+        item['livello'] = int(utente.exp/100)
         self.update_user(chatid,item)
 
     def CorrectAnswer(self, chatid):
