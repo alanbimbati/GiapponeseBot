@@ -159,21 +159,11 @@ class GiappoBot:
 
     def buyHalfWord(self, chatid):
         utente = self.getUtente(chatid)
-        if utente.money >=50:
+        if utente.money >=20:
             item = {}
-            item['money'] = utente.money -50
+            item['money'] = utente.money -20
             self.update_user(chatid, item)
             return utente.risposta[:int(len(utente.risposta)/2)]
-        else:
-            return "No money, no party"
-        
-    def skip(self, chatid):
-        utente = self.getUtente(chatid)
-        if utente.money >=50:
-            item = {}
-            item['money'] = utente.money -50
-            self.update_user(chatid, item)
-            return "Domanda saltata"
         else:
             return "No money, no party"
 
