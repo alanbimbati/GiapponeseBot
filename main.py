@@ -140,7 +140,7 @@ def Question(message, chatid):
     session = Session()
     
     markup = types.ReplyKeyboardMarkup(one_time_keyboard=True, row_width=2)
-    indizi = ['💰 20: Metà parola', '💰 0: Skip']
+    indizi = ['💰 20: Metà parola','💰 10: Categoria', '💰 0: Skip']
     for indizio in indizi:
         markup.add(indizio)
     utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
@@ -165,6 +165,11 @@ def Answer(message):
                 meta = g.buyHalfWord(chatid)
                 msg = bot.reply_to(message, meta) 
                 bot.register_next_step_handler(msg, Answer)
+            elif "Categoria" in risposta_data:
+                meta = g.buyCategory(chatid)
+                print("ho comprato ",meta)
+                msg = bot.reply_to(message, meta) 
+                bot.register_next_step_handler(msg, Answer)             
             elif "Skip" in risposta_data: 
                 Start(message)
         elif risposta_data==risposta_esatta:
@@ -183,6 +188,6 @@ def Answer(message):
     except Exception as e:
         error(message, e)
 
-bot.polling()
+bot.infinity_polling()
 
 

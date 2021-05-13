@@ -167,6 +167,25 @@ class GiappoBot:
         else:
             return "No money, no party"
 
+    def buyCategory(self,chatid):
+        utente = self.getUtente(chatid)
+        session = self.Session()
+        print("traduci in ",utente.traduci_in, utente.risposta)
+        if utente.traduci_in == "Italiano":
+            tag = session.query(Word).filter_by(ita=utente.risposta).first().Tag
+        elif utente.traduci_in == "Romaji":
+            tag = session.query(Word).filter_by(romanji=utente.risposta).first().Tag
+        elif utente.traduci_in == "katana":
+            tag = session.query(Word).filter_by(katana=utente.risposta).first().Tag
+
+        if utente.money >=10:
+            item = {}
+            item['money'] = utente.money -10
+            self.update_user(chatid, item)
+            return tag
+        else:
+            return "No money, no party"
+
     def getUtente(self, chatid):
         session = self.Session()
         utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
