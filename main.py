@@ -144,7 +144,19 @@ def Question(message, chatid):
     for indizio in indizi:
         markup.add(indizio)
     utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
-    msg = bot.reply_to(message, "Traduci \""+utente.domanda+"\" in " + utente.traduci_in, reply_markup=markup)
+    
+    if utente.traduci_in == "Italiano":
+        word = session.query(Word).filter_by(ita=utente.risposta).first()
+    elif utente.traduci_in == "Romaji":
+        word = session.query(Word).filter_by(romanji=utente.risposta).first()
+    elif utente.traduci_in == "Katana":
+        word = session.query(Word).filter_by(katana=utente.risposta).first()
+
+    domanda = "Traduci \""+utente.domanda+"\" in " + utente.traduci_in
+    if word.Altro != "":
+        domanda = domanda +" ("+ word.Altro+")"
+
+    msg = bot.reply_to(message, domanda, reply_markup=markup)
     bot.register_next_step_handler(msg, Answer)
 
     session.close()

@@ -170,12 +170,11 @@ class GiappoBot:
     def buyCategory(self,chatid):
         utente = self.getUtente(chatid)
         session = self.Session()
-        print("traduci in ",utente.traduci_in, utente.risposta)
         if utente.traduci_in == "Italiano":
             tag = session.query(Word).filter_by(ita=utente.risposta).first().Tag
         elif utente.traduci_in == "Romaji":
             tag = session.query(Word).filter_by(romanji=utente.risposta).first().Tag
-        elif utente.traduci_in == "katana":
+        elif utente.traduci_in == "Katana":
             tag = session.query(Word).filter_by(katana=utente.risposta).first().Tag
 
         if utente.money >=10:
