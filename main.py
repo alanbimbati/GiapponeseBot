@@ -1,4 +1,5 @@
 #!/home/alan/MEGAsync/GiapponeseBot/python/bin/python3
+#!/home/pi/Documents/Giappo/GiapponeseBot/python/bin/python3
 from GiappoClass import GiappoBot
 from telebot import types
 from telebot import TeleBot
