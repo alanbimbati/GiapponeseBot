@@ -102,11 +102,11 @@ def Menu(message):
         elif "classifica" in message.text.lower():
             utenti = g.classifica()
             if len(utenti)>=1:
-                classifica = "🥇 "+utenti[0].nome+" Lv."+str(utenti[0].livello)+"Exp. "+str(utenti[0].exp)+"\n"
+                classifica = "🥇 "+utenti[0].nome+"\tLv."+str(utenti[0].livello)+"\tExp. "+str(utenti[0].exp)+"\n"
             if len(utenti)>=2:
-                classifica = classifica + "🥈 "+utenti[1].nome+" Lv."+str(utenti[1].livello)+"Exp. "+str(utenti[1].exp)+"\n"
+                classifica = classifica + "🥈 "+utenti[1].nome+"\tLv."+str(utenti[1].livello)+"\tExp. "+str(utenti[1].exp)+"\n"
             if len(utenti)>=3:
-                classifica = classifica + "🥉 "+utenti[2].nome+" Lv."+str(utenti[2].livello)+"Exp. "+str(utenti[2].exp)+"\n"
+                classifica = classifica + "🥉 "+utenti[2].nome+"\tLv."+str(utenti[2].livello)+"\tExp. "+str(utenti[2].exp)+"\n"
             bot.send_message(chatid, classifica)
             Start(message)
 

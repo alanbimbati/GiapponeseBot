@@ -171,11 +171,11 @@ class GiappoBot:
         utente = self.getUtente(chatid)
         session = self.Session()
         if utente.traduci_in == "Italiano":
-            tag = session.query(Word).filter_by(ita=utente.risposta).first().Tag
+            tag = session.query(Word).filter_by(    ita=utente.risposta     ).first().Tag
         elif utente.traduci_in == "Romaji":
-            tag = session.query(Word).filter_by(romanji=utente.risposta).first().Tag
+            tag = session.query(Word).filter_by(    romanji=utente.risposta ).first().Tag
         elif utente.traduci_in == "Katana":
-            tag = session.query(Word).filter_by(katana=utente.risposta).first().Tag
+            tag = session.query(Word).filter_by(    katana=utente.risposta  ).first().Tag
 
         if utente.money >=10:
             item = {}
@@ -230,12 +230,12 @@ class GiappoBot:
                     session.close()
             else:
                 word = Word()
-                if row['Romanji'] != word.romanji: word.romanji = row['Romanji']
-                if row['Katana'] != word.katana: word.katana = row['Katana']
-                if row['Libro'] != word.libro: word.libro = row['Libro']
-                if row['Lezione'] != word.Lezione: word.Lezione = row['Lezione']
-                if row['Tag'] != word.Tag: word.Tag = row['Tag']
-                if row['Altro...'] != word.Altro: word.Altro = row['Altro...']
+                if row['Romanji']   != word.romanji: word.romanji   = row['Romanji']
+                if row['Katana']    != word.katana: word.katana     = row['Katana']
+                if row['Libro']     != word.libro: word.libro       = row['Libro']
+                if row['Lezione']   != word.Lezione: word.Lezione   = row['Lezione']
+                if row['Tag']       != word.Tag: word.Tag           = row['Tag']
+                if row['Altro...']  != word.Altro: word.Altro       = row['Altro...']
 
 
     def classifica(self):   
