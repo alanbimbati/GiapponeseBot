@@ -37,4 +37,5 @@ class Word(Base):
     libro = Column('libro', String(32))
     Lezione = Column('lezione', String(16))
     Tag = Column('tag', String(32))
+    livello = Column('livello', Integer)
     Altro = Column('altro', String(128))

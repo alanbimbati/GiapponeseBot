@@ -24,6 +24,13 @@ class GiappoBot:
         create_table(engine)
         self.Session = sessionmaker(bind=engine)
 
+    def QuestionLevel(self, chatid):
+        session = self.Session()
+        utente = session.query(Utente).filter_by(id_telegram=chatid).first()
+        words = session.query(Word).filter(Word.livello <= utente.livello)
+        print('LIVELLO utente', utente.livello)
+        return words
+
     def ItaToRomanji(self, chatid, words):
         self.TranslateFromTo(chatid, "Italiano", "Romaji", words)
 
@@ -38,11 +45,13 @@ class GiappoBot:
         
     def TranslateFromTo(self, chatid, translate_by, translate_to, words):
         print("Translate from ", translate_by, "to ",translate_to)
+        words = self.QuestionLevel(chatid).all()
+        print('domande possibili: ', len(words))
+
         self.clean(chatid)
         # words = session.query(Word).all()
         random.seed()
         index = random.randint(0,len(words)-1)
-        print(index, len(words), words[index])
         word = words[index]
         item={}
 
@@ -61,40 +70,34 @@ class GiappoBot:
             item['risposta'] = word.katana
 
         if item['risposta'] == "" or item['domanda']=="":
-            self.clean(chatid)
-            self.TranslateFromTo(chatid, translate_by, translate_to, words)
-
-        item['traduci_da'] = translate_by
-        item['traduci_in'] = translate_to
-        print(item)
-        self.update_user(chatid, item)
+            pass
+        else:
+            item['traduci_da'] = translate_by
+            item['traduci_in'] = translate_to
+            self.update_user(chatid, item)
 
     def domandaTag(self,chatid, tag):
         session = self.Session()
         words = session.query(Word)
         words = words.filter_by(Tag=tag).all()
-        random.seed()
-        scelta = random.randint(1,4)
-        if scelta == 1:
-            self.ItaToKatana(chatid, words)
-        elif scelta == 2:
-            self.ItaToRomanji(chatid, words)
-        elif scelta == 3:
-            self.RomanjiToIta(chatid, words)
-        elif scelta == 4:
-            self.KatanaToIta(chatid, words)
-        else:
-            print("ERROR")
+        self.TuttoRandom(chatid,words)
         session.close()
 
+    def alltags(self, chatid):
+        session = self.Session()
+        words = self.QuestionLevel(chatid).all()
+        tags = words.tag.unique()
+        return tags
+
     def TuttoRandom(self, chatid, words):
+        session = self.Session()       
         scelta = random.randint(1,4)
         if scelta == 1:
-            self.ItaToKatana(chatid, words)
+            self.RomanjiToIta(chatid, words)
         elif scelta == 2:
             self.ItaToRomanji(chatid, words)
         elif scelta == 3:
-            self.RomanjiToIta(chatid, words)
+            self.ItaToKatana(chatid, words)
         elif scelta == 4:
             self.KatanaToIta(chatid, words)
         else:
@@ -201,6 +204,17 @@ class GiappoBot:
         session.commit()
         session.close()
 
+    def update_word(self, id, kwargs):
+        session = self.Session()
+        utente = session.query(Word).filter_by(id = id).first()
+        
+        for key, value in kwargs.items():  # `kwargs.iteritems()` in Python 2
+            setattr(utente, key, value) 
+
+        session.commit()
+        session.close()
+
+
     def populaDB(self):
         session = self.Session()
         scope = ["https://spreadsheets.google.com/feeds",'https://www.googleapis.com/auth/spreadsheets',"https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive"]
@@ -209,17 +223,20 @@ class GiappoBot:
         sheet = client.open("Studio Giapponese").sheet1
         nrows = sheet.get_all_records()
         for row in nrows:
-            exist = session.query(Word).filter_by(ita=row['Italiano']).first()
+            exist = session.query(Word).filter_by(ita=row['Id']).first()
+            word = Word()
+            word.id         = row['Id']
+            word.ita        = row['Italiano']
+            word.romanji    = row['Romanji']
+            word.katana     = row['Katana']
+            word.libro      = row['Libro']
+            word.lezione    = row['Lezione']
+            word.Tag        = row['Tag']
+            word.Altro      = row['Altro...']
+            word.livello    = row['Livello']
+
             if exist is None:
                 try:
-                    word = Word()
-                    word.ita        = row['Italiano']
-                    word.romanji    = row['Romanji']
-                    word.katana     = row['Katana']
-                    word.libro      = row['Libro']
-                    word.lezione    = row['Lezione']
-                    word.Tag        = row['Tag']
-                    word.Altro      = row['Altro...']
 
                     session.add(word)
                     session.commit()
@@ -236,10 +253,15 @@ class GiappoBot:
                 if row['Lezione']   != word.Lezione: word.Lezione   = row['Lezione']
                 if row['Tag']       != word.Tag: word.Tag           = row['Tag']
                 if row['Altro...']  != word.Altro: word.Altro       = row['Altro...']
-
+                self.update_word(word.id, word)
 
     def classifica(self):   
         session = self.Session()
         utenti = session.query(Utente).order_by(desc(Utente.livello)).order_by(desc(Utente.exp)).all()
         return utenti
         
+    def deleteAccount(self,chatid):
+        session = self.Session()
+        utente = session.query(Utente).filter_by(id_telegram=chatid).first()
+        session.delete(utente)
+        session.commit()
