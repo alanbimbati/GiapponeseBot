@@ -24,13 +24,17 @@ class GiappoBot:
         create_table(engine)
         self.Session = sessionmaker(bind=engine)
 
-    def QuestionLevel(self, chatid):
+    def LevelFilter(self, chatid):
         session = self.Session()
         utente = session.query(Utente).filter_by(id_telegram=chatid).first()
         words = session.query(Word).filter(Word.livello <= utente.livello)
-        print('LIVELLO utente', utente.livello)
         return words
 
+    def QuestionByLevel(self, chatid, livello):
+        session = self.Session()
+        utente = session.query(Utente).filter_by(id_telegram=chatid).first()
+        words = session.query(Word).filter(Word.livello == utente.livello)
+        return words
     def ItaToRomanji(self, chatid, words):
         self.TranslateFromTo(chatid, "Italiano", "Romaji", words)
 
@@ -44,10 +48,7 @@ class GiappoBot:
         self.TranslateFromTo(chatid, "Katana", "Italiano", words)
         
     def TranslateFromTo(self, chatid, translate_by, translate_to, words):
-        print("Translate from ", translate_by, "to ",translate_to)
-        words = self.QuestionLevel(chatid).all()
-        print('domande possibili: ', len(words))
-
+        words = self.LevelFilter(chatid).all()
         self.clean(chatid)
         # words = session.query(Word).all()
         random.seed()
@@ -82,10 +83,20 @@ class GiappoBot:
         words = words.filter_by(Tag=tag).all()
         self.TuttoRandom(chatid,words)
         session.close()
+    
+    def domandaLevel(self,chatid, livello):
+        lvl = int(livello.split()[1])
+        print(lvl)
+        session = self.Session()
+        words = session.query(Word)
+        words = words.filter_by(livello=lvl).all()
+        self.TuttoRandom(chatid,words)
+        session.close()
+
 
     def alltags(self, chatid):
         session = self.Session()
-        words = self.QuestionLevel(chatid).all()
+        words = self.LevelFilter(chatid).all()
         tags = words.tag.unique()
         return tags
 

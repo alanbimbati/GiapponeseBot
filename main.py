@@ -11,8 +11,8 @@ from sqlalchemy.orm     import sessionmaker
 
 from model import Utente,Word, db_connect, create_table
 
-BOT_TOKEN = "1359089063:AAEig5IHLo_sRmyoGEzPbEv0PdylyyIglAo" #Giappo
-#BOT_TOKEN = "1722321202:AAH0ejhh_A5kLePfD9bt9CGYBXZbE9iA6AU" #RaspiAlanBot
+# BOT_TOKEN = "1359089063:AAEig5IHLo_sRmyoGEzPbEv0PdylyyIglAo" #Giappo
+BOT_TOKEN = "1722321202:AAH0ejhh_A5kLePfD9bt9CGYBXZbE9iA6AU" #RaspiAlanBot
 CANALE_LOG = "-1001469821841"
 bot = TeleBot(BOT_TOKEN)
 
@@ -47,36 +47,18 @@ def unlock(message):
     livello = session.query(Utente).filter_by(id_telegram=message.chat.id).first().livello
     markup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
 
-    if livello==0:
-        markup.add('🔒 🇮🇹 ItaToRomaji 🇯🇵', '🔒 🇮🇹 ItaToKana 🇯🇵')
-        markup.add('🔒 🇯🇵 RomajiToIta 🇮🇹', '🔒 🇯🇵 KanaToIta 🇮🇹')
-        markup.add('️🔒 #️⃣ Tag', '🎲 TuttoRandom')
-        markup.add('👤 Scheda personale','🔒 🏆 Classifica')
-        markup.add('❌ Cancella Profilo')
-    elif livello==1:
-        markup.add('🇮🇹 ItaToRomaji 🇯🇵', '🔒 🇮🇹 ItaToKana 🇯🇵')
-        markup.add('🇯🇵 RomajiToIta 🇮🇹', '🔒 🇯🇵 KanaToIta 🇮🇹')
-        markup.add('️🔒 #️⃣ Tag', '🎲 TuttoRandom')
-        markup.add('👤 Scheda personale','🏆 Classifica')
-        markup.add('❌ Cancella Profilo')
-    elif livello==2:
-        markup.add('🇮🇹 ItaToRomaji 🇯🇵', '🔒 🇮🇹 ItaToKana 🇯🇵')
-        markup.add('🇯🇵 RomajiToIta 🇮🇹', '🇯🇵 KanaToIta 🇮🇹')
-        markup.add('️🔒 #️⃣ Tag', '🎲 TuttoRandom')
-        markup.add('👤 Scheda personale','🏆 Classifica')
-        markup.add('❌ Cancella Profilo')
-    elif livello==3:
-        markup.add('🇮🇹 ItaToRomaji 🇯🇵', '🇮🇹 ItaToKana 🇯🇵')
-        markup.add('🇯🇵 RomajiToIta 🇮🇹', '🇯🇵 KanaToIta 🇮🇹')
-        markup.add('️🔒 #️⃣ Tag', '🎲 TuttoRandom')
-        markup.add('👤 Scheda personale','🏆 Classifica')
-        markup.add('❌ Cancella Profilo')  
-    else:
-        markup.add('🇮🇹 ItaToRomaji 🇯🇵', '🇮🇹 ItaToKana 🇯🇵')
-        markup.add('🇯🇵 RomajiToIta 🇮🇹', '🇯🇵 KanaToIta 🇮🇹')
-        markup.add('️#️⃣ Tag', '🎲 TuttoRandom')
-        markup.add('👤 Scheda personale','🏆 Classifica')
-        markup.add('❌ Cancella Profilo')  
+    if livello>=0:
+        markup.add('🎲 Domanda Casuale')
+    if livello>=1:
+        markup.add('🇮🇹 ItaToRomaji 🇯🇵', '🇯🇵 RomajiToIta 🇮🇹')
+    if livello>=2:
+        markup.add('🇯🇵 KanaToIta 🇮🇹', '🇮🇹 ItatoKana 🇯🇵')
+    if livello>=5:
+        markup.add('️#️⃣ Tag') 
+    if livello>=10:
+        markup.add('🔢 Livelli')
+    markup.add('👤 Scheda personale','🏆 Classifica')
+    markup.add('❌ Cancella Profilo')  
     if authorize(message):
         markup.add('Backup','Restore')  
     return markup
@@ -105,20 +87,23 @@ def Menu(message):
         chatid = message.chat.id
 
         words = session.query(Word).all()
+        utente = session.query(Utente).filter_by(id_telegram=chatid).first()
 
-        if "🇮🇹 ItaToRomaji 🇯🇵" == message.text and '🔒' not in message.text:     
+
+        if "🇮🇹 ItaToRomaji 🇯🇵" == message.text:     
             g.ItaToRomanji(chatid, words)
             Question(message, chatid)
-        elif "🇮🇹 ItaToKana 🇯🇵" == message.text and '🔒' not in message.text:     
+        elif "🇮🇹 ItaToKana 🇯🇵" == message.text:     
             g.ItaToKana(chatid, words)
             Question(message, chatid)
-        elif "🇯🇵 RomajiToIta 🇮🇹'" == message.text and '🔒' not in message.text:     
+        elif "🇯🇵 RomajiToIta 🇮🇹'" == message.text:   
             g.RomanjiToIta(chatid, words)
             Question(message, chatid)
-        elif "🇯🇵 KanaToIta 🇮🇹" == message.text and '🔒' not in message.text:     
+        elif "🇯🇵 KanaToIta 🇮🇹" == message.text:     
             g.KanaToIta(chatid, words)
             Question(message, chatid)
-        elif "#️⃣ Tag" in message.text and '🔒' not in message.text:
+
+        elif "#️⃣ Tag" == message.text:
             tags = g.alltags(chatid)
             markup_tags = types.ReplyKeyboardMarkup(one_time_keyboard=True)
             for tag in tags:
@@ -126,14 +111,24 @@ def Menu(message):
                 markup_tags.add(tag)
             msg = bot.reply_to(message, "Scegli il tag", reply_markup=markup_tags)
             bot.register_next_step_handler(msg, Tag)
-        elif "🎲 TuttoRandom" == message.text and '🔒' not in message.text:
+
+        elif '🔢 Livelli' == message.text:
+            markup_lvl = types.ReplyKeyboardMarkup(one_time_keyboard=True)
+            for i in range(utente.livello):
+                markup_lvl.add("Livello "+str(i))
+            msg = bot.reply_to(message, "Scegli il livello", reply_markup=markup_lvl)
+            bot.register_next_step_handler(msg, Level)      
+
+        elif "🎲 Domanda Casuale" == message.text:
             g.TuttoRandom(chatid, words)
             Question(message, chatid)
-        elif "👤 Scheda personale" == message.text and '🔒' not in message.text:
+
+        elif "👤 Scheda personale" == message.text:
             bot.reply_to(message, g.printMe(chatid),reply_markup=hideBoard)
             time.sleep(1)
             Start(message)
-        elif "🏆 Classifica" == message.text.lower() and '🔒' not in message.text:
+
+        elif "🏆 Classifica" == message.text.lower():
             utenti = g.classifica()
             if len(utenti)>=1:
                 classifica = "🥇 "+utenti[0].nome+"\tLv."+str(utenti[0].livello)+"\tExp. "+str(utenti[0].exp)+"\n"
@@ -143,6 +138,7 @@ def Menu(message):
                 classifica = classifica + "🥉 "+utenti[2].nome+"\tLv."+str(utenti[2].livello)+"\tExp. "+str(utenti[2].exp)+"\n"
             bot.send_message(chatid, classifica)
             Start(message)
+
         elif 'cancella' in message.text.lower():
             msg = bot.reply_to(message, 'Sei sicuro di cancellare il tuo account? Scrivi SI, SONO SICURO')
             bot.register_next_step_handler(msg, Delete)
@@ -168,6 +164,16 @@ def Tag(message):
         chatid = message.chat.id
         g = GiappoBot(BOT_TOKEN, CANALE_LOG)
         g.domandaTag(chatid, message.text)
+        Question(message, chatid)
+    except Exception as e:
+        error(message,e)
+
+def Level(message):
+    print("level", message.text)
+    try:
+        chatid = message.chat.id
+        g = GiappoBot(BOT_TOKEN, CANALE_LOG)
+        g.domandaLevel(chatid, message.text)
         Question(message, chatid)
     except Exception as e:
         error(message,e)
