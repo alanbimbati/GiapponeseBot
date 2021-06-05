@@ -11,8 +11,8 @@ from sqlalchemy.orm     import sessionmaker
 
 from model import Utente,Word, db_connect, create_table
 
-BOT_TOKEN = "1359089063:AAEig5IHLo_sRmyoGEzPbEv0PdylyyIglAo" #Giappo
-#BOT_TOKEN = "1722321202:AAH0ejhh_A5kLePfD9bt9CGYBXZbE9iA6AU" #RaspiAlanBot
+# BOT_TOKEN = "1359089063:AAEig5IHLo_sRmyoGEzPbEv0PdylyyIglAo" #Giappo
+BOT_TOKEN = "1722321202:AAH0ejhh_A5kLePfD9bt9CGYBXZbE9iA6AU" #RaspiAlanBot
 CANALE_LOG = "-1001469821841"
 bot = TeleBot(BOT_TOKEN)
 
@@ -48,32 +48,32 @@ def unlock(message):
     markup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
 
     if livello==0:
-        markup.add('🔒 🇮🇹 ItaToRomaji 🇯🇵', '🔒 🇮🇹 ItaToKatana 🇯🇵')
-        markup.add('🔒 🇯🇵 RomajiToIta 🇮🇹', '🔒 🇯🇵 KatanaToIta 🇮🇹')
+        markup.add('🔒 🇮🇹 ItaToRomaji 🇯🇵', '🔒 🇮🇹 ItaToKana 🇯🇵')
+        markup.add('🔒 🇯🇵 RomajiToIta 🇮🇹', '🔒 🇯🇵 KanaToIta 🇮🇹')
         markup.add('️🔒 #️⃣ Tag', '🎲 TuttoRandom')
         markup.add('👤 Scheda personale','🔒 🏆 Classifica')
         markup.add('❌ Cancella Profilo')
     elif livello==1:
-        markup.add('🇮🇹 ItaToRomaji 🇯🇵', '🔒 🇮🇹 ItaToKatana 🇯🇵')
-        markup.add('🇯🇵 RomajiToIta 🇮🇹', '🔒 🇯🇵 KatanaToIta 🇮🇹')
+        markup.add('🇮🇹 ItaToRomaji 🇯🇵', '🔒 🇮🇹 ItaToKana 🇯🇵')
+        markup.add('🇯🇵 RomajiToIta 🇮🇹', '🔒 🇯🇵 KanaToIta 🇮🇹')
         markup.add('️🔒 #️⃣ Tag', '🎲 TuttoRandom')
         markup.add('👤 Scheda personale','🏆 Classifica')
         markup.add('❌ Cancella Profilo')
     elif livello==2:
-        markup.add('🇮🇹 ItaToRomaji 🇯🇵', '🔒 🇮🇹 ItaToKatana 🇯🇵')
-        markup.add('🇯🇵 RomajiToIta 🇮🇹', '🇯🇵 KatanaToIta 🇮🇹')
+        markup.add('🇮🇹 ItaToRomaji 🇯🇵', '🔒 🇮🇹 ItaToKana 🇯🇵')
+        markup.add('🇯🇵 RomajiToIta 🇮🇹', '🇯🇵 KanaToIta 🇮🇹')
         markup.add('️🔒 #️⃣ Tag', '🎲 TuttoRandom')
         markup.add('👤 Scheda personale','🏆 Classifica')
         markup.add('❌ Cancella Profilo')
     elif livello==3:
-        markup.add('🇮🇹 ItaToRomaji 🇯🇵', '🇮🇹 ItaToKatana 🇯🇵')
-        markup.add('🇯🇵 RomajiToIta 🇮🇹', '🇯🇵 KatanaToIta 🇮🇹')
+        markup.add('🇮🇹 ItaToRomaji 🇯🇵', '🇮🇹 ItaToKana 🇯🇵')
+        markup.add('🇯🇵 RomajiToIta 🇮🇹', '🇯🇵 KanaToIta 🇮🇹')
         markup.add('️🔒 #️⃣ Tag', '🎲 TuttoRandom')
         markup.add('👤 Scheda personale','🏆 Classifica')
         markup.add('❌ Cancella Profilo')  
     else:
-        markup.add('🇮🇹 ItaToRomaji 🇯🇵', '🇮🇹 ItaToKatana 🇯🇵')
-        markup.add('🇯🇵 RomajiToIta 🇮🇹', '🇯🇵 KatanaToIta 🇮🇹')
+        markup.add('🇮🇹 ItaToRomaji 🇯🇵', '🇮🇹 ItaToKana 🇯🇵')
+        markup.add('🇯🇵 RomajiToIta 🇮🇹', '🇯🇵 KanaToIta 🇮🇹')
         markup.add('️#️⃣ Tag', '🎲 TuttoRandom')
         markup.add('👤 Scheda personale','🏆 Classifica')
         markup.add('❌ Cancella Profilo')  
@@ -109,14 +109,14 @@ def Menu(message):
         if "🇮🇹 ItaToRomaji 🇯🇵" == message.text and '🔒' not in message.text:     
             g.ItaToRomanji(chatid, words)
             Question(message, chatid)
-        elif "🇮🇹 ItaToKatana 🇯🇵" == message.text and '🔒' not in message.text:     
-            g.ItaToKatana(chatid, words)
+        elif "🇮🇹 ItaToKana 🇯🇵" == message.text and '🔒' not in message.text:     
+            g.ItaToKana(chatid, words)
             Question(message, chatid)
         elif "🇯🇵 RomajiToIta 🇮🇹'" == message.text and '🔒' not in message.text:     
             g.RomanjiToIta(chatid, words)
             Question(message, chatid)
-        elif "🇯🇵 KatanaToIta 🇮🇹" == message.text and '🔒' not in message.text:     
-            g.KatanaToIta(chatid, words)
+        elif "🇯🇵 KanaToIta 🇮🇹" == message.text and '🔒' not in message.text:     
+            g.KanaToIta(chatid, words)
             Question(message, chatid)
         elif "#️⃣ Tag" in message.text and '🔒' not in message.text:
             tags = g.alltags(chatid)
@@ -143,7 +143,7 @@ def Menu(message):
                 classifica = classifica + "🥉 "+utenti[2].nome+"\tLv."+str(utenti[2].livello)+"\tExp. "+str(utenti[2].exp)+"\n"
             bot.send_message(chatid, classifica)
             Start(message)
-        elif '❌ Cancella Profilo' == message.text.lower() and '🔒' not in message.text:
+        elif 'cancella' in message.text.lower():
             msg = bot.reply_to(message, 'Sei sicuro di cancellare il tuo account? Scrivi SI, SONO SICURO')
             bot.register_next_step_handler(msg, Delete)
         else:
@@ -194,15 +194,15 @@ def Question(message, chatid):
         markup.add(indizio)
     utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
     if utente.traduci_in == '' or utente.traduci_da == '':
-        bot.send_message(chatid, 'Mi dispiace non posso ancora farti questa domanda...') 
+        bot.send_message(chatid, 'Mi dispiace non posso ancora farti questa domanda... riprova') 
         Start(message)
     else:
         if utente.traduci_in == "Italiano":
             word = session.query(Word).filter_by(ita=utente.risposta).first()
         elif utente.traduci_in == "Romaji":
             word = session.query(Word).filter_by(romanji=utente.risposta).first()
-        elif utente.traduci_in == "Katana":
-            word = session.query(Word).filter_by(katana=utente.risposta).first()
+        elif utente.traduci_in == "Kana":
+            word = session.query(Word).filter_by(Kana=utente.risposta).first()
 
         domanda = "Traduci \""+utente.domanda+"\" in " + utente.traduci_in
         if word.Altro != "":
