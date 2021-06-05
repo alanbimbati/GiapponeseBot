@@ -11,8 +11,8 @@ from sqlalchemy.orm     import sessionmaker
 
 from model import Utente,Word, db_connect, create_table
 
-BOT_TOKEN = "1359089063:AAEig5IHLo_sRmyoGEzPbEv0PdylyyIglAo" #Giappo
-#BOT_TOKEN = "1722321202:AAH0ejhh_A5kLePfD9bt9CGYBXZbE9iA6AU" #RaspiAlanBot
+#BOT_TOKEN = "1359089063:AAEig5IHLo_sRmyoGEzPbEv0PdylyyIglAo" #Giappo
+BOT_TOKEN = "1722321202:AAH0ejhh_A5kLePfD9bt9CGYBXZbE9iA6AU" #RaspiAlanBot
 CANALE_LOG = "-1001469821841"
 bot = TeleBot(BOT_TOKEN)
 
@@ -150,12 +150,12 @@ def Menu(message):
             bot.send_message(chatid, 'Devi prima passare di livello per sbloccare questa funzionalità')
             Start(message)
         if authorize(message):
-            if "Backup" in message.text and '🔒' not in message.text:
+            if "Backup" in message.text:
                 doc = open('giappo.db', 'rb')
                 bot.send_document(chatid, doc, caption="#database #backup", reply_markup=hideBoard)
                 doc.close()
                 Start(message)
-            if "Restore" in message.text and '🔒' not in message.text:
+            if "Restore" in message.text:
                 g.populaDB()  
                 Start(message)
         session.close()
@@ -225,11 +225,11 @@ def Answer(message):
 
         level = utente.livello
         if "💰" in message.text:
-            if "Metà parola" in risposta_data:
+            if "metà parola" in risposta_data:
                 meta = g.buyHalfWord(chatid)
                 msg = bot.reply_to(message, meta) 
                 bot.register_next_step_handler(msg, Answer)
-            elif "Categoria" in risposta_data:
+            elif "categoria" in risposta_data:
                 meta = g.buyCategory(chatid)
                 print("ho comprato ",meta)
                 msg = bot.reply_to(message, meta) 
