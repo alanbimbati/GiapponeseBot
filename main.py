@@ -11,8 +11,8 @@ from sqlalchemy.orm     import sessionmaker
 
 from model import Utente,Word, db_connect, create_table
 
-# BOT_TOKEN = "1359089063:AAEig5IHLo_sRmyoGEzPbEv0PdylyyIglAo" #Giappo
-BOT_TOKEN = "1722321202:AAH0ejhh_A5kLePfD9bt9CGYBXZbE9iA6AU" #RaspiAlanBot
+BOT_TOKEN = "1359089063:AAEig5IHLo_sRmyoGEzPbEv0PdylyyIglAo" #Giappo
+#BOT_TOKEN = "1722321202:AAH0ejhh_A5kLePfD9bt9CGYBXZbE9iA6AU" #RaspiAlanBot
 CANALE_LOG = "-1001469821841"
 bot = TeleBot(BOT_TOKEN)
 
@@ -69,7 +69,7 @@ def Start(message):
         g = GiappoBot(BOT_TOKEN, CANALE_LOG)  
         g.CreateUtente(message)
         markup = unlock(message)
-        msg = bot.reply_to(message, "Cosa vuoi fare?", reply_markup=markup)
+        msg = bot.reply_to(message, "Cosa vuoi fare?\n\nℹ️ Info al canale @ImparaGiapponese", reply_markup=markup)
         bot.register_next_step_handler(msg, Menu)
     else:
         bot.reply_to(message, "Mi dispiace, questo bot funziona solo in privato")
