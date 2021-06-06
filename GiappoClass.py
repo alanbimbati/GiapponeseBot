@@ -269,6 +269,7 @@ class GiappoBot:
     def classifica(self):   
         session = self.Session()
         utenti = session.query(Utente).order_by(desc(Utente.livello)).order_by(desc(Utente.exp)).all()
+        session.close()
         return utenti
         
     def deleteAccount(self,chatid):

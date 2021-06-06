@@ -11,8 +11,8 @@ from sqlalchemy.orm     import sessionmaker
 
 from model import Utente,Word, db_connect, create_table
 
-BOT_TOKEN = "1359089063:AAEig5IHLo_sRmyoGEzPbEv0PdylyyIglAo" #Giappo
-# BOT_TOKEN = "1722321202:AAH0ejhh_A5kLePfD9bt9CGYBXZbE9iA6AU" #RaspiAlanBot
+# BOT_TOKEN = "1359089063:AAEig5IHLo_sRmyoGEzPbEv0PdylyyIglAo" #Giappo
+BOT_TOKEN = "1722321202:AAH0ejhh_A5kLePfD9bt9CGYBXZbE9iA6AU" #RaspiAlanBot
 CANALE_LOG = "-1001469821841"
 bot = TeleBot(BOT_TOKEN)
 
@@ -21,6 +21,20 @@ hideBoard = types.ReplyKeyboardRemove()
 admin = {}
 admin['Alan'] = '62716473'
 admin['Lorena'] = '391473447'
+
+
+comandi = {}
+comandi['random'] = '🎲 Domanda Casuale'
+comandi['livelli'] = '🔢 Livelli'
+comandi['ItaToRomaji'] = '🇮🇹 Da Ita a Romaji 🇯🇵'
+comandi['RomajiToIta'] = '🇯🇵 Da Romaji a Ita 🇮🇹'
+comandi['KanaToIta'] = '🇯🇵 Da Kana a Ita 🇮🇹'
+comandi['ItaToKana'] = '🇮🇹 Da Ita a Kana 🇯🇵'
+comandi['Categoria'] = '#️⃣ Categoria'
+comandi['profilo'] = "👤 Scheda personale"
+comandi['classifica'] = '🏆 Classifica'
+comandi['delete'] = '❌ Cancella Profilo'
+
 
 def cleanString(string):
     return string.replace("\n","").replace(",","").replace(".","").lower()
@@ -48,17 +62,18 @@ def unlock(message):
     markup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
 
     if livello>=0:
-        markup.add('🎲 Domanda Casuale')
+        markup.add(comandi['random'])
     if livello>=1:
-        markup.add('🇮🇹 ItaToRomaji 🇯🇵', '🇯🇵 RomajiToIta 🇮🇹')
+        markup.add(comandi['livelli'])
+    if livello>=1:
+        markup.add(comandi['ItaToRomaji'], comandi['RomajiToIta'])
     if livello>=2:
-        markup.add('🇯🇵 KanaToIta 🇮🇹', '🇮🇹 ItatoKana 🇯🇵')
+        markup.add(comandi['ItaToKana'], comandi['KanaToIta'])
     if livello>=5:
-        markup.add('️#️⃣ Tag') 
-    if livello>=10:
-        markup.add('🔢 Livelli')
-    markup.add('👤 Scheda personale','🏆 Classifica')
-    markup.add('❌ Cancella Profilo')  
+        markup.add(comandi['Categoria'])
+
+    markup.add(comandi['profilo'],comandi['classifica'])
+    markup.add(comandi['delete'])  
     if authorize(message):
         markup.add('Backup','Restore')  
     return markup
@@ -90,20 +105,20 @@ def Menu(message):
         utente = session.query(Utente).filter_by(id_telegram=chatid).first()
 
 
-        if "🇮🇹 ItaToRomaji 🇯🇵" == message.text:     
+        if comandi['ItaToRomaji'] == message.text:     
             g.ItaToRomanji(chatid, words)
             Question(message, chatid)
-        elif "🇮🇹 ItaToKana 🇯🇵" == message.text:     
+        elif comandi['ItaToKana'] == message.text:     
             g.ItaToKana(chatid, words)
             Question(message, chatid)
-        elif "🇯🇵 RomajiToIta 🇮🇹'" == message.text:   
+        elif comandi['RomajiToIta'] == message.text:   
             g.RomanjiToIta(chatid, words)
             Question(message, chatid)
-        elif "🇯🇵 KanaToIta 🇮🇹" == message.text:     
+        elif comandi['KanaToIta'] == message.text:     
             g.KanaToIta(chatid, words)
             Question(message, chatid)
 
-        elif "#️⃣ Tag" == message.text:
+        elif comandi["Categoria"] == message.text:
             tags = g.alltags(chatid)
             markup_tags = types.ReplyKeyboardMarkup(one_time_keyboard=True)
             for tag in tags:
@@ -112,30 +127,35 @@ def Menu(message):
             msg = bot.reply_to(message, "Scegli il tag", reply_markup=markup_tags)
             bot.register_next_step_handler(msg, Tag)
 
-        elif '🔢 Livelli' == message.text:
+        elif comandi['livelli'] == message.text:
             markup_lvl = types.ReplyKeyboardMarkup(one_time_keyboard=True)
             for i in range(utente.livello):
                 markup_lvl.add("Livello "+str(i))
             msg = bot.reply_to(message, "Scegli il livello", reply_markup=markup_lvl)
             bot.register_next_step_handler(msg, Level)      
 
-        elif "🎲 Domanda Casuale" == message.text:
+        elif comandi['random'] == message.text:
             g.TuttoRandom(chatid, words)
             Question(message, chatid)
 
-        elif "👤 Scheda personale" == message.text:
+        elif comandi['profilo'] == message.text:
             bot.reply_to(message, g.printMe(chatid),reply_markup=hideBoard)
             time.sleep(1)
             Start(message)
 
-        elif "🏆 Classifica" == message.text.lower():
+        elif comandi["classifica"] == message.text:
             utenti = g.classifica()
-            if len(utenti)>=1:
-                classifica = "🥇 "+utenti[0].nome+"\tLv."+str(utenti[0].livello)+"\tExp. "+str(utenti[0].exp)+"\n"
-            if len(utenti)>=2:
-                classifica = classifica + "🥈 "+utenti[1].nome+"\tLv."+str(utenti[1].livello)+"\tExp. "+str(utenti[1].exp)+"\n"
-            if len(utenti)>=3:
-                classifica = classifica + "🥉 "+utenti[2].nome+"\tLv."+str(utenti[2].livello)+"\tExp. "+str(utenti[2].exp)+"\n"
+            classifica = ""
+            for i in range(len(utenti)):
+                if i==0:
+                    classifica = classifica + "🥇\t"
+                elif i==1:
+                    classifica = classifica + "🥈\t"
+                elif i==2:
+                    classifica = classifica + "🥉\t"
+                else:
+                    classifica = classifica + str(i+1) + "\t"
+                classifica = classifica + utenti[i].nome+"\tLv."+str(utenti[i].livello)+"\tExp. "+str(utenti[i].exp)+"\n"
             bot.send_message(chatid, classifica)
             Start(message)
 
