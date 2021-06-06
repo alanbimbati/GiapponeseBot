@@ -71,9 +71,9 @@ def unlock(message):
         markup.add(comandi['random'])
     if livello>=1:
         markup.add(comandi['livelli'])
-    if livello>=1:
-        markup.add(comandi['ItaToRomaji'], comandi['RomajiToIta'])
     if livello>=2:
+        markup.add(comandi['ItaToRomaji'], comandi['RomajiToIta'])
+    if livello>=3:
         markup.add(comandi['ItaToKana'], comandi['KanaToIta'])
     if livello>=5:
         markup.add(comandi['Categoria'])
