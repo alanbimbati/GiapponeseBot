@@ -239,7 +239,7 @@ class GiappoBot:
             word.id         = row['Id']
             word.ita        = row['Italiano']
             word.romanji    = row['Romanji']
-            word.katana     = row['Katana']
+            word.katana     = row['Kana']
             word.libro      = row['Libro']
             word.lezione    = row['Lezione']
             word.Tag        = row['Tag']
@@ -259,7 +259,7 @@ class GiappoBot:
             else:
                 word = Word()
                 if row['Romanji']   != word.romanji: word.romanji   = row['Romanji']
-                if row['Katana']    != word.katana: word.katana     = row['Katana']
+                if row['Kana']    != word.katana: word.katana     = row['Kana']
                 if row['Libro']     != word.libro: word.libro       = row['Libro']
                 if row['Lezione']   != word.Lezione: word.Lezione   = row['Lezione']
                 if row['Tag']       != word.Tag: word.Tag           = row['Tag']

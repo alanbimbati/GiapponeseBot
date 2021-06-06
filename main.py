@@ -142,10 +142,7 @@ def Menu(message):
         elif 'cancella' in message.text.lower():
             msg = bot.reply_to(message, 'Sei sicuro di cancellare il tuo account? Scrivi SI, SONO SICURO')
             bot.register_next_step_handler(msg, Delete)
-        else:
-            bot.send_message(chatid, 'Devi prima passare di livello per sbloccare questa funzionalità')
-            Start(message)
-        if authorize(message):
+        elif authorize(message):
             if "Backup" in message.text:
                 doc = open('giappo.db', 'rb')
                 bot.send_document(chatid, doc, caption="#database #backup", reply_markup=hideBoard)
@@ -154,6 +151,9 @@ def Menu(message):
             if "Restore" in message.text:
                 g.populaDB()  
                 Start(message)
+        else:
+            bot.send_message(chatid, 'Devi prima passare di livello per sbloccare questa funzionalità')
+            Start(message)
         session.close()
     except Exception as e:
         error(message, e)
@@ -201,7 +201,7 @@ def Question(message, chatid):
     utente = session.query(Utente).filter_by(id_telegram = chatid).first() 
 
     if utente.traduci_in == '' or utente.traduci_da == '':
-        bot.send_message(chatid, '😅 Scusami non riesco a trovare una domanda adatta a te... mi riavvio') 
+        bot.send_message(chatid, '😅 Scusami non riesco a trovare una domanda adatta a... mi riavvio') 
         Start(message)
     else:
         if utente.traduci_in == "Italiano":
