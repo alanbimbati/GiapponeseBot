@@ -34,7 +34,7 @@ comandi['Categoria'] = '#️⃣ Categoria'
 comandi['profilo'] = "👤 Scheda personale"
 comandi['classifica'] = '🏆 Classifica'
 comandi['delete'] = '❌ Cancella Profilo'
-
+comandi['materiale'] = '📚 Materiale di studio'
 
 def cleanString(string):
     return string.replace("\n","").replace(",","").replace(".","").lower()
@@ -52,6 +52,12 @@ def error(message, error):
     print(str(error))
     bot.send_message(CANALE_LOG, str(error)+"\n#Error")
     bot.reply_to(message, "😔 C'è stato un problema...riavviami con /start", reply_markup=hideBoard)
+
+def scegli_livello(message, utente):
+    markup_lvl = types.ReplyKeyboardMarkup(one_time_keyboard=True)
+    for i in range(utente.livello):
+        markup_lvl.add("Livello "+str(i))
+    return markup_lvl
 
 def unlock(message):
     engine = db_connect()
@@ -72,7 +78,8 @@ def unlock(message):
     if livello>=5:
         markup.add(comandi['Categoria'])
 
-    markup.add(comandi['profilo'],comandi['classifica'])
+    markup.add(comandi['profilo'], comandi['classifica'])
+    markup.add(comandi['materiale'])
     markup.add(comandi['delete'])  
     if authorize(message):
         markup.add('Backup','Restore')  
@@ -134,12 +141,9 @@ def Menu(message):
             bot.register_next_step_handler(msg, Tag)
 
         elif comandi['livelli'] == message.text:
-            markup_lvl = types.ReplyKeyboardMarkup(one_time_keyboard=True)
-            for i in range(utente.livello):
-                markup_lvl.add("Livello "+str(i))
+            markup_lvl = scegli_livello(message, utente)
             msg = bot.reply_to(message, "Scegli il livello", reply_markup=markup_lvl)
             bot.register_next_step_handler(msg, Level)      
-
         elif comandi['random'] == message.text:
             g.TuttoRandom(chatid, words)
             Question(message, chatid)
@@ -169,10 +173,15 @@ def Menu(message):
             msg = bot.reply_to(message, 'Sei sicuro di cancellare il tuo account? Scrivi SI, SONO SICURO')
             bot.register_next_step_handler(msg, Delete)
      
-        elif "/help" in message.text:
+        elif "/help" == message.text:
             bot.send_message(chatid, "Benvenuto nel bot per poter imparare il giapponese giocando! 🇮🇹🇯🇵 \n\n✅ Rispondi correttamente alle domande, otterrai punti esperienza per passare di livello  e sbloccare nuove funzionalità, e ottenere monete da spendere per avere indizi.\n\n ❌ Se sbaglierai risposta guadagnerai meno punti esperienza e perderai monete)")
             bot.send_message(chatid, "Per incominciare premi /start o scrivimi /help per riavere questo messaggio")
      
+        elif comandi['materiale'] == message.text:
+            markup_lvl = scegli_livello(message, utente)
+            msg = bot.reply_to(message, "Scegli il livello", reply_markup=markup_lvl)
+            bot.register_next_step_handler(msg, SendMateriale)    
+
         elif authorize(message):
             if "Backup" in message.text:
                 doc = open('giappo.db', 'rb')
@@ -200,7 +209,6 @@ def Tag(message):
         error(message,e)
 
 def Level(message):
-    print("level", message.text)
     try:
         chatid = message.chat.id
         g = GiappoBot(BOT_TOKEN, CANALE_LOG)
@@ -208,6 +216,17 @@ def Level(message):
         Question(message, chatid)
     except Exception as e:
         error(message,e)
+
+def SendMateriale(message):
+    try:
+        livello = message.text
+        chatid = message.chat.id
+        doc = open("Materiale/"+livello+'.pdf', 'rb')
+        bot.send_document(chatid, doc, caption="Materiale di studio "+livello, reply_markup=hideBoard)
+        doc.close()
+    except Exception as e:
+        error(message,e)
+
 
 def Delete(message):
     chatid = message.chat.id
@@ -270,13 +289,16 @@ def Answer(message):
                 print("ho comprato ",meta)
                 msg = bot.reply_to(message, meta) 
                 bot.register_next_step_handler(msg, Answer)             
-            elif "Skip" in risposta_data: 
+            elif "skip" in risposta_data: 
                 Start(message)
         elif risposta_data==risposta_esatta:
             g.CorrectAnswer(chatid)
+            utente = g.getUtente(chatid)
             current_level = utente.livello 
             if current_level != level:
                 bot.send_message(chatid, "🎉 Complimenti! Sei passato/a al livello "+str(current_level), reply_markup=hideBoard)
+                message.text = "Livello "+str(current_level)
+                SendMateriale(message)
             else:
                 bot.send_message(chatid, "🎉 Complimenti hai risposto giusto!!", reply_markup=hideBoard)
             Start(message)
