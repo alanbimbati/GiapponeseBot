@@ -36,6 +36,7 @@ comandi['classifica'] = '🏆 Classifica'
 comandi['delete'] = '❌ Cancella Profilo'
 comandi['materiale'] = '📚 Materiale di studio'
 
+
 def cleanString(string):
     return string.replace("\n","").replace(",","").replace(".","").lower()
 
@@ -183,13 +184,18 @@ def Menu(message):
             bot.register_next_step_handler(msg, SendMateriale)    
 
         elif authorize(message):
-            if "Backup" in message.text:
+            if "backup" in message.text.lower():
                 doc = open('giappo.db', 'rb')
                 bot.send_document(chatid, doc, caption="#database #backup", reply_markup=hideBoard)
                 doc.close()
                 Start(message)
-            if "Restore" in message.text:
+            elif "Restore" in message.text:
                 g.populaDB()  
+                Start(message)
+            elif "update" in message.text:
+                utenti = session.query(Utente).all()
+                for utente in utenti:
+                    bot.send_message(utente.id_telegram, "Ciao, il bot è stato aggiornato. Premi /start per farlo funzionare!")
                 Start(message)
         else:
             bot.send_message(chatid, 'Devi prima passare di livello per sbloccare questa funzionalità')
