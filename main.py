@@ -11,8 +11,8 @@ from sqlalchemy.orm     import sessionmaker
 
 from model import Utente,Word, db_connect, create_table
 
-BOT_TOKEN = "1359089063:AAEig5IHLo_sRmyoGEzPbEv0PdylyyIglAo" #Giappo
-#BOT_TOKEN = "1722321202:AAH0ejhh_A5kLePfD9bt9CGYBXZbE9iA6AU" #RaspiAlanBot
+#BOT_TOKEN = "1359089063:AAEig5IHLo_sRmyoGEzPbEv0PdylyyIglAo" #Giappo
+BOT_TOKEN = "1722321202:AAH0ejhh_A5kLePfD9bt9CGYBXZbE9iA6AU" #RaspiAlanBot
 CANALE_LOG = "-1001469821841"
 bot = TeleBot(BOT_TOKEN)
 
@@ -200,8 +200,12 @@ def Question(message, chatid):
         markup.add(indizio)
     utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
     if utente.traduci_in == '' or utente.traduci_da == '':
-        bot.send_message(chatid, 'Mi dispiace non posso ancora farti questa domanda... riprova') 
-        Start(message)
+
+        try:
+            Question(message, chatid)
+        except:
+            bot.send_message(chatid, '😅 Scusami sono veramente lento... mi riavvio') 
+            Start(message)
     else:
         if utente.traduci_in == "Italiano":
             word = session.query(Word).filter_by(ita=utente.risposta).first()
