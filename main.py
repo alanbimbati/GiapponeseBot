@@ -51,7 +51,7 @@ def authorize(message):
 def error(message, error):
     print(str(error))
     bot.send_message(CANALE_LOG, str(error)+"\n#Error")
-    bot.reply_to(message, "😔 C'è stato un problema...riavviamo con /start", reply_markup=hideBoard)
+    bot.reply_to(message, "😔 C'è stato un problema...riavviami con /start", reply_markup=hideBoard)
 
 def unlock(message):
     engine = db_connect()
@@ -84,10 +84,16 @@ def Start(message):
         g = GiappoBot(BOT_TOKEN, CANALE_LOG)  
         g.CreateUtente(message)
         markup = unlock(message)
-        msg = bot.reply_to(message, "Cosa vuoi fare?\n\nℹ️ Info al canale @ImparaGiapponese", reply_markup=markup)
+        msg = bot.reply_to(message, "Cosa vuoi fare?\n\nℹ️ Per sapere come funziona il bot, digita /help", reply_markup=markup)
         bot.register_next_step_handler(msg, Menu)
     else:
         bot.reply_to(message, "Mi dispiace, questo bot funziona solo in privato")
+
+@bot.message_handler(commands=['help'])
+def help(message):
+    chatid = message.chat.id
+    bot.send_message(chatid, "Benvenuto nel bot per poter imparare il giapponese giocando! 🇮🇹🇯🇵 \n\n✅ Rispondi correttamente alle domande, otterrai punti esperienza per passare di livello  e sbloccare nuove funzionalità, e ottenere monete da spendere per avere indizi.\n\n ❌ Se sbaglierai risposta guadagnerai meno punti esperienza e perderai monete)")
+    bot.send_message(chatid, "Per incominciare premi /start o scrivimi /help per riavere questo messaggio")
 
 @bot.callback_query_handler(func=lambda call: "Menu" in call.data)
 def Menu(message): 
@@ -162,6 +168,11 @@ def Menu(message):
         elif 'cancella' in message.text.lower():
             msg = bot.reply_to(message, 'Sei sicuro di cancellare il tuo account? Scrivi SI, SONO SICURO')
             bot.register_next_step_handler(msg, Delete)
+     
+        elif "/help" in message.text:
+            bot.send_message(chatid, "Benvenuto nel bot per poter imparare il giapponese giocando! 🇮🇹🇯🇵 \n\n✅ Rispondi correttamente alle domande, otterrai punti esperienza per passare di livello  e sbloccare nuove funzionalità, e ottenere monete da spendere per avere indizi.\n\n ❌ Se sbaglierai risposta guadagnerai meno punti esperienza e perderai monete)")
+            bot.send_message(chatid, "Per incominciare premi /start o scrivimi /help per riavere questo messaggio")
+     
         elif authorize(message):
             if "Backup" in message.text:
                 doc = open('giappo.db', 'rb')
@@ -241,8 +252,6 @@ def Question(message, chatid):
         session.close()
 
 def Answer(message):
-    print("answer")
-
     try:
         g = GiappoBot(BOT_TOKEN,CANALE_LOG)
         chatid = message.chat.id
