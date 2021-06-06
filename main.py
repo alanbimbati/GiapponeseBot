@@ -198,14 +198,11 @@ def Question(message, chatid):
     indizi = ['💰 20: Metà parola','💰 10: Categoria', '💰 0: Skip']
     for indizio in indizi:
         markup.add(indizio)
-    utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
-    if utente.traduci_in == '' or utente.traduci_da == '':
+    utente = session.query(Utente).filter_by(id_telegram = chatid).first() 
 
-        try:
-            Question(message, chatid)
-        except:
-            bot.send_message(chatid, '😅 Scusami sono veramente lento... mi riavvio') 
-            Start(message)
+    if utente.traduci_in == '' or utente.traduci_da == '':
+        bot.send_message(chatid, '😅 Scusami non riesco a trovare una domanda adatta a te... mi riavvio') 
+        Start(message)
     else:
         if utente.traduci_in == "Italiano":
             word = session.query(Word).filter_by(ita=utente.risposta).first()
