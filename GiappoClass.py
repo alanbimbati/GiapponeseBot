@@ -101,7 +101,6 @@ class GiappoBot:
         return tags
 
     def TuttoRandom(self, chatid, words):
-        session = self.Session()       
         scelta = random.randint(1,4)
         if scelta == 1:
             self.RomanjiToIta(chatid, words)

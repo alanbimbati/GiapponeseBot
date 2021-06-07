@@ -11,8 +11,8 @@ from sqlalchemy.orm     import sessionmaker
 
 from model import Utente,Word, db_connect, create_table
 
-BOT_TOKEN = "1359089063:AAEig5IHLo_sRmyoGEzPbEv0PdylyyIglAo" #Giappo
-# BOT_TOKEN = "1722321202:AAH0ejhh_A5kLePfD9bt9CGYBXZbE9iA6AU" #RaspiAlanBot
+# BOT_TOKEN = "1359089063:AAEig5IHLo_sRmyoGEzPbEv0PdylyyIglAo" #Giappo
+BOT_TOKEN = "1722321202:AAH0ejhh_A5kLePfD9bt9CGYBXZbE9iA6AU" #RaspiAlanBot
 CANALE_LOG = "-1001469821841"
 bot = TeleBot(BOT_TOKEN)
 
@@ -298,21 +298,20 @@ def Answer(message):
             elif "skip" in risposta_data: 
                 Start(message)
         elif risposta_data==risposta_esatta:
-            g.CorrectAnswer(chatid)
-            utente = g.getUtente(chatid)
-            current_level = utente.livello 
-            if current_level != level:
-                bot.send_message(chatid, "🎉 Complimenti! Sei passato/a al livello "+str(current_level), reply_markup=hideBoard)
-                message.text = "Livello "+str(current_level)
-                SendMateriale(message)
-            else:
-                bot.send_message(chatid, "🎉 Complimenti hai risposto giusto!!", reply_markup=hideBoard)
+            g.CorrectAnswer(chatid)           
+            bot.send_message(chatid, "🎉 Complimenti hai risposto giusto!!", reply_markup=hideBoard)
             Start(message)
 
         else:
             g.WrongAnswer(chatid)
             bot.send_message(chatid, "Mi dispiace, la risposta era "+utente.risposta, reply_markup=hideBoard)
             Start(message)
+        utente = g.getUtente(chatid)
+        current_level = utente.livello 
+        if current_level != level:
+            bot.send_message(chatid, "🎉 Complimenti! Sei passato/a al livello "+str(current_level), reply_markup=hideBoard)
+            message.text = "Livello "+str(current_level)
+            SendMateriale(message)
     except Exception as e:
         error(message, e)
 
