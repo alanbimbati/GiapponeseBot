@@ -19,22 +19,22 @@ bot = TeleBot(BOT_TOKEN)
 
 hideBoard = types.ReplyKeyboardRemove()  
 admin = {}
-admin['Alan'] = '62716473'
+admin['Alan']   = '62716473'
 admin['Lorena'] = '391473447'
 
 
 comandi = {}
-comandi['random'] = '🎲 Domanda Casuale'
-comandi['livelli'] = '🔢 Livelli'
-comandi['ItaToRomaji'] = '🇮🇹 Da Ita a Romaji 🇯🇵'
-comandi['RomajiToIta'] = '🇯🇵 Da Romaji a Ita 🇮🇹'
-comandi['KanaToIta'] = '🇯🇵 Da Kana a Ita 🇮🇹'
-comandi['ItaToKana'] = '🇮🇹 Da Ita a Kana 🇯🇵'
-comandi['Categoria'] = '#️⃣ Categoria'
-comandi['profilo'] = "👤 Scheda personale"
-comandi['classifica'] = '🏆 Classifica'
-comandi['delete'] = '❌ Cancella Profilo'
-comandi['materiale'] = '📚 Materiale di studio'
+comandi['random']       = '🎲 Domanda Casuale'
+comandi['livelli']      = '🔢 Livelli'
+comandi['ItaToRomaji']  = '🇮🇹 Da Ita a Romaji 🇯🇵'
+comandi['RomajiToIta']  = '🇯🇵 Da Romaji a Ita 🇮🇹'
+comandi['KanaToIta']    = '🇯🇵 Da Kana a Ita 🇮🇹'
+comandi['ItaToKana']    = '🇮🇹 Da Ita a Kana 🇯🇵'
+comandi['Categoria']    = '#️⃣ Categoria'
+comandi['profilo']      = "👤 Scheda personale"
+comandi['classifica']   = '🏆 Classifica'
+comandi['delete']       = '❌ Cancella Profilo'
+comandi['materiale']    = '📚 Materiale di studio'
 
 
 def cleanString(string):
@@ -56,7 +56,7 @@ def error(message, error):
 
 def scegli_livello(message, utente):
     markup_lvl = types.ReplyKeyboardMarkup(one_time_keyboard=True)
-    for i in range(utente.livello):
+    for i in range(utente.livello+1):
         markup_lvl.add("Livello "+str(i))
     return markup_lvl
 
@@ -180,8 +180,9 @@ def Menu(message):
      
         elif comandi['materiale'] == message.text:
             markup_lvl = scegli_livello(message, utente)
+            markup_lvl.add("Forme di scrittura")
             msg = bot.reply_to(message, "Scegli il livello", reply_markup=markup_lvl)
-            bot.register_next_step_handler(msg, SendMateriale)    
+            bot.register_next_step_handler(msg, SendMateriale)   
 
         elif authorize(message):
             if "backup" in message.text.lower():
@@ -314,6 +315,10 @@ def Answer(message):
             SendMateriale(message)
     except Exception as e:
         error(message, e)
+
+@bot.message_handler(func=lambda m: True)
+def echo_all(message):
+	bot.reply_to(message, "Mi dispiace ma non ho capito... premi /start per riavviarmi")
 
 bot.infinity_polling()
 
