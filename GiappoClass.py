@@ -24,57 +24,62 @@ class GiappoBot:
         create_table(engine)
         self.Session = sessionmaker(bind=engine)
 
-    def LevelFilter(self, chatid):
+    def LevelFilter(self, chatid,words):
         session = self.Session()
-        utente = session.query(Utente).filter_by(id_telegram=chatid).first()
-        words = session.query(Word).filter(Word.livello <= utente.livello)
+        utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
+        words = words.filter(Word.livello <= utente.livello)
         return words
 
-    def QuestionByLevel(self, chatid, livello):
+    def QuestionByLevel(self, chatid, words):
         session = self.Session()
-        utente = session.query(Utente).filter_by(id_telegram=chatid).first()
-        words = session.query(Word).filter(Word.livello == utente.livello)
+        utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
+        words = words.filter(Word.livello == utente.livello)
         return words
+
     def ItaToRomanji(self, chatid, words):
         self.TranslateFromTo(chatid, "Italiano", "Romaji", words)
 
-    def ItaToKatana(self, chatid, words):
-        self.TranslateFromTo(chatid, "Italiano", "Katana", words)
+    def ItaToKana(self, chatid, words):
+        words = words.filter(Word.katana != None)
+        self.TranslateFromTo(chatid, "Italiano", "Kana", words)
 
     def RomanjiToIta(self, chatid, words):
         self.TranslateFromTo(chatid, "Romaji", "Italiano", words)
 
-    def KatanaToIta(self, chatid, words):
-        self.TranslateFromTo(chatid, "Katana", "Italiano", words)
+    def KanaToIta(self, chatid, words):
+        words = words.filter(Word.katana != None)
+        self.TranslateFromTo(chatid, "Kana", "Italiano", words)
         
     def TranslateFromTo(self, chatid, translate_by, translate_to, words):
-        words = self.LevelFilter(chatid).all()
+        print("translate from ",translate_by, "to ",translate_to)
+        words = words.all()
         self.clean(chatid)
         # words = session.query(Word).all()
         random.seed()
         index = random.randint(0,len(words)-1)
         word = words[index]
+        print("domanda", index)
+        print(word.ita, word.romanji, word.katana)
         item={}
 
         if translate_by == "Italiano":
             item['domanda'] = word.ita
         elif translate_by == "Romaji":
             item['domanda'] = word.romanji
-        elif translate_by == "Katana":
+        elif translate_by == "Kana":
             item['domanda'] = word.katana
 
         if translate_to == "Italiano":
             item['risposta'] = word.ita
         elif translate_to == "Romaji":
             item['risposta'] = word.romanji
-        elif translate_to == "Katana":
+        elif translate_to == "Kana":
             item['risposta'] = word.katana
 
-        if item['risposta'] == "" or item['domanda']=="":
-            pass
-        else:
+        if item['risposta'] != "" and item['domanda'] != "":
             item['traduci_da'] = translate_by
             item['traduci_in'] = translate_to
+            print(item)
             self.update_user(chatid, item)
 
     def domandaTag(self,chatid, tag):
@@ -101,15 +106,21 @@ class GiappoBot:
         return tags
 
     def TuttoRandom(self, chatid, words):
-        scelta = random.randint(1,4)
-        if scelta == 1:
+        session = self.Session()
+        utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
+        if utente.livello <1:
+            scelta = random.randint(1,2)
+        else:
+            scelta = random.randint(1,4)
+        
+        if   scelta == 1:
             self.RomanjiToIta(chatid, words)
         elif scelta == 2:
             self.ItaToRomanji(chatid, words)
         elif scelta == 3:
-            self.ItaToKatana(chatid, words)
+            self.ItaToKana(chatid, words)
         elif scelta == 4:
-            self.KatanaToIta(chatid, words)
+            self.KanaToIta(chatid, words)
         else:
             print("ERROR")
 
@@ -122,7 +133,8 @@ class GiappoBot:
         self.update_user(chatid, item)
 
     def changeExp(self, chatid, Exp, Money):
-        utente = self.getUtente(chatid)
+        session = self.Session()
+        utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
         item = {}
         item['exp'] = utente.exp + Exp
         item['money'] = utente.money+ Money
@@ -136,30 +148,35 @@ class GiappoBot:
         self.changeExp(chatid, exp, money)
 
     def WrongAnswer(self, chatid):
-        money = random.randint(1,5)*-1
-        exp = 1
-        self.changeExp(chatid, exp, money)
+        item = {}
+        item['vita'] = random.randint(1,5)
+        self.update_user(chatid, item)
+        self.changeExp(chatid, exp=1, money=0)
 
     def printMe(self, chatid):
-        me = self.getUtente(chatid)
+        session = self.Session()
+        me = session.query(Utente).filter_by(id_telegram = chatid).first()  
         if me.username is not None:
-            return "👤 @"+me.username+"\n💪🏻 Exp"+str(me.exp)+"\n🎖 Lv. "+str(me.livello)+"\n💰 Money "+str(me.money)
+            stringa = "👤 @"+me.username+"\n💪🏻 Exp"+str(me.exp)+"\n🎖 Lv. "+str(me.livello)+"\n💰 Money "+str(me.money)
         else:
-            return "👤 "+me.nome+"\n💪🏻 Exp"+str(me.exp)+"\n🎖 Lv. "+str(me.livello)+"\n💰 Money "+str(me.money)
+            stringa = "👤 "+me.nome+"\n💪🏻 Exp"+str(me.exp)+"\n🎖 Lv. "+str(me.livello)+"\n💰 Money "+str(me.money)
+        session.close()
+        return stringa
 
     def CreateUtente(self, message):
         session = self.Session()
-        exist = self.getUtente(message.chat.id)
+        chatid = message.chat.id
+        exist = session.query(Utente).filter_by(id_telegram = chatid).first()  
         if exist is None:
             try:
                 utente = Utente()
-                utente.username = message.chat.username
-                utente.nome = message.chat.first_name
-                utente.id_telegram = message.chat.id
-                utente.cognome = message.chat.last_name
-                utente.exp = 0
-                utente.livello = 0
-                utente.money = 0
+                utente.username     = message.chat.username
+                utente.nome         = message.chat.first_name
+                utente.id_telegram  = message.chat.id
+                utente.cognome      = message.chat.last_name
+                utente.exp          = 0
+                utente.livello      = 0
+                utente.money        = 0
                 # logging.info("adding...")
                 # logging.info(sell)
                 session.add(utente)
@@ -171,18 +188,21 @@ class GiappoBot:
                 session.close()
 
     def buyHalfWord(self, chatid):
-        utente = self.getUtente(chatid)
+        session = self.Session()
+        utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
         if utente.money >=20:
             item = {}
             item['money'] = utente.money -20
+            session.close()
             self.update_user(chatid, item)
             return utente.risposta[:int(len(utente.risposta)/2)]
         else:
+            session.close()
             return "No money, no party"
 
     def buyCategory(self,chatid):
-        utente = self.getUtente(chatid)
         session = self.Session()
+        utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
         if utente.traduci_in == "Italiano":
             tag = session.query(Word).filter_by(    ita=utente.risposta     ).first().Tag
         elif utente.traduci_in == "Romaji":
@@ -197,18 +217,15 @@ class GiappoBot:
             return tag
         else:
             return "No money, no party"
-
-    def getUtente(self, chatid):
-        session = self.Session()
-        utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
         session.close()
-        return utente
 
     def update_user(self, chatid, kwargs):
+        print("updating user...")
         session = self.Session()
-        utente = session.query(Utente).filter_by(id_telegram = chatid).first()
+        utente =  session.query(Utente).filter_by(id_telegram=chatid).first()
         
-        for key, value in kwargs.items():  # `kwargs.iteritems()` in Python 2
+        for key, value in kwargs.items():  # `kwargs.iteritems()` in Python
+            print("updating ",key, "in ",value)
             setattr(utente, key, value) 
 
         session.commit()
@@ -273,6 +290,12 @@ class GiappoBot:
         
     def deleteAccount(self,chatid):
         session = self.Session()
-        utente = session.query(Utente).filter_by(id_telegram=chatid).first()
+        utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
         session.delete(utente)
         session.commit()
+
+    def getUtente(self, chatid):
+        session = self.Session()
+        utente = session.query(Utente).filter_by(id_telegram=chatid).first()
+        session.close()
+        return utente

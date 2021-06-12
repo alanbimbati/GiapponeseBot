@@ -11,8 +11,8 @@ from sqlalchemy.orm     import sessionmaker
 
 from model import Utente,Word, db_connect, create_table
 
-BOT_TOKEN = "1359089063:AAEig5IHLo_sRmyoGEzPbEv0PdylyyIglAo" #Giappo
-# BOT_TOKEN = "1722321202:AAH0ejhh_A5kLePfD9bt9CGYBXZbE9iA6AU" #RaspiAlanBot
+# BOT_TOKEN = "1359089063:AAEig5IHLo_sRmyoGEzPbEv0PdylyyIglAo" #Giappo
+BOT_TOKEN = "1722321202:AAH0ejhh_A5kLePfD9bt9CGYBXZbE9iA6AU" #RaspiAlanBot
 CANALE_LOG = "-1001469821841"
 bot = TeleBot(BOT_TOKEN)
 
@@ -28,10 +28,10 @@ comandi['random']       = '🎲 Domanda Casuale'
 comandi['livelli']      = '🔢 Livelli'
 comandi['ItaToRomaji']  = '🇮🇹 Da Ita a Romaji 🇯🇵'
 comandi['RomajiToIta']  = '🇯🇵 Da Romaji a Ita 🇮🇹'
-comandi['KanaToIta']    = '🇯🇵 Da Kana a Ita 🇮🇹'
 comandi['ItaToKana']    = '🇮🇹 Da Ita a Kana 🇯🇵'
+comandi['KanaToIta']    = '🇯🇵 Da Kana a Ita 🇮🇹'
 comandi['Categoria']    = '#️⃣ Categoria'
-comandi['profilo']      = "👤 Scheda personale"
+comandi['profilo']      = '👤 Scheda personale'
 comandi['classifica']   = '🏆 Classifica'
 comandi['delete']       = '❌ Cancella Profilo'
 comandi['materiale']    = '📚 Materiale di studio'
@@ -115,7 +115,9 @@ def Menu(message):
         g = GiappoBot(BOT_TOKEN, CANALE_LOG)  
         chatid = message.chat.id
 
-        words = session.query(Word).all()
+        words = session.query(Word)
+        words = g.LevelFilter(chatid, words)
+        print("Domande possibili: ",len(words.all()))
         utente = session.query(Utente).filter_by(id_telegram=chatid).first()
 
 
@@ -151,7 +153,7 @@ def Menu(message):
 
         elif comandi['profilo'] == message.text:
             bot.reply_to(message, g.printMe(chatid),reply_markup=hideBoard)
-            time.sleep(1)
+            time.sleep(0.5)
             Start(message)
 
         elif comandi["classifica"] == message.text:
@@ -257,25 +259,20 @@ def Question(message, chatid):
         markup.add(indizio)
     utente = session.query(Utente).filter_by(id_telegram = chatid).first() 
 
-    if utente.traduci_in == '' or utente.traduci_da == '':
-        bot.send_message(chatid, '😅 Scusami non riesco a trovare una domanda adatta a... mi riavvio') 
-        Start(message)
-    else:
-        if utente.traduci_in == "Italiano":
-            word = session.query(Word).filter_by(ita=utente.risposta).first()
-        elif utente.traduci_in == "Romaji":
-            word = session.query(Word).filter_by(romanji=utente.risposta).first()
-        elif utente.traduci_in == "Kana":
-            word = session.query(Word).filter_by(Kana=utente.risposta).first()
+    if utente.traduci_in == "Italiano":
+        word = session.query(Word).filter_by(ita=utente.risposta).first()
+    elif utente.traduci_in == "Romaji":
+        word = session.query(Word).filter_by(romanji=utente.risposta).first()
+    elif utente.traduci_in == "Kana":
+        word = session.query(Word).filter_by(katana=utente.risposta).first()
 
-        domanda = "Traduci \""+utente.domanda+"\" in " + utente.traduci_in
-        if word.Altro != "":
-            domanda = domanda +" ("+ word.Altro+")"
+    domanda = "Traduci \""+utente.domanda+"\" in " + utente.traduci_in
+    if word.Altro != "":
+        domanda = domanda +" ("+ word.Altro+")"
+    session.close()
+    msg = bot.reply_to(message, domanda, reply_markup=markup)
+    bot.register_next_step_handler(msg, Answer)
 
-        msg = bot.reply_to(message, domanda, reply_markup=markup)
-        bot.register_next_step_handler(msg, Answer)
-
-        session.close()
 
 def Answer(message):
     try:
@@ -313,6 +310,9 @@ def Answer(message):
             bot.send_message(chatid, "🎉 Complimenti! Sei passato/a al livello "+str(current_level), reply_markup=hideBoard)
             message.text = "Livello "+str(current_level)
             SendMateriale(message)
+            if current_level==1:
+                message.text = "Forme di scrittura"
+                SendMateriale(message)
     except Exception as e:
         error(message, e)
 
