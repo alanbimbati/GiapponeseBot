@@ -23,6 +23,7 @@ class Utente(Base):
     exp = Column('exp', Integer)
     money = Column('money', Integer)
     livello = Column('livello', Integer)
+    vita = Column('vita', Integer)
     domanda = Column('domanda', String(64))
     risposta = Column('risposta', String(64))
     traduci_da = Column('traduci_da', String(64))

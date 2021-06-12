@@ -30,11 +30,11 @@ class GiappoBot:
         words = words.filter(Word.livello <= utente.livello)
         return words
 
-    def QuestionByLevel(self, chatid, words):
-        session = self.Session()
-        utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
-        words = words.filter(Word.livello == utente.livello)
-        return words
+    # def QuestionByLevel(self, chatid, words):
+    #     session = self.Session()
+    #     utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
+    #     words = words.filter(Word.livello == utente.livello)
+    #     return words
 
     def ItaToRomanji(self, chatid, words):
         self.TranslateFromTo(chatid, "Italiano", "Romaji", words)
@@ -51,14 +51,12 @@ class GiappoBot:
         self.TranslateFromTo(chatid, "Kana", "Italiano", words)
         
     def TranslateFromTo(self, chatid, translate_by, translate_to, words):
-        print("translate from ",translate_by, "to ",translate_to)
         words = words.all()
         self.clean(chatid)
         # words = session.query(Word).all()
         random.seed()
         index = random.randint(0,len(words)-1)
         word = words[index]
-        print("domanda", index)
         print(word.ita, word.romanji, word.katana)
         item={}
 
@@ -79,7 +77,6 @@ class GiappoBot:
         if item['risposta'] != "" and item['domanda'] != "":
             item['traduci_da'] = translate_by
             item['traduci_in'] = translate_to
-            print(item)
             self.update_user(chatid, item)
 
     def domandaTag(self,chatid, tag):
@@ -91,10 +88,9 @@ class GiappoBot:
     
     def domandaLevel(self,chatid, livello):
         lvl = int(livello.split()[1])
-        print(lvl)
         session = self.Session()
         words = session.query(Word)
-        words = words.filter_by(livello=lvl).all()
+        words = words.filter_by(livello=lvl)
         self.TuttoRandom(chatid,words)
         session.close()
 
@@ -132,34 +128,43 @@ class GiappoBot:
         item['risposta'] = ""
         self.update_user(chatid, item)
 
-    def changeExp(self, chatid, Exp, Money):
-        session = self.Session()
-        utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
-        item = {}
-        item['exp'] = utente.exp + Exp
-        item['money'] = utente.money+ Money
-        item['livello'] = int(item['exp']/100)
-        print(item)
-        self.update_user(chatid,item)
-
     def CorrectAnswer(self, chatid):
-        money = random.randint(1, 10)
-        exp = random.randint(2,5)
-        self.changeExp(chatid, exp, money)
+        utente = self.getUtente(chatid)
+        item = {}
+        item['money'] = utente.money + random.randint(1, 10)
+        item['exp']   = utente.exp + random.randint(2,5)
+        item['livello'] = int(item['exp'] / 100)
+        risposta = "🎉 Complimenti hai risposto giusto!!"
+        if item['livello']!=utente.livello:
+            item['vita'] = self.maxLife(utente)+10
+            risposta = risposta + "\n🎉 Complimenti! Sei passato/a al livello "+str(item['livello'])
+
+        self.update_user(chatid, item)
+        return risposta
 
     def WrongAnswer(self, chatid):
         item = {}
-        item['vita'] = random.randint(1,5)
+        utente = self.getUtente(chatid)
+        item['vita'] = utente.vita - random.randint(1,5)
+        current_life = item['vita']
+        if current_life<0:
+            item['vita']        = self.maxLife(utente)
+            item['livello']     = max(utente.livello-1,0)
+            item['exp']         = max(utente.exp-100,0)
+            risposta = "☠️ Sei morto! Hai perso 1 livello, la prossima volta compra qualche pozione!"
+        else:
+            risposta = "Mi dispiace la risposta giusta era "+str(utente.risposta)
         self.update_user(chatid, item)
-        self.changeExp(chatid, exp=1, money=0)
+        return risposta
 
     def printMe(self, chatid):
         session = self.Session()
         me = session.query(Utente).filter_by(id_telegram = chatid).first()  
         if me.username is not None:
-            stringa = "👤 @"+me.username+"\n💪🏻 Exp"+str(me.exp)+"\n🎖 Lv. "+str(me.livello)+"\n💰 Money "+str(me.money)
+            stringa = "👤 @"+me.username
         else:
-            stringa = "👤 "+me.nome+"\n💪🏻 Exp"+str(me.exp)+"\n🎖 Lv. "+str(me.livello)+"\n💰 Money "+str(me.money)
+            stringa = "👤 "+me.nome
+        stringa = stringa +"\n💪🏻 Exp "+str(me.exp)+"\n🎖 Lv. "+str(me.livello)+"\n💰 Money "+str(me.money)+"\n🩸 Vita "+str(me.vita)+"/"+str(self.maxLife(me))
         session.close()
         return stringa
 
@@ -174,6 +179,7 @@ class GiappoBot:
                 utente.nome         = message.chat.first_name
                 utente.id_telegram  = message.chat.id
                 utente.cognome      = message.chat.last_name
+                utente.vita         = 50
                 utente.exp          = 0
                 utente.livello      = 0
                 utente.money        = 0
@@ -219,15 +225,33 @@ class GiappoBot:
             return "No money, no party"
         session.close()
 
+    def buyPotion(self, chatid, tipologia):
+        session = self.Session()
+        utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
+        max_life = self.maxLife(utente)
+        item = {}
+        if tipologia==0:   
+            vita = 10
+        elif tipologia==1:
+            vita = 20
+        elif tipologia==2:
+            vita = 30
+        else:
+            vita = 0
+        item['vita'] = min(utente.vita +vita, max_life)
+        if vita!=0:
+            messaggio = "Ho ripristinato "+ str(vita)+ " Punti Vita 🩸"
+        else:
+            messaggio = "Senza soldi non puoi comprare alcuna pozione"
+        self.update_user(chatid, item)
+        return messaggio
+
     def update_user(self, chatid, kwargs):
-        print("updating user...")
         session = self.Session()
         utente =  session.query(Utente).filter_by(id_telegram=chatid).first()
-        
         for key, value in kwargs.items():  # `kwargs.iteritems()` in Python
             print("updating ",key, "in ",value)
             setattr(utente, key, value) 
-
         session.commit()
         session.close()
 
@@ -299,3 +323,6 @@ class GiappoBot:
         utente = session.query(Utente).filter_by(id_telegram=chatid).first()
         session.close()
         return utente
+
+    def maxLife(self, utente):
+        return 50 + utente.livello*10

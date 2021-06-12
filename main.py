@@ -11,8 +11,8 @@ from sqlalchemy.orm     import sessionmaker
 
 from model import Utente,Word, db_connect, create_table
 
-# BOT_TOKEN = "1359089063:AAEig5IHLo_sRmyoGEzPbEv0PdylyyIglAo" #Giappo
-BOT_TOKEN = "1722321202:AAH0ejhh_A5kLePfD9bt9CGYBXZbE9iA6AU" #RaspiAlanBot
+BOT_TOKEN = "1359089063:AAEig5IHLo_sRmyoGEzPbEv0PdylyyIglAo" #Giappo
+# BOT_TOKEN = "1722321202:AAH0ejhh_A5kLePfD9bt9CGYBXZbE9iA6AU" #RaspiAlanBot
 CANALE_LOG = "-1001469821841"
 bot = TeleBot(BOT_TOKEN)
 
@@ -117,7 +117,6 @@ def Menu(message):
 
         words = session.query(Word)
         words = g.LevelFilter(chatid, words)
-        print("Domande possibili: ",len(words.all()))
         utente = session.query(Utente).filter_by(id_telegram=chatid).first()
 
 
@@ -254,7 +253,8 @@ def Question(message, chatid):
     session = Session()
     
     markup = types.ReplyKeyboardMarkup(one_time_keyboard=True, row_width=2)
-    indizi = ['💰 20: Metà parola','💰 10: Categoria', '💰 0: Skip']
+    indizi = ['💰 10: Categoria', '💰 20: Metà parola', '💰 10: Pozione leggera 🩸', '💰 20: Pozione moderata 🩸', '💰 30: Pozione superiore 🩸']
+
     for indizio in indizi:
         markup.add(indizio)
     utente = session.query(Utente).filter_by(id_telegram = chatid).first() 
@@ -285,29 +285,33 @@ def Answer(message):
         level = utente.livello
         if "💰" in message.text:
             if "metà parola" in risposta_data:
-                meta = g.buyHalfWord(chatid)
-                msg = bot.reply_to(message, meta) 
-                bot.register_next_step_handler(msg, Answer)
+                risposta = g.buyHalfWord(chatid)
             elif "categoria" in risposta_data:
-                meta = g.buyCategory(chatid)
-                print("ho comprato ",meta)
-                msg = bot.reply_to(message, meta) 
-                bot.register_next_step_handler(msg, Answer)             
-            elif "skip" in risposta_data: 
-                Start(message)
+                risposta = g.buyCategory(chatid)
+            elif "🩸" in message.text:
+                if "leggera" in message.text:
+                    risposta = g.buyPotion(chatid, 0)
+                elif "moderata" in message.text:
+                    risposta = g.buyPotion(chatid, 1)
+                elif "superiore" in message.text:
+                    risposta = g.buyPotion(chatid, 2)
+            else:
+                risposta = "Non ho capito bene..."
+            bot.send_message(message.chat.id, risposta)
+            msg = bot.reply_to(message, "Ora rispondi alla domanda") 
+            bot.register_next_step_handler(msg, Answer)   
         elif risposta_data==risposta_esatta:
-            g.CorrectAnswer(chatid)           
-            bot.send_message(chatid, "🎉 Complimenti hai risposto giusto!!", reply_markup=hideBoard)
+            risposta = g.CorrectAnswer(chatid)           
+            bot.send_message(chatid, risposta, reply_markup=hideBoard)
+            Start(message)
+        else:
+            risposta = g.WrongAnswer(chatid)
+            bot.send_message(chatid, risposta, reply_markup=hideBoard)
             Start(message)
 
-        else:
-            g.WrongAnswer(chatid)
-            bot.send_message(chatid, "Mi dispiace, la risposta era "+utente.risposta, reply_markup=hideBoard)
-            Start(message)
         utente = g.getUtente(chatid)
         current_level = utente.livello 
         if current_level != level:
-            bot.send_message(chatid, "🎉 Complimenti! Sei passato/a al livello "+str(current_level), reply_markup=hideBoard)
             message.text = "Livello "+str(current_level)
             SendMateriale(message)
             if current_level==1:
