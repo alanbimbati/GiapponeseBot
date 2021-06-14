@@ -51,13 +51,14 @@ class GiappoBot:
         self.TranslateFromTo(chatid, "Kana", "Italiano", words)
         
     def TranslateFromTo(self, chatid, translate_by, translate_to, words):
+        livelli = words.distinct(Word.livello).group_by(Word.livello).all()
         words = words.all()
         self.clean(chatid)
         # words = session.query(Word).all()
         random.seed()
         index = random.randint(0,len(words)-1)
         word = words[index]
-        print(word.ita, word.romanji, word.katana)
+        print("PAROLA ", word.ita, word.romanji, word.katana)
         item={}
 
         if translate_by == "Italiano":
@@ -74,9 +75,34 @@ class GiappoBot:
         elif translate_to == "Kana":
             item['risposta'] = word.katana
 
+        item['traduci_da'] = translate_by
+        item['traduci_in'] = translate_to
+
+
+        # scegli livello 0
+        if len(livelli)==1 and livelli[0].livello==0:
+            if item['traduci_da'] == "Italiano" and item['traduci_in'] == "Kana":
+                print("ita kana -> ita romaji")
+                item['traduci_in'] = "Romaji"
+                item['risposta'] = word.romanji
+
+            elif item['traduci_da'] == "Kana" and item['traduci_in'] == "Italiano":
+                print("kana ita -> romaji ita")
+                item['traduci_da'] == "Romaji"
+                item['domanda'] = word.romanji
+
+            elif item['traduci_da'] == "Kana" and item['traduci_in'] == "Romaji":
+                print("kana romaji -> ita romaji")
+                item['traduci_da'] == "Italiano"
+                item['domanda'] = word.ita
+
+            elif item['traduci_da'] == "Romaji" and item['traduci_in'] == "Kana":
+                print("romaji kana -> romaji ita")
+                item['traduci_in'] = "Italiano"
+                item['risposta'] = word.ita
+
+
         if item['risposta'] != "" and item['domanda'] != "":
-            item['traduci_da'] = translate_by
-            item['traduci_in'] = translate_to
             self.update_user(chatid, item)
 
     def domandaTag(self,chatid, tag):
@@ -85,6 +111,7 @@ class GiappoBot:
         words = words.filter_by(Tag=tag).all()
         self.TuttoRandom(chatid,words)
         session.close()
+
     
     def domandaLevel(self,chatid, livello):
         lvl = int(livello.split()[1])
@@ -96,19 +123,12 @@ class GiappoBot:
 
 
     def alltags(self, chatid):
-        session = self.Session()
         words = self.LevelFilter(chatid).all()
         tags = words.tag.unique()
         return tags
 
     def TuttoRandom(self, chatid, words):
-        session = self.Session()
-        utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
-        if utente.livello <1:
-            scelta = random.randint(1,2)
-        else:
-            scelta = random.randint(1,4)
-        
+        scelta = random.randint(1,4)        
         if   scelta == 1:
             self.RomanjiToIta(chatid, words)
         elif scelta == 2:

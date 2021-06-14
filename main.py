@@ -248,7 +248,6 @@ def Delete(message):
 
 def Question(message, chatid):
     engine = db_connect()
-    create_table(engine)
     Session = sessionmaker(bind=engine)
     session = Session()
     
@@ -266,12 +265,13 @@ def Question(message, chatid):
     elif utente.traduci_in == "Kana":
         word = session.query(Word).filter_by(katana=utente.risposta).first()
 
-    domanda = "Traduci \""+utente.domanda+"\" in " + utente.traduci_in
-    if word.Altro != "":
-        domanda = domanda +" ("+ word.Altro+")"
-    session.close()
-    msg = bot.reply_to(message, domanda, reply_markup=markup)
-    bot.register_next_step_handler(msg, Answer)
+    if word is not None:
+        domanda = "Traduci \""+utente.domanda+"\" in " + utente.traduci_in
+        if word.Altro != "":
+            domanda = domanda +" ("+ word.Altro+")"
+        session.close()
+        msg = bot.reply_to(message, domanda, reply_markup=markup)
+        bot.register_next_step_handler(msg, Answer)
 
 
 def Answer(message):
