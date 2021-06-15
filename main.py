@@ -192,7 +192,7 @@ def Menu(message):
                 doc.close()
                 Start(message)
             elif "Restore" in message.text:
-                g.populaDB()  
+                g.Restore()  
                 Start(message)
             elif "update" in message.text:
                 utenti = session.query(Utente).all()
