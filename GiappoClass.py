@@ -280,10 +280,6 @@ class GiappoBot:
         word = session.query(Word).filter_by(id = word_id).first()
         
         for key, value in kwargs.items():  # `kwargs.iteritems()` in Python 2
-<<<<<<< HEAD
-=======
-            print("updating ",key, "in ",value)
->>>>>>> ee66e39103a4e482b7dc436eb20170c18011c7cd
             setattr(word, key, value) 
 
         session.commit()
