@@ -275,40 +275,42 @@ class GiappoBot:
         session.commit()
         session.close()
 
-    def update_word(self, id, kwargs):
+    def update_word(self, word_id, kwargs):
         session = self.Session()
-        utente = session.query(Word).filter_by(id = id).first()
+        word = session.query(Word).filter_by(id = word_id).first()
         
         for key, value in kwargs.items():  # `kwargs.iteritems()` in Python 2
-            setattr(utente, key, value) 
+            print("updating ",key, "in ",value)
+            setattr(word, key, value) 
 
         session.commit()
         session.close()
 
 
-    def populaDB(self):
-        session = self.Session()
+    def Restore(self):
         scope = ["https://spreadsheets.google.com/feeds",'https://www.googleapis.com/auth/spreadsheets',"https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive"]
         creds = ServiceAccountCredentials.from_json_keyfile_name("creds.json", scope)
         client = gspread.authorize(creds)
         sheet = client.open("Studio Giapponese").sheet1
         nrows = sheet.get_all_records()
         for row in nrows:
-            exist = session.query(Word).filter_by(ita=row['Id']).first()
+            print("riga ",row)
+            session = self.Session()
+            exist = session.query(Word).filter_by(id=row['Id']).first()
             word = Word()
             word.id         = row['Id']
             word.ita        = row['Italiano']
-            word.romanji    = row['Romanji']
+            word.romanji    = row['Romaji']
             word.katana     = row['Kana']
             word.libro      = row['Libro']
             word.lezione    = row['Lezione']
             word.Tag        = row['Tag']
             word.Altro      = row['Altro...']
             word.livello    = row['Livello']
-
+            session.close()
             if exist is None:
+                session = self.Session()
                 try:
-
                     session.add(word)
                     session.commit()
                 except:
@@ -317,14 +319,26 @@ class GiappoBot:
                 finally:
                     session.close()
             else:
-                word = Word()
-                if row['Romanji']   != word.romanji: word.romanji   = row['Romanji']
-                if row['Kana']    != word.katana: word.katana     = row['Kana']
-                if row['Libro']     != word.libro: word.libro       = row['Libro']
-                if row['Lezione']   != word.Lezione: word.Lezione   = row['Lezione']
-                if row['Tag']       != word.Tag: word.Tag           = row['Tag']
-                if row['Altro...']  != word.Altro: word.Altro       = row['Altro...']
-                self.update_word(word.id, word)
+                word = {}
+                word['id']          = row['Id']
+                word['romanji']     = row['Romaji']
+                word['katana']      = row['Kana']
+                word['libro']       = row['Libro']
+                word['ita']         = row['Italiano']
+                word['tag']         = row['Tag']
+                word['altro']       = row['Altro...']
+                word['lezione']     = row['Lezione']
+                word['livello']     = row['Livello']
+                
+                # if row['Romaji']    != word.romanji: word.romanji   = row['Romaji']
+                # if row['Kana']      != word.katana: word.katana     = row['Kana']
+                # if row['Libro']     != word.libro: word.libro       = row['Libro']
+                # if row['Lezione']   != word.Lezione: word.Lezione   = row['Lezione']
+                # if row['Tag']       != word.Tag: word.Tag           = row['Tag']
+                # if row['Altro...']  != word.Altro: word.Altro       = row['Altro...']
+                session.close()
+                self.update_word(word['id'], word)
+                
 
     def classifica(self):   
         session = self.Session()
