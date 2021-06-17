@@ -192,6 +192,7 @@ def Menu(message):
                 doc.close()
                 Start(message)
             elif "Restore" in message.text:
+                bot.send_message(chatid, "Aggiorno il database, abbi pazienza...")
                 g.Restore()  
                 bot.send_message(chatid, "Ho aggiornato tutte le parole!")
                 Start(message)

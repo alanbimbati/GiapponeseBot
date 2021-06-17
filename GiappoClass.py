@@ -253,9 +253,9 @@ class GiappoBot:
         if tipologia==0:   
             vita = 10
         elif tipologia==1:
-            vita = 20
+            vita = 25
         elif tipologia==2:
-            vita = 30
+            vita = 50
         else:
             vita = 0
         item['vita'] = min(utente.vita +vita, max_life)
@@ -344,7 +344,7 @@ class GiappoBot:
         session.commit()
 
     def getUtente(self, chatid):
-        session = self.Session()
+        session = self.Session()    
         utente = session.query(Utente).filter_by(id_telegram=chatid).first()
         session.close()
         return utente
