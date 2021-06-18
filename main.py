@@ -25,6 +25,7 @@ admin['Lorena'] = '391473447'
 
 comandi = {}
 comandi['random']       = '🎲 Domanda Casuale'
+comandi['last_lv']      = "🎲 Ultimo livello"
 comandi['livelli']      = '🔢 Livelli'
 comandi['ItaToRomaji']  = '🇮🇹 Da Ita a Romaji 🇯🇵'
 comandi['RomajiToIta']  = '🇯🇵 Da Romaji a Ita 🇮🇹'
@@ -57,7 +58,7 @@ def error(message, error):
 def scegli_livello(message, utente):
     markup_lvl = types.ReplyKeyboardMarkup(one_time_keyboard=True)
     for i in range(utente.livello+1):
-        markup_lvl.add("Livello "+str(i))
+        markup_lvl.add("Livello "+str(utente.livello-i))
     return markup_lvl
 
 def unlock(message):
@@ -71,7 +72,7 @@ def unlock(message):
     if livello>=0:
         markup.add(comandi['random'])
     if livello>=1:
-        markup.add(comandi['livelli'])
+        markup.add(comandi['livelli'], comandi['last_lv'])
     if livello>=2:
         markup.add(comandi['ItaToRomaji'], comandi['RomajiToIta'])
     if livello>=3:
@@ -145,7 +146,11 @@ def Menu(message):
         elif comandi['livelli'] == message.text:
             markup_lvl = scegli_livello(message, utente)
             msg = bot.reply_to(message, "Scegli il livello", reply_markup=markup_lvl)
-            bot.register_next_step_handler(msg, Level)      
+            bot.register_next_step_handler(msg, Level)  
+        elif comandi['last_lv'] == message.text:
+            g.domandaLevel(chatid, "Livello "+str(utente.livello))
+            Question(message, chatid)
+
         elif comandi['random'] == message.text:
             g.TuttoRandom(chatid, words)
             Question(message, chatid)
