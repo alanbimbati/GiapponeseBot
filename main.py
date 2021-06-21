@@ -25,7 +25,7 @@ admin['Lorena'] = '391473447'
 
 comandi = {}
 comandi['random']       = '🎲 Domanda Casuale'
-comandi['last_lv']      = "🎲 Ultimo livello"
+comandi['last_lv']      = '🎲 Ultimo livello'
 comandi['livelli']      = '🔢 Livelli'
 comandi['ItaToRomaji']  = '🇮🇹 Da Ita a Romaji 🇯🇵'
 comandi['RomajiToIta']  = '🇯🇵 Da Romaji a Ita 🇮🇹'
@@ -70,9 +70,9 @@ def unlock(message):
     markup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
 
     if livello>=0:
-        markup.add(comandi['random'])
+        markup.add(comandi['random'], comandi['last_lv'])
     if livello>=1:
-        markup.add(comandi['livelli'], comandi['last_lv'])
+        markup.add(comandi['livelli'])
     if livello>=2:
         markup.add(comandi['ItaToRomaji'], comandi['RomajiToIta'])
     if livello>=3:
@@ -101,8 +101,7 @@ def Start(message):
 @bot.message_handler(commands=['help'])
 def help(message):
     chatid = message.chat.id
-    bot.send_message(chatid, "Benvenuto nel bot per poter imparare il giapponese giocando! 🇮🇹🇯🇵 \n\n✅ Rispondi correttamente alle domande, otterrai punti esperienza per passare di livello  e sbloccare nuove funzionalità, e ottenere monete da spendere per avere indizi.\n\n ❌ Se sbaglierai risposta guadagnerai meno punti esperienza e perderai monete)")
-    bot.send_message(chatid, "Per incominciare premi /start o scrivimi /help per riavere questo messaggio")
+    bot.send_message(chatid, "Benvenuto nel bot per poter imparare il giapponese giocando! 🇮🇹🇯🇵 \n\n✅ Rispondi correttamente alle domande, otterrai punti esperienza per passare di livello  e sbloccare nuove funzionalità, e ottenere monete da spendere.\n\n ❌ Se sbaglierai risposta perderai vita, non morire!")
 
 @bot.callback_query_handler(func=lambda call: "Menu" in call.data)
 def Menu(message): 
@@ -189,7 +188,7 @@ def Menu(message):
             markup_lvl.add("Forme di scrittura")
             msg = bot.reply_to(message, "Scegli il livello", reply_markup=markup_lvl)
             bot.register_next_step_handler(msg, SendMateriale)   
-
+        
         elif authorize(message):
             if "backup" in message.text.lower():
                 doc = open('giappo.db', 'rb')
@@ -314,7 +313,7 @@ def Answer(message):
         else:
             risposta = g.WrongAnswer(chatid)
             bot.send_message(chatid, risposta, reply_markup=hideBoard)
-            Start(message)
+            
 
         utente = g.getUtente(chatid)
         current_level = utente.livello 
@@ -324,6 +323,7 @@ def Answer(message):
             if current_level==1:
                 message.text = "Forme di scrittura"
                 SendMateriale(message)
+        Start(message)
     except Exception as e:
         error(message, e)
 
