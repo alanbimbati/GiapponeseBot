@@ -30,12 +30,6 @@ class GiappoBot:
         words = words.filter(Word.livello <= utente.livello)
         return words
 
-    # def QuestionByLevel(self, chatid, words):
-    #     session = self.Session()
-    #     utente = session.query(Utente).filter_by(id_telegram = chatid).first()  
-    #     words = words.filter(Word.livello == utente.livello)
-    #     return words
-
     def ItaToRomanji(self, chatid, words):
         self.TranslateFromTo(chatid, "Italiano", "Romaji", words)
 
@@ -120,12 +114,6 @@ class GiappoBot:
         words = words.filter_by(livello=lvl)
         self.TuttoRandom(chatid,words)
         session.close()
-
-
-    def alltags(self, chatid):
-        words = self.LevelFilter(chatid).all()
-        tags = words.tag.unique()
-        return tags
 
     def TuttoRandom(self, chatid, words):
         scelta = random.randint(1,4)        

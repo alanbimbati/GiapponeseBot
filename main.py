@@ -14,7 +14,7 @@ from model import Utente,Word, db_connect, create_table
 # BOT_TOKEN = "1359089063:AAEig5IHLo_sRmyoGEzPbEv0PdylyyIglAo" #Giappo
 BOT_TOKEN = "1722321202:AAH0ejhh_A5kLePfD9bt9CGYBXZbE9iA6AU" #RaspiAlanBot
 CANALE_LOG = "-1001469821841"
-bot = TeleBot(BOT_TOKEN)
+bot = TeleBot(BOT_TOKEN, threaded=False)
 
 
 hideBoard = types.ReplyKeyboardRemove()  
@@ -37,6 +37,18 @@ comandi['classifica']   = '🏆 Classifica'
 comandi['delete']       = '❌ Cancella Profilo'
 comandi['materiale']    = '📚 Materiale di studio'
 
+def broadcast(message):
+    if authorize(message):
+        engine = db_connect()
+        create_table(engine)
+        Session = sessionmaker(bind=engine)
+        session = Session()
+        people = session.query(Utente).all()
+        for person in people:
+            try:
+                bot.send_message(person.id_telegram, message.text)
+            except:
+                bot.reply_to(message, "L'utente "+person.nome+" ("+str(person.id_telegram)+") non ha l'accesso al bot")
 
 def cleanString(string):
     return string.replace("\n","").replace(",","").replace(".","").lower()
@@ -53,11 +65,68 @@ def error(message, error):
     bot.send_message(CANALE_LOG, str(error)+"\n#Error")
     bot.reply_to(message, "😔 C'è stato un problema...riavviami con /start", reply_markup=hideBoard)
 
-def scegli_livello(message, utente):
-    markup_lvl = types.ReplyKeyboardMarkup(one_time_keyboard=True)
+def scegli_livello(utente, tipo):
+    markup_lvl = types.InlineKeyboardMarkup()
     for i in range(utente.livello+1):
-        markup_lvl.add("Livello "+str(utente.livello-i))
+        lv = tipo+" Livello "+str(utente.livello-i)
+        markup_lvl.add(types.InlineKeyboardButton(lv, callback_data=lv))
     return markup_lvl
+
+@bot.callback_query_handler(func=lambda call: True and ("Livello" in call.data or "Forme" in call.data))
+def SendMateriale(call):
+    chatid = call.message.chat.id
+    words = call.data.split()[1:]
+    livello = ""
+    for word in words:    
+        livello = livello+word+" "
+    livello = livello[:-1]
+    print(livello)
+    if "Materiale" in call.data:
+        try:
+            doc = open("Materiale/"+livello+'.pdf', 'rb')
+            bot.send_document(chatid, doc, caption="Materiale di studio "+livello)
+            doc.close()
+        except Exception as e:
+            print("Errore nel documento")
+    elif "Domanda" in call.data:
+        try:
+            g = GiappoBot(BOT_TOKEN, CANALE_LOG)
+            g.domandaLevel(chatid, livello)
+            Question(call.message, chatid)
+        except Exception as e:
+            print("Error")
+
+
+
+@bot.callback_query_handler(func=lambda call: True and "💰" in call.data)
+def Indizi(call):
+    g = GiappoBot(BOT_TOKEN, CANALE_LOG)  
+    chatid = call.message.chat.id
+    risposta = ""
+    if "metà parola" in call.data.lower():
+        risposta = g.buyHalfWord(chatid)
+    elif "categoria" in call.data.lower():
+        risposta = g.buyCategory(chatid)
+    elif "🩸" in call.data:
+        if "leggera" in call.data.lower():
+            risposta = g.buyPotion(chatid, 0)
+        elif "moderata" in call.data.lower():
+            risposta = g.buyPotion(chatid, 1)
+        elif "superiore" in call.data.lower():
+            risposta = g.buyPotion(chatid, 2)
+    bot.send_message(chatid, risposta)
+
+@bot.callback_query_handler(func=lambda call: True and "Tag" in call.data)
+def Tag(call):
+    chatid = call.message.chat.id
+    tag = call.data.split(":")[1]
+    try:
+        g = GiappoBot(BOT_TOKEN, CANALE_LOG)
+        g.domandaTag(chatid, tag)
+        Question(call.message, chatid)
+    except Exception as e:
+        print("Errore nel tag")
+
 
 def unlock(message):
     engine = db_connect()
@@ -82,27 +151,20 @@ def unlock(message):
     markup.add(comandi['materiale'])
     markup.add(comandi['delete'])  
     if authorize(message):
-        markup.add('Backup','Restore')  
+        markup.add('Backup','Restore')
+        markup.add("Broadcast")  
     return markup
 
-@bot.message_handler(commands=['start','Start'])
-def Start(message):
-    if message.chat.type == "private":
-        g = GiappoBot(BOT_TOKEN, CANALE_LOG)  
-        g.CreateUtente(message)
-        markup = unlock(message)
-        msg = bot.reply_to(message, "Cosa vuoi fare?\n\nℹ️ Per sapere come funziona il bot, digita /help", reply_markup=markup)
-        bot.register_next_step_handler(msg, Menu)
-    else:
-        bot.reply_to(message, "Mi dispiace, questo bot funziona solo in privato")
+@bot.message_handler(commands=['start'])
+def start(message):
+    markup = unlock(message)
+    welcome = "Benvenuto nel bot per poter imparare il giapponese giocando! 🇮🇹🇯🇵 \n\n✅ Rispondi correttamente alle domande, otterrai punti esperienza per passare di livello  e sbloccare nuove funzionalità, e ottenere monete da spendere.\n\n ❌ Se sbaglierai risposta perderai vita, non morire!"
+    bot.send_message(message.chat.id, welcome, reply_markup=markup)
+    Menu(message)
 
-@bot.message_handler(commands=['help'])
-def help(message):
-    chatid = message.chat.id
-    bot.send_message(chatid, "Benvenuto nel bot per poter imparare il giapponese giocando! 🇮🇹🇯🇵 \n\n✅ Rispondi correttamente alle domande, otterrai punti esperienza per passare di livello  e sbloccare nuove funzionalità, e ottenere monete da spendere.\n\n ❌ Se sbaglierai risposta perderai vita, non morire!")
-
-@bot.callback_query_handler(func=lambda call: "Menu" in call.data)
+@bot.message_handler(func=lambda msg: True)
 def Menu(message): 
+    print("Menu")
     try: 
         # SQLalchemy session
         engine = db_connect()
@@ -117,8 +179,15 @@ def Menu(message):
         words = g.LevelFilter(chatid, words)
         utente = session.query(Utente).filter_by(id_telegram=chatid).first()
 
-
-        if comandi['ItaToRomaji'] == message.text:     
+        g = GiappoBot(BOT_TOKEN, CANALE_LOG)  
+        g.CreateUtente(message)
+        markup = unlock(message)
+       
+        if "/help" == message.text:
+            bot.send_message(chatid, "Benvenuto nel bot per poter imparare il giapponese giocando! 🇮🇹🇯🇵 \n\n✅ Rispondi correttamente alle domande, otterrai punti esperienza per passare di livello  e sbloccare nuove funzionalità, e ottenere monete da spendere per avere indizi.\n\n ❌ Se sbaglierai risposta guadagnerai meno punti esperienza e perderai monete)")
+            bot.send_message(chatid, "Per incominciare premi /start o scrivimi /help per riavere questo messaggio")
+     
+        elif comandi['ItaToRomaji'] == message.text:     
             g.ItaToRomanji(chatid, words)
             Question(message, chatid)
         elif comandi['ItaToKana'] == message.text:     
@@ -132,18 +201,18 @@ def Menu(message):
             Question(message, chatid)
 
         elif comandi["Categoria"] == message.text:
-            tags = g.alltags(chatid)
-            markup_tags = types.ReplyKeyboardMarkup(one_time_keyboard=True)
+            words = words.all()
+            tags = words.tag.unique()
+            markup_tags = types.InlineKeyboardMarkup()
             for tag in tags:
                 tag = str(tag).replace("(","").replace(")","").replace("'","").replace(",","")
-                markup_tags.add(tag)
-            msg = bot.reply_to(message, "Scegli il tag", reply_markup=markup_tags)
-            bot.register_next_step_handler(msg, Tag)
-
+                markup_tags.add(types.InlineKeyboardButton(tag, callback_data="Categoria: "+tag))
+            bot.reply_to(message, "Scegli il tag", reply_markup=markup_tags)
+            
         elif comandi['livelli'] == message.text:
-            markup_lvl = scegli_livello(message, utente)
-            msg = bot.reply_to(message, "Scegli il livello", reply_markup=markup_lvl)
-            bot.register_next_step_handler(msg, Level)  
+            markup_lvl = scegli_livello(utente, "Domanda")
+            msg = bot.reply_to(message, "Scegli il livello della domanda", reply_markup=markup_lvl)
+
         elif comandi['last_lv'] == message.text:
             g.domandaLevel(chatid, "Livello "+str(utente.livello))
             Question(message, chatid)
@@ -153,9 +222,8 @@ def Menu(message):
             Question(message, chatid)
 
         elif comandi['profilo'] == message.text:
-            bot.reply_to(message, g.printMe(chatid),reply_markup=hideBoard)
+            bot.reply_to(message, g.printMe(chatid))
             time.sleep(0.5)
-            Start(message)
 
         elif comandi["classifica"] == message.text:
             utenti = g.classifica()
@@ -170,42 +238,38 @@ def Menu(message):
                 else:
                     classifica = classifica + str(i+1) + "\t"
                 classifica = classifica + utenti[i].nome+"\tLv."+str(utenti[i].livello)+"\tExp. "+str(utenti[i].exp)+"\n"
-            bot.send_message(chatid, classifica)
-            Start(message)
+            bot.send_message(chatid, classifica, reply_markup=markup)
 
         elif 'cancella' in message.text.lower():
             msg = bot.reply_to(message, 'Sei sicuro di cancellare il tuo account? Scrivi SI, SONO SICURO')
             bot.register_next_step_handler(msg, Delete)
      
-        elif "/help" == message.text:
-            bot.send_message(chatid, "Benvenuto nel bot per poter imparare il giapponese giocando! 🇮🇹🇯🇵 \n\n✅ Rispondi correttamente alle domande, otterrai punti esperienza per passare di livello  e sbloccare nuove funzionalità, e ottenere monete da spendere per avere indizi.\n\n ❌ Se sbaglierai risposta guadagnerai meno punti esperienza e perderai monete)")
-            bot.send_message(chatid, "Per incominciare premi /start o scrivimi /help per riavere questo messaggio")
-     
         elif comandi['materiale'] == message.text:
-            markup_lvl = scegli_livello(message, utente)
-            markup_lvl.add("Forme di scrittura")
+            markup_lvl = scegli_livello(utente, "Materiale")
+            markup_lvl.add(types.InlineKeyboardButton("Materiale Forme di scrittura", callback_data="Materiale Forme di scrittura"))
             msg = bot.reply_to(message, "Scegli il livello", reply_markup=markup_lvl)
-            bot.register_next_step_handler(msg, SendMateriale)   
+
         
         elif authorize(message):
             if "backup" in message.text.lower():
                 doc = open('giappo.db', 'rb')
-                bot.send_document(chatid, doc, caption="#database #backup", reply_markup=hideBoard)
+                bot.send_document(chatid, doc, caption="#database #backup")
                 doc.close()
-                Start(message)
+     
             elif "Restore" in message.text:
                 bot.send_message(chatid, "Aggiorno il database, abbi pazienza...")
                 g.Restore()  
                 bot.send_message(chatid, "Ho aggiornato tutte le parole!")
-                Start(message)
+
             elif "update" in message.text:
                 utenti = session.query(Utente).all()
                 for utente in utenti:
                     bot.send_message(utente.id_telegram, "Ciao, il bot è stato aggiornato. Premi /start per farlo funzionare!")
-                Start(message)
+            elif "Broadcast" in message.text:
+                msg = bot.reply_to(message, "Cosa vuoi scrivere?")
+                bot.register_next_step_handler(msg, broadcast)
         else:
-            bot.send_message(chatid, 'Devi prima passare di livello per sbloccare questa funzionalità')
-            Start(message)
+            bot.send_message(chatid, 'Questa funzionalità non esiste o la devi ancora sbloccare', reply_markup=markup)
         session.close()
     except Exception as e:
         error(message, e)
@@ -220,25 +284,6 @@ def Tag(message):
     except Exception as e:
         error(message,e)
 
-def Level(message):
-    try:
-        chatid = message.chat.id
-        g = GiappoBot(BOT_TOKEN, CANALE_LOG)
-        g.domandaLevel(chatid, message.text)
-        Question(message, chatid)
-    except Exception as e:
-        error(message,e)
-
-def SendMateriale(message):
-    try:
-        livello = message.text
-        chatid = message.chat.id
-        doc = open("Materiale/"+livello+'.pdf', 'rb')
-        bot.send_document(chatid, doc, caption="Materiale di studio "+livello, reply_markup=hideBoard)
-        doc.close()
-    except Exception as e:
-        error(message,e)
-
 
 def Delete(message):
     chatid = message.chat.id
@@ -248,18 +293,18 @@ def Delete(message):
         bot.send_message(chatid, 'Sayounara!')
     else:
         bot.send_message(chatid, 'Nessun problema')
-        Start(message)
 
 def Question(message, chatid):
     engine = db_connect()
     Session = sessionmaker(bind=engine)
     session = Session()
     
-    markup = types.ReplyKeyboardMarkup(one_time_keyboard=True, row_width=2)
+    markup = types.InlineKeyboardMarkup()
     indizi = ['💰 10: Categoria', '💰 20: Metà parola', '💰 10: Pozione leggera 🩸', '💰 20: Pozione moderata 🩸', '💰 30: Pozione superiore 🩸']
 
+
     for indizio in indizi:
-        markup.add(indizio)
+        markup.add(types.InlineKeyboardButton(indizio, callback_data=indizio))
     utente = session.query(Utente).filter_by(id_telegram = chatid).first() 
 
     if utente.traduci_in == "Italiano":
@@ -306,22 +351,24 @@ def Answer(message):
             bot.register_next_step_handler(msg, Answer)   
         elif risposta_data==risposta_esatta:
             risposta = g.CorrectAnswer(chatid)           
-            bot.send_message(chatid, risposta, reply_markup=hideBoard)
-            Start(message)
+            bot.send_message(chatid, risposta)
         else:
             risposta = g.WrongAnswer(chatid)
-            bot.send_message(chatid, risposta, reply_markup=hideBoard)
+            bot.send_message(chatid, risposta)
             
 
         utente = g.getUtente(chatid)
         current_level = utente.livello 
+        markup = unlock(message)
         if current_level != level:
-            message.text = "Livello "+str(current_level)
-            SendMateriale(message)
+            doc = open("Materiale/Livello "+str(current_level)+'.pdf', 'rb')
+            bot.send_document(chatid, doc, caption="Materiale di studio "+str(current_level), reply_markup=markup)
+            doc.close()            
             if current_level==1:
-                message.text = "Forme di scrittura"
+                doc = open("Materiale/Forme di scrittura.pdf", 'rb')
+                bot.send_document(chatid, doc, caption="Materiale di studio: Forme di scrittura", reply_markup=markup)
+                doc.close() 
                 SendMateriale(message)
-        Start(message)
     except Exception as e:
         error(message, e)
 
