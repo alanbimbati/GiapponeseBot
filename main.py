@@ -134,7 +134,7 @@ def unlock(message):
     Session = sessionmaker(bind=engine)
     session = Session()
     livello = session.query(Utente).filter_by(id_telegram=message.chat.id).first().livello
-    markup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
+    markup = types.ReplyKeyboardMarkup( )
 
     if livello>=0:
         markup.add(comandi['random'], comandi['last_lv'])
@@ -332,24 +332,7 @@ def Answer(message):
         risposta_data   = cleanString(message.text)
 
         level = utente.livello
-        if "💰" in message.text:
-            if "metà parola" in risposta_data:
-                risposta = g.buyHalfWord(chatid)
-            elif "categoria" in risposta_data:
-                risposta = g.buyCategory(chatid)
-            elif "🩸" in message.text:
-                if "leggera" in message.text:
-                    risposta = g.buyPotion(chatid, 0)
-                elif "moderata" in message.text:
-                    risposta = g.buyPotion(chatid, 1)
-                elif "superiore" in message.text:
-                    risposta = g.buyPotion(chatid, 2)
-            else:
-                risposta = "Non ho capito bene..."
-            bot.send_message(message.chat.id, risposta)
-            msg = bot.reply_to(message, "Ora rispondi alla domanda") 
-            bot.register_next_step_handler(msg, Answer)   
-        elif risposta_data==risposta_esatta:
+        if risposta_data==risposta_esatta:
             risposta = g.CorrectAnswer(chatid)           
             bot.send_message(chatid, risposta)
         else:

@@ -239,11 +239,23 @@ class GiappoBot:
         max_life = self.maxLife(utente)
         item = {}
         if tipologia==0:   
-            vita = 10
+            if utente.money >=10:
+                item = {}
+                item['money'] = utente.money -10
+                self.update_user(chatid, item)
+                vita = 10
         elif tipologia==1:
-            vita = 25
+            if utente.money >=20:
+                item = {}
+                item['money'] = utente.money -20
+                self.update_user(chatid, item)
+                vita = 25
         elif tipologia==2:
-            vita = 50
+            if utente.money >=30:
+                item = {}
+                item['money'] = utente.money -30
+                self.update_user(chatid, item)
+                vita = 40
         else:
             vita = 0
         item['vita'] = min(utente.vita +vita, max_life)
