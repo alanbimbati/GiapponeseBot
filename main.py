@@ -134,6 +134,7 @@ def unlock(message):
     Session = sessionmaker(bind=engine)
     session = Session()
     livello = session.query(Utente).filter_by(id_telegram=message.chat.id).first().livello
+    
     markup = types.ReplyKeyboardMarkup( )
 
     if livello>=0:
@@ -155,8 +156,21 @@ def unlock(message):
         markup.add("Broadcast")  
     return markup
 
+
+def createUser(message):
+    chatid = message.chat.id
+    engine = db_connect()
+    create_table(engine)
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    utente = session.query(Utente).filter_by(id_telegram=chatid).first()
+    if utente is None:
+        g = GiappoBot(BOT_TOKEN, CANALE_LOG)  
+        g.CreateUtente(message)
+
 @bot.message_handler(commands=['start'])
 def start(message):
+    createUser(message)
     markup = unlock(message)
     welcome = "Benvenuto nel bot per poter imparare il giapponese giocando! 🇮🇹🇯🇵 \n\n✅ Rispondi correttamente alle domande, otterrai punti esperienza per passare di livello  e sbloccare nuove funzionalità, e ottenere monete da spendere.\n\n ❌ Se sbaglierai risposta perderai vita, non morire!"
     bot.send_message(message.chat.id, welcome, reply_markup=markup)
