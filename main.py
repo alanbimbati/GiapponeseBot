@@ -18,8 +18,7 @@ bot = TeleBot(BOT_TOKEN, threaded=False)
 
 hideBoard = types.ReplyKeyboardRemove()  
 admin = {}
-admin['Alan']   = '62716473'
-admin['Lorena'] = '391473447'
+admin['User']   = 'ID'
 
 
 comandi = {}
