@@ -11,15 +11,7 @@ from sqlalchemy.orm     import sessionmaker
 
 from model import Utente,Word, db_connect, create_table
 
-BOT_TOKEN = "API_TOKEN"
-CANALE_LOG = "ID_CANALE"
-bot = TeleBot(BOT_TOKEN, threaded=False)
-
-
-hideBoard = types.ReplyKeyboardRemove()  
-admin = {}
-admin['User']   = 'ID'
-
+from settings import *
 
 comandi = {}
 comandi['random']       = '🎲 Domanda Casuale'
